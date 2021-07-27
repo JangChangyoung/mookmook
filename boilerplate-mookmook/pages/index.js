@@ -1,5 +1,4 @@
 /* eslint-disable no-restricted-globals */
-/* eslint-disable react/no-array-index-key */
 import React, { useState } from "react";
 import styles from "styles/index.module.css";
 import { Navbar, Nav, Container } from "react-bootstrap";
