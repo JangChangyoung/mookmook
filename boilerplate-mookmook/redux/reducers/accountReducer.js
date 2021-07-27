@@ -1,16 +1,19 @@
 /* eslint-disable camelcase */
-import { Map } from 'immutable';
+import { Map } from "immutable";
 
+// user가 auth state(login or logout) 바뀔때마다 돈다
+// token 값을 매번 가져오면 되지만 decoding할때마다 비용이드니까, 이걸 한번만 불러와서 저장하고, 그걸 다시쓴다.
+// user state가 없을때 다시 field 전부다 초기화 한다.
 const initialState = Map({
-  uid: '',
-  email: '',
-  phoneNumber: '',
-  displayName: '',
-  photoURL: '',
+  uid: "",
+  email: "",
+  phoneNumber: "",
+  displayName: "",
+  photoURL: "",
 });
 
-export const UPDATE_ACCOUNT_INFO = 'account/UPDATE_ACCOUT_INFO';
-export const SIGNOUT = 'account/SIGNOUT';
+export const UPDATE_ACCOUNT_INFO = "account/UPDATE_ACCOUT_INFO";
+export const SIGNOUT = "account/SIGNOUT";
 
 /* updateInfo
 
