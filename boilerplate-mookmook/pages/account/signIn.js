@@ -2,11 +2,11 @@ import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Offcanvas, Form, Button } from "react-bootstrap";
 
-const SignInPage = ({ show, handleClose }) => {
+const SignInPage = ({ show, onHide }) => {
   // 이미 로그인시 메인페이지로 리다이렉션
-  console.log(show, handleClose);
+  // console.log(show, onHide);
   return (
-    <Offcanvas show={show} onHide={handleClose} placement="end">
+    <Offcanvas show={show} onHide={onHide} placement="end">
       <Offcanvas.Header closeButton>
         <Offcanvas.Title>SignIn</Offcanvas.Title>
       </Offcanvas.Header>

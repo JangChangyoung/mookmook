@@ -2,7 +2,7 @@
 /* eslint-disable react/no-array-index-key */
 import React, { useState } from "react";
 import styles from "styles/index.module.css";
-import { Navbar, Nav, Container, Offcanvas } from "react-bootstrap";
+import { Navbar, Nav, Container } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import PostCreatePage from "./post/create";
 import SignInPage from "./account/signIn";
@@ -18,12 +18,6 @@ const Home = () => {
     <div>
       <PostCreatePage show={show} onHide={handleClose} />
       <SignInPage show={show2} onHide={handleClose2} />
-      <Offcanvas show={show} onHide={handleClose}>
-        <Offcanvas.Header closeButton>
-          <Offcanvas.Title>Create Page</Offcanvas.Title>
-        </Offcanvas.Header>
-        <Offcanvas.Body> Let uss make New Page!!!!!!!</Offcanvas.Body>
-      </Offcanvas>
       <Navbar bg="light" expand="lg">
         <Container>
           <Navbar.Collapse id="basic-navbar-nav">
