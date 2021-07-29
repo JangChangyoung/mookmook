@@ -47,11 +47,18 @@ const SignUpPage = ({ show, onHide }) => {
         <Offcanvas.Title>{`hi ${e}`}</Offcanvas.Title>
       </Offcanvas.Header>
       <Offcanvas.Body>
-        <Image src="img/facebook_login.png" onClick={loginFacebook} />
+        <Image
+          src="img/facebook_login.png"
+          onClick={loginFacebook}
+          width="250"
+          height="65"
+        />
         <br />
         <br />
         <Image
           src="img/btn_google_signin_dark_normal_web@2x.png"
+          width="250"
+          height="50"
           onClick={loginGoogle}
         />
         <br />
