@@ -1,6 +1,6 @@
 /* eslint-disable consistent-return */
-import admin from 'firebase-admin';
-import axios from 'axios';
+import admin from "firebase-admin";
+import axios from "axios";
 
 if (admin.apps.length === 0) {
   admin.initializeApp({
@@ -20,7 +20,8 @@ if (admin.apps.length === 0) {
 }
 
 export default async (req, res) => {
-  const SLACK_URL = 'https://hooks.slack.com/services/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';
+  const SLACK_URL =
+    "https://hooks.slack.com/services/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";
 
   try {
     // const token = req.headers['x-access-token'];
@@ -28,7 +29,8 @@ export default async (req, res) => {
 
     const { question } = req.body;
 
-    if (!question) return res.status(400).json({ success: false, error: 'Bad Request' });
+    if (!question)
+      return res.status(400).json({ success: false, error: "Bad Request" });
 
     await axios.post(SLACK_URL, {
       text: `문의자: 김문의\n문의내용: ${question}\n`,
@@ -41,7 +43,7 @@ export default async (req, res) => {
   } catch (err) {
     res.status(403).json({
       success: false,
-      error: 'Permission Denied',
+      error: "Permission Denied",
     });
   }
 };

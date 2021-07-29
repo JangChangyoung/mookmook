@@ -1,21 +1,25 @@
+/* eslint-disable camelcase */
+/* eslint-disable prefer-destructuring */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable-next-line react/prop-types */
-import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 
-import firebase from 'firebase/app';
-import 'firebase/auth';
+import firebase from "firebase/app";
+import "firebase/auth";
 
-import { createStore } from 'redux';
-import { createWrapper } from 'next-redux-wrapper';
+import { createStore } from "redux";
+import { createWrapper } from "next-redux-wrapper";
 
-import reducers from 'redux/reducers';
+import reducers from "redux/reducers";
 
-// eslint-disable-next-line camelcase
-import { AR_signOut, AR_updateAccountInfo } from 'redux/reducers/accountReducer';
+import {
+  AR_signOut,
+  AR_updateAccountInfo,
+} from "redux/reducers/accountReducer";
 
-import 'styles/globals.scss';
+import "styles/globals.scss";
 
 const App = ({ Component, pageProps }) => {
   if (firebase.apps.length === 0) {
@@ -39,11 +43,11 @@ const App = ({ Component, pageProps }) => {
       if (!user) dispatch(AR_signOut());
       else {
         const updateData = [
-          ['uid', user.uid],
-          ['email', user.email],
-          ['phoneNumber', user.phoneNumber],
-          ['displayName', user.displayName],
-          ['photoURL', user.photoURL],
+          ["uid", user.uid],
+          ["email", user.email],
+          ["phoneNumber", user.phoneNumber],
+          ["displayName", user.displayName],
+          ["photoURL", user.photoURL],
         ];
         dispatch(AR_updateAccountInfo(updateData));
       }

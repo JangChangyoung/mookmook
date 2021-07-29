@@ -1,101 +1,65 @@
-import React from 'react';
-import { provider, auth } from '../_app';
+/* eslint-disable react/prop-types */
+/* eslint-disable no-undef */
+/* eslint-disable camelcase */
+/* eslint-disable no-console */
+/* eslint-disable react/button-has-type */
+import React from "react";
+import { useSelector } from "react-redux";
+import { Offcanvas, Button, Image } from "react-bootstrap";
+
+// import { styles } from "./styles.module.scss";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { provider, auth } from "../_app";
 
 // let firebaseui = require('firebaseui');
 
-class SignUpPage extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      uid: null,
-      email: null,
-      phoneNumber: null,
-      displayName: null,
-      photoURL: null,
-      provider: null,
-    };
+const SignUpPage = ({ show, onHide }) => {
+  const e = useSelector((store) => store.account.get("displayName"));
+  // facebook login button---------------------------------------
+  // const finished_rendering = function () {
+  //   console.log("finished rendering plugins");
+  //   const spinner = document.getElementById("spinner");
+  //   spinner.removeAttribute("style");
+  //   spinner.removeChild(spinner.childNodes[0]);
+  // };
+  // FB.Event.subscribe("xfbml.render", finished_rendering);
+  //-------------------------------------------------------------
+  function loginFacebook() {
+    auth().signInWithPopup(provider.facebook);
   }
 
-//   componentWillMount() {
-//     auth().onAuthStateChanged()
-//       .then(user => {
-//       if (user) {
-//         this.setState({ user })
-//       }
-//     })
-//   }
-
-  loginFacebook = () => {
-    auth().signInWithPopup(provider.facebook)
-      .then(({ user }) => {
-        console.log(user);
-        this.setState({ 
-          uid: user.uid,
-          email: user.email,
-          phoneNumber: user.phoneNumber,
-          displayName: user.displayName,
-          photoURL: user.photoURL,
-          provider: 'facebook',
-        })
-      })
+  function loginGoogle() {
+    auth().signInWithPopup(provider.google);
   }
 
-  loginGoogle = () => {
-    auth().signInWithPopup(provider.google)
-      .then(({ user }) => {
-        console.log(user);
-        this.setState({ 
-          uid: user.uid,
-          email: user.email,
-          phoneNumber: user.phoneNumber,
-          displayName: user.displayName,
-          photoURL: user.photoURL,
-          provider: 'google',
-        })
-      })
+  function logout() {
+    auth()
+      .signOut()
+      .catch((err) => {
+        console.error("logout error: ", err);
+      });
   }
 
-  logout = () => {
-    auth().signOut().then(() => {
-      this.setState({
-        uid: null,
-        email: null,
-        phoneNumber: null,
-        displayName: null,
-        photoURL: null,
-        provider: null,
-      })
-    }).catch((err) => {
-      console.error('logout error: ', err);
-    });
-  }
-
-  render() {
-
-    return (
-      <div>
-        <div>SignUp Page</div>
-        <div className='app'>
-          <p>{this.state.user ? `Hi, ${this.state.user.displayName}!` : 'Hi!'}</p>
-          <div className='login'>
-            <button onClick={this.loginFacebook}>
-                Login with Facebook
-            </button>
-          </div>
-          <div className='login'>
-            <button onClick={this.loginGoogle}>
-                Login with Google
-            </button>
-          </div>
-          <div>
-            <button onClick={this.logout}>
-                Logout
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  }
-}
+  return (
+    <Offcanvas show={show} onHide={onHide} placement="end">
+      <Offcanvas.Header closeButton>
+        <Offcanvas.Title>SignUp</Offcanvas.Title>
+        <Offcanvas.Title>{`hi ${e}`}</Offcanvas.Title>
+      </Offcanvas.Header>
+      <Offcanvas.Body>
+        <Image src="img/facebook_login.png" onClick={loginFacebook} />
+        <br />
+        <br />
+        <Image
+          src="img/btn_google_signin_dark_normal_web@2x.png"
+          onClick={loginGoogle}
+        />
+        <br />
+        <br />
+        <Button onClick={logout}>Logout</Button>
+      </Offcanvas.Body>
+    </Offcanvas>
+  );
+};
 
 export default SignUpPage;

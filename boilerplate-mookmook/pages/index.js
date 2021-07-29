@@ -1,10 +1,11 @@
 /* eslint-disable no-restricted-globals */
 import React, { useState } from "react";
-import styles from "styles/index.module.css";
-import { Navbar, Nav, Container } from "react-bootstrap";
+import { Navbar, Nav, Container, Image } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import PostCreatePage from "./post/create";
-import SignInPage from "./account/signIn";
+import SignUpPage from "./account/signUp";
+import Contact from "./contact/index";
+import style from "./style.module.scss";
 
 const Home = () => {
   const [show, setShow] = useState(false);
@@ -13,10 +14,14 @@ const Home = () => {
   const [show2, setShow2] = useState(false);
   const handleShow2 = () => setShow2(true);
   const handleClose2 = () => setShow2(false);
+  const [show3, setShow3] = useState(false);
+  const handleShow3 = () => setShow3(true);
+  const handleClose3 = () => setShow3(false);
+
   return (
-    <div>
+    <>
       <PostCreatePage show={show} onHide={handleClose} />
-      <SignInPage show={show2} onHide={handleClose2} />
+      <SignUpPage show={show2} onHide={handleClose2} />
       <Navbar bg="light" expand="lg">
         <Container>
           <Navbar.Collapse id="basic-navbar-nav">
@@ -25,7 +30,7 @@ const Home = () => {
               <Nav.Link href="#create">Book or Movie</Nav.Link>
             </Nav>
           </Navbar.Collapse>
-          <Navbar.Brand className={styles.brandName} href="#home">
+          <Navbar.Brand className={style.brandName} href="#home">
             Mook-Mook
           </Navbar.Brand>
           <Navbar.Collapse
@@ -33,14 +38,36 @@ const Home = () => {
             className="justify-content-end"
           >
             <Nav>
-              <Nav.Link href="./contact">contact</Nav.Link>
-              <Nav.Link onClick={handleShow2}>SignIn</Nav.Link>
+              <Nav.Link onClick={handleShow2}>Login</Nav.Link>
             </Nav>
           </Navbar.Collapse>
         </Container>
       </Navbar>
-    </div>
+
+      <Container fluid>
+        <Contact show={show3} onHide={handleClose3} />
+        <Image
+          className={style.contact}
+          src="img/contact.png"
+          width="50"
+          height="50"
+          onClick={handleShow3}
+          rounded
+        />
+      </Container>
+    </>
   );
 };
 
 export default Home;
+
+// const handleShow = () => {
+//   if(type === 'a') {
+//     setShow(true)
+//   }
+//   if(type === 'b') {
+
+//   }
+// }
+
+// const [shows, setShows] = useState({ show1: false, show2: false, show3: false});
