@@ -20,9 +20,10 @@ class PostCreatePage extends React.Component {
     return firebase.auth().currentUser.displayName;
   }
 
-  handleClick = async (data) => {
+  handleClick = async (data, icolor) => {
     let title = document.getElementById("title").value;
     let imgurl = data;
+    let imgcolor = icolor;
     let color = document.getElementById("color").value;
     let line = document.getElementById("line").value;
     let review = document.getElementById("review").value;
@@ -33,6 +34,7 @@ class PostCreatePage extends React.Component {
       .collection("posts")
       .add({
         userID: "test",
+        imgcolor: imgcolor,
         title: title,
         imgurl: imgurl,
         color: color,

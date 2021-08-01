@@ -1,13 +1,17 @@
+/* eslint-disable react/sort-comp */
+/* eslint-disable react/no-array-index-key */
 /* eslint-disable react/state-in-constructor */
 /* eslint-disable no-useless-constructor */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/destructuring-assignment */
 import React, { PureComponent } from "react";
 import ReactCrop from "react-image-crop";
-import { Button, Form } from "react-bootstrap";
-
+import Color, { Palette } from "color-thief-react";
+import { Button, Form, ButtonGroup } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "react-image-crop/dist/ReactCrop.css";
+
+const Loading = () => <div>Loading...</div>;
 
 class ImageCrop extends PureComponent {
   constructor(props) {
@@ -21,6 +25,12 @@ class ImageCrop extends PureComponent {
       width: 30,
       aspect: 4 / 3,
     },
+  };
+
+  icolorpick = (e) => {
+    this.setState({ icolor: e });
+    console.log(e);
+    console.log("errrrrrrrrrrrrrror!");
   };
 
   onSelectFile = (e) => {
@@ -101,7 +111,8 @@ class ImageCrop extends PureComponent {
   }
 
   render() {
-    const { crop, croppedImageUrl, croppedImageJPG, src } = this.state;
+    const { crop, croppedImageUrl, croppedImageJPG, src, icolor } = this.state;
+    console.log(this.state);
 
     return (
       <>
@@ -134,10 +145,67 @@ class ImageCrop extends PureComponent {
           />
         )}
         <br />
+        <>
+          <Color src={croppedImageUrl} crossOrigin="anonymous" format="hex">
+            {({ data, loading }) => {
+              if (loading) return <Loading />;
+              return (
+                <>
+                  Predominat color:
+                  <br />
+                  <Button
+                    style={{
+                      background: data,
+                      borderColor: "#ffffff",
+                      color: data,
+                    }}
+                    value={data}
+                    onClick={() => this.icolorpick(data)}
+                  >
+                    {data}
+                  </Button>
+                </>
+              );
+            }}
+          </Color>
+          <Palette
+            src={croppedImageUrl}
+            crossOrigin="anonymous"
+            format="hex"
+            colorCount={4}
+          >
+            {({ data, loading }) => {
+              if (loading) return <Loading />;
+
+              return (
+                <div>
+                  Palette:
+                  <ButtonGroup aria-label="Basic example">
+                    {data &&
+                      data.map((color, index) => (
+                        <Button
+                          style={{
+                            background: color,
+                            color,
+                            borderColor: "#ffffff",
+                          }}
+                          key={index}
+                          value={color}
+                          onClick={() => this.icolorpick(color)}
+                        >
+                          {color}
+                        </Button>
+                      ))}
+                  </ButtonGroup>
+                </div>
+              );
+            }}
+          </Palette>
+        </>
         <br />
         <Button
           className="confirm"
-          onClick={() => this.props.handleClick(croppedImageJPG)}
+          onClick={() => this.props.handleClick(croppedImageJPG, icolor)}
           as="input"
           type="submit"
           value="Submit"
