@@ -1,8 +1,8 @@
 /* eslint-disable */
 import React from "react";
 import firebase from "firebase";
-import { Offcanvas } from "react-bootstrap";
-
+import { Offcanvas, Form, FormGroup } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
 import ImageCrop from "./crop";
 import SearchMovie from "./searchMovie";
 
@@ -11,13 +11,13 @@ class PostCreatePage extends React.Component {
     super(props);
   }
 
-  getTime() {
-    let today = new Date();
-    let year = today.getFullYear(); // 년도
-    let month = today.getMonth() + 1; // 월
-    let date = today.getDate(); // 날짜
-    let day = today.getDay(); // 요일, 0~6
-    return year + "/" + month + "/" + date;
+  initFirebaseAuth() {
+    // Listen to auth state changes.
+    firebase.auth().onAuthStateChanged();
+  }
+
+  getUserName() {
+    return firebase.auth().currentUser.displayName;
   }
 
   handleClick = async (data) => {
@@ -28,24 +28,20 @@ class PostCreatePage extends React.Component {
     let review = document.getElementById("review").value;
 
     const db = firebase.firestore();
-    db.settings({
-      timestampsInSnapshots: true,
-    });
 
     await db
       .collection("posts")
       .add({
-        userID: "userID",
+        userID: "test",
         title: title,
         imgurl: imgurl,
         color: color,
         line: line,
         review: review,
         like: 0,
-        uploadTime: this.getTime(),
+        uploadTime: firebase.firestore.FieldValue.serverTimestamp(),
       })
       .then(() => {
-        console.log("등록완료");
         alert("등록되었습니다.");
         window.location.reload();
       });
@@ -55,30 +51,36 @@ class PostCreatePage extends React.Component {
     return (
       <Offcanvas show={this.props.show} onHide={this.props.onHide}>
         <Offcanvas.Header closeButton>
-          <Offcanvas.Title>SignIn</Offcanvas.Title>
+          <Offcanvas.Title>Post your review</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
           <div className="container">
             <SearchMovie />
-            <ImageCrop handleClick={this.handleClick} />
-            <form>
-              <input
+            <Form>
+              <Form.Label>Movie Title</Form.Label>
+              <Form.Control
                 id="title"
-                className="post"
+                type="text"
                 placeholder="write the movie title"
               />
-              <input id="color" className="post" placeholder="write color" />
-              <input
-                id="line"
-                className="post"
-                placeholder="write a famous line"
+              <br></br>
+              <Form.Label htmlFor="exampleColorInput">Color picker</Form.Label>
+              <Form.Control
+                type="color"
+                id="color"
+                defaultValue="#563d7c"
+                title="Choose your color"
               />
-              <input
-                id="review"
-                className="post"
-                placeholder="write your review"
-              />
-            </form>
+              <FormGroup>
+                <Form.Label>Famous line</Form.Label>
+                <Form.Control id="line" as="textarea" rows={2} />
+              </FormGroup>
+              <Form.Group>
+                <Form.Label>Review</Form.Label>
+                <Form.Control id="review" as="textarea" rows={3} />
+              </Form.Group>
+            </Form>
+            <ImageCrop handleClick={this.handleClick} />
           </div>
         </Offcanvas.Body>
       </Offcanvas>

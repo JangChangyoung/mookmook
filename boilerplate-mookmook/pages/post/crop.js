@@ -1,11 +1,19 @@
+/* eslint-disable react/state-in-constructor */
+/* eslint-disable no-useless-constructor */
+/* eslint-disable react/prop-types */
+/* eslint-disable react/destructuring-assignment */
 import React, { PureComponent } from "react";
 import ReactCrop from "react-image-crop";
+import { Button, Form } from "react-bootstrap";
+
+import "bootstrap/dist/css/bootstrap.min.css";
 import "react-image-crop/dist/ReactCrop.css";
 
 class ImageCrop extends PureComponent {
   constructor(props) {
     super(props);
   }
+
   state = {
     src: null, // origin image file
     crop: {
@@ -39,17 +47,6 @@ class ImageCrop extends PureComponent {
     // this.setState({ crop: percentCrop });
     this.setState({ crop });
   };
-
-  async makeClientCrop(crop) {
-    if (this.imageRef && crop.width && crop.height) {
-      const { croppedImageJPG, croppedImageUrl } = await this.getCroppedImg(
-        this.imageRef,
-        crop,
-        "newFile.jpeg"
-      );
-      this.setState({ croppedImageJPG, croppedImageUrl });
-    }
-  }
 
   getCroppedImg(image, crop, fileName) {
     const canvas = document.createElement("canvas");
@@ -92,45 +89,32 @@ class ImageCrop extends PureComponent {
     });
   }
 
-  // uploadCroppedImg = async () => {
-  //   console.log("this: ", this.state.croppedImageJPG);
-
-  //   // firestore
-  //   const db = firebase.firestore();
-  //   db.settings({
-  //     timestampsInSnapshots: true,
-  //   });
-  //   const userRef = db.collection("posts").add({
-  //     title: "영화제목",
-  //     imgurl: this.state.croppedImageJPG,
-  //     color: "#000000",
-  //     line: "명대사 입력",
-  //     review: "리뷰입니다.",
-  //   });
-
-  // let storage = firebase.storage();
-  // let storageRef = firebase.storage().ref();
-  // await storageRef
-  //   .child("images/croppedImgURL")
-  //   .put(this.state.croppedImageJPG)
-  //   .catch((err) => console.error(err));
-  // storage.ref("/images/Cropimage").put(this.state.croppedImageJPG);
-  // };
+  async makeClientCrop(crop) {
+    if (this.imageRef && crop.width && crop.height) {
+      const { croppedImageJPG, croppedImageUrl } = await this.getCroppedImg(
+        this.imageRef,
+        crop,
+        "newFile.jpeg"
+      );
+      this.setState({ croppedImageJPG, croppedImageUrl });
+    }
+  }
 
   render() {
     const { crop, croppedImageUrl, croppedImageJPG, src } = this.state;
 
     return (
-      <div className="ImageCrop">
-        <div>
-          <label htmlFor="exampleFormControlFile1">파일 첨부하기</label>
-          <input
+      <>
+        <Form.Group controlId="formFile" className="mb-3">
+          <Form.Label htmlFor="exampleFormControlFile1">File Submit</Form.Label>
+          <Form.Control
             type="file"
             id="exampleFormControlFile1"
             accept="image/*"
             onChange={this.onSelectFile}
           />
-        </div>
+        </Form.Group>
+
         {src && (
           <ReactCrop
             src={src}
@@ -149,13 +133,16 @@ class ImageCrop extends PureComponent {
             src={croppedImageUrl}
           />
         )}
-        <button
+        <br />
+        <br />
+        <Button
           className="confirm"
           onClick={() => this.props.handleClick(croppedImageJPG)}
-        >
-          등록
-        </button>
-      </div>
+          as="input"
+          type="submit"
+          value="Submit"
+        />
+      </>
     );
   }
 }

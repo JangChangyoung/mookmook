@@ -15,15 +15,7 @@ import { provider, auth } from "../_app";
 
 const SignUpPage = ({ show, onHide }) => {
   const e = useSelector((store) => store.account.get("displayName"));
-  // facebook login button---------------------------------------
-  // const finished_rendering = function () {
-  //   console.log("finished rendering plugins");
-  //   const spinner = document.getElementById("spinner");
-  //   spinner.removeAttribute("style");
-  //   spinner.removeChild(spinner.childNodes[0]);
-  // };
-  // FB.Event.subscribe("xfbml.render", finished_rendering);
-  //-------------------------------------------------------------
+
   function loginFacebook() {
     auth().signInWithPopup(provider.facebook);
   }
