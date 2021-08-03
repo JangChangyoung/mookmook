@@ -16,10 +16,6 @@ class PostCreatePage extends React.Component {
     firebase.auth().onAuthStateChanged();
   }
 
-  getUserName() {
-    return firebase.auth().currentUser.displayName;
-  }
-
   handleClick = async (data, icolor) => {
     let title = document.getElementById("title").value;
     let imgurl = data;
@@ -29,11 +25,12 @@ class PostCreatePage extends React.Component {
     let review = document.getElementById("review").value;
 
     const db = firebase.firestore();
-
+    const user = firebase.auth().currentUser;
+    console.log(user);
     await db
       .collection("posts")
       .add({
-        userID: "test",
+        userID: user.uid,
         imgcolor: imgcolor,
         title: title,
         imgurl: imgurl,

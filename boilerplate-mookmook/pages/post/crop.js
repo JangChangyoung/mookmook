@@ -29,8 +29,6 @@ class ImageCrop extends PureComponent {
 
   icolorpick = (e) => {
     this.setState({ icolor: e });
-    console.log(e);
-    console.log("errrrrrrrrrrrrrror!");
   };
 
   onSelectFile = (e) => {
