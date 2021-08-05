@@ -4,11 +4,16 @@ import firebase from "firebase";
 import { Offcanvas, Form, FormGroup } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import ImageCrop from "./crop";
-import SearchMovie from "./searchMovie";
+import Search from "./search";
 
 class PostCreatePage extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      title: null,
+      imgurl: null,
+      type: null,
+    };
   }
 
   initFirebaseAuth() {
@@ -17,9 +22,10 @@ class PostCreatePage extends React.Component {
   }
 
   handleClick = async (data, icolor) => {
-    let title = document.getElementById("title").value;
+    let title = this.state.title;
     let imgurl = data;
     let imgcolor = icolor;
+    let type = this.state.type;
     let color = document.getElementById("color").value;
     let line = document.getElementById("line").value;
     let review = document.getElementById("review").value;
@@ -32,6 +38,7 @@ class PostCreatePage extends React.Component {
       .add({
         userID: user.uid,
         imgcolor: imgcolor,
+        type: type,
         title: title,
         imgurl: imgurl,
         color: color,
@@ -46,6 +53,14 @@ class PostCreatePage extends React.Component {
       });
   };
 
+  selectTitle = (title) => {
+    if (title.includes("<b>")) {
+      var titles = title.split("<b>")[1].toString();
+      var title = titles.split("</b>")[0].toString();
+    }
+    this.setState({ title: title });
+  };
+  radioChange = (e) => this.setState({ type: e.target.value });
   render() {
     return (
       <Offcanvas show={this.props.show} onHide={this.props.onHide}>
@@ -54,13 +69,36 @@ class PostCreatePage extends React.Component {
         </Offcanvas.Header>
         <Offcanvas.Body>
           <div className="container">
-            <SearchMovie />
+            <Search
+              type={this.state.type}
+              title={this.state.title}
+              selectTitle={this.selectTitle}
+            />
+            <br />
+            <br />
+            <Form.Check
+              id="type"
+              type="radio"
+              name="type"
+              value="movie"
+              label="movie"
+              onChange={(e) => this.radioChange(e)}
+            />
+            <Form.Check
+              type="radio"
+              name="type"
+              id="type"
+              value="book"
+              label="book"
+              onChange={(e) => this.radioChange(e)}
+            />
             <Form>
               <Form.Label>Movie Title</Form.Label>
               <Form.Control
                 id="title"
                 type="text"
-                placeholder="write the movie title"
+                value={this.state.title}
+                // placeholder="write the movie title"
               />
               <br></br>
               <Form.Label htmlFor="exampleColorInput">Color picker</Form.Label>
