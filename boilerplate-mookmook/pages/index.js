@@ -1,73 +1,99 @@
-/* eslint-disable no-restricted-globals */
-import React, { useState } from "react";
-import { Navbar, Nav, Container, Image } from "react-bootstrap";
+import React from "react";
+import firebase from "firebase/app";
+import "firebase/firestore";
+import "firebase/auth";
+import { Form } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import PostCreatePage from "./post/create";
-import SignUpPage from "./account/signUp";
-import Contact from "./contact/index";
-import style from "./style.module.scss";
+// import { resolveHref } from "next/dist/next-server/lib/router/router";
+// import { set } from "immutable";
+import Layout from "../components/layout";
 
-const Home = () => {
-  const [show, setShow] = useState(false);
-  const handleShow = () => setShow(true);
-  const handleClose = () => setShow(false);
-  const [show2, setShow2] = useState(false);
-  const handleShow2 = () => setShow2(true);
-  const handleClose2 = () => setShow2(false);
-  const [show3, setShow3] = useState(false);
-  const handleShow3 = () => setShow3(true);
-  const handleClose3 = () => setShow3(false);
+class Home extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      // posts: this.postUploading(),
+      books: null,
+      movies: null,
+      isLoading: true,
+      type: null,
+    };
+  }
 
-  return (
-    <>
-      <PostCreatePage show={show} onHide={handleClose} />
-      <SignUpPage show={show2} onHide={handleClose2} />
-      <Navbar bg="light" expand="lg">
-        <Container>
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="justify-content-start">
-              <Nav.Link onClick={handleShow}>+Create</Nav.Link>
-              <Nav.Link href="#create">Book or Movie</Nav.Link>
-            </Nav>
-          </Navbar.Collapse>
-          <Navbar.Brand className={style.brandName} href="#home">
-            Mook-Mook
-          </Navbar.Brand>
-          <Navbar.Collapse
-            id="basic-navbar-nav"
-            className="justify-content-end"
-          >
-            <Nav>
-              <Nav.Link onClick={handleShow2}>Login</Nav.Link>
-            </Nav>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
+  componentDidMount() {
+    this.postUploading();
+  }
 
-      <Container fluid>
-        <Contact show={show3} onHide={handleClose3} />
-        <Image
-          className={style.contact}
-          src="img/contact.png"
-          width="50"
-          height="50"
-          onClick={handleShow3}
-          rounded
+  changeLoading = (movies, books) => {
+    if (books !== [] && movies !== []) {
+      console.log(books, movies);
+      this.setState({ movies, books, isLoading: false });
+    } else {
+      this.setState({ isLoading: "error" });
+    }
+  };
+
+  getPosts = (name) => {
+    return new Promise((resolve, reject) => {
+      const data = firebase.firestore().collection(name).get();
+      resolve(data);
+    });
+  };
+
+  postUploading = async () => {
+    console.log("loading");
+    const books = [];
+    const movies = [];
+
+    await Promise.all(
+      ["book", "movie"].map(async (name) => {
+        const docs = await this.getPosts(name);
+        docs.forEach((doc) => {
+          if (name === "book") books.push(doc.data());
+          else if (name === "movie") movies.push(doc.data());
+        });
+      })
+    );
+    this.changeLoading(movies, books);
+  };
+
+  checkChange = (e) => this.setState({ type: e.target.value });
+
+  render() {
+    console.log("rendering");
+    const { movies, books, isLoading, type } = this.state;
+
+    return (
+      <div>
+        <Layout />
+        <Form.Check
+          type="radio"
+          name="type"
+          value="movie"
+          label="movie"
+          onChange={(e) => this.checkChange(e)}
         />
-      </Container>
-    </>
-  );
-};
+        <Form.Check
+          type="radio"
+          name="type"
+          value="book"
+          label="book"
+          onChange={(e) => this.checkChange(e)}
+        />
+        {isLoading
+          ? "loading . . ."
+          : type
+          ? type === "movie"
+            ? movies.map((movie, index) => (
+                <img key={index} src={movie.imgurl} alt={movie.title} />
+              ))
+            : books.map((book, index) => (
+                <img key={index} src={book.imgurl} alt={book.title} />
+              ))
+          : null}
+      </div>
+    );
+  }
+}
 
 export default Home;
-
-// const handleShow = () => {
-//   if(type === 'a') {
-//     setShow(true)
-//   }
-//   if(type === 'b') {
-
-//   }
-// }
-
-// const [shows, setShows] = useState({ show1: false, show2: false, show3: false});

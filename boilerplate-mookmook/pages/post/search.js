@@ -127,7 +127,6 @@ class ModalForm extends Component {
           <Form>
             <Row className="align-items-center">
               <Col xs="auto">
-                <Form.Label>Title</Form.Label>
                 <Form.Control
                   className="mb-2"
                   type="text"
