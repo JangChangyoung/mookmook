@@ -4,8 +4,6 @@ import "firebase/firestore";
 import "firebase/auth";
 import { Form } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-// import { resolveHref } from "next/dist/next-server/lib/router/router";
-// import { set } from "immutable";
 import Layout from "../components/layout";
 
 class Home extends React.Component {

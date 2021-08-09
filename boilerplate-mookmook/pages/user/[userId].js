@@ -1,6 +1,5 @@
-import React, { useEffect } from "react";
-import firebase from "firebase/app";
-import "firebase/firestore";
+import React from "react";
+import firebase from "firebase";
 import "firebase/auth";
 import { useRouter } from "next/router";
 import { Form } from "react-bootstrap";
@@ -18,6 +17,7 @@ class UserPost extends React.Component {
       books: null,
       movies: null,
       isLoading: true,
+      isHost: true,
       type: null,
     };
   }
@@ -28,7 +28,6 @@ class UserPost extends React.Component {
 
   changeLoading = (movies, books) => {
     if (books !== [] && movies !== []) {
-      console.log(books, movies);
       this.setState({ movies, books, isLoading: false });
     } else {
       this.setState({ isLoading: "error" });
@@ -36,12 +35,12 @@ class UserPost extends React.Component {
   };
 
   getPosts = (name) => {
+    const { hostID } = this.props;
     return new Promise((resolve, reject) => {
-      console.log("this", this.props.uid);
       const data = firebase
         .firestore()
         .collection(name)
-        .where("userID", "==", this.props.uid)
+        .where("userID", "==", hostID)
         .get();
       resolve(data);
     });
@@ -56,8 +55,8 @@ class UserPost extends React.Component {
       ["book", "movie"].map(async (name) => {
         const docs = await this.getPosts(name);
         docs.forEach((doc) => {
-          if (name === "book") books.push(doc.data());
-          else if (name === "movie") movies.push(doc.data());
+          if (name === "book") books.push([doc.id, doc.data()]);
+          else if (name === "movie") movies.push([doc.id, doc.data()]);
         });
       })
     );
@@ -68,7 +67,8 @@ class UserPost extends React.Component {
 
   render() {
     console.log("rendering");
-    const { movies, books, isLoading, type } = this.state;
+    const { movies, books, isHost, isLoading, type } = this.state;
+    // const visitor = firebase.auth().currentUser;
 
     return (
       <div>
@@ -92,14 +92,18 @@ class UserPost extends React.Component {
           ? type === "movie"
             ? movies.map((movie, index) => (
                 <div>
-                  <img key={index} src={movie.imgurl} alt={movie.title} />
-                  <PostDelete uid={this.props.uid} docID={index} type="movie" />
+                  <img src={movie[1].imgurl} alt={movie[1].title} />
+                  {isHost ? (
+                    <PostDelete key={movie[0]} type="movie" docID={movie[0]} />
+                  ) : null}
                 </div>
               ))
             : books.map((book, index) => (
                 <div>
-                  <img key={index} src={book.imgurl} alt={book.title} />
-                  <PostDelete uid={this.props.uid} docID={index} type="book" />
+                  <img src={book[1].imgurl} alt={book[1].title} />
+                  {isHost ? (
+                    <PostDelete key={book[0]} type="book" docID={book[0]} />
+                  ) : null}
                 </div>
               ))
           : null}
@@ -110,21 +114,19 @@ class UserPost extends React.Component {
 
 const UserPage = () => {
   const router = useRouter();
-  const { userId } = router.query;
+  const hostID = router.query.userId;
 
   // const [loading, setLoading] = useState(true);
-
   // useEffect(() => {
   //   // data request
   //   setLoading(false);
   // }, []);
-  console.log("rendering");
 
   return (
     <div>
       <Layout />
-      {`user: ${userId}`}
-      {userId ? <UserPost uid={userId} /> : null}
+      {`${hostID}`}님의 컬렉션입니다
+      {hostID ? <UserPost hostID={hostID} /> : null}
     </div>
   );
 };

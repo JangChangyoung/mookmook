@@ -33,8 +33,9 @@ class PostCreatePage extends React.Component {
     const db = firebase.firestore();
     const user = firebase.auth().currentUser;
     console.log(user);
+    console.log(type);
     await db
-      .collection("posts")
+      .collection(type)
       .add({
         userID: user.uid,
         imgcolor: imgcolor,
@@ -55,8 +56,7 @@ class PostCreatePage extends React.Component {
 
   selectTitle = (title) => {
     if (title.includes("<b>")) {
-      var titles = title.split("<b>")[1].toString();
-      var title = titles.split("</b>")[0].toString();
+      var title = title.replace(/<b>/gi, "").replace(/<\/b>/gi, "");
     }
     this.setState({ title: title });
   };

@@ -40,7 +40,7 @@ const SignUpPage = ({ show, onHide }) => {
       </Offcanvas.Header>
       <Offcanvas.Body>
         <Image
-          src="img/facebook_login.png"
+          src="/assets/facebook_login.png"
           onClick={loginFacebook}
           width="250"
           height="65"
@@ -48,7 +48,7 @@ const SignUpPage = ({ show, onHide }) => {
         <br />
         <br />
         <Image
-          src="img/btn_google_signin_dark_normal_web@2x.png"
+          src="/assets/btn_google_signin_dark_normal_web@2x.png"
           width="250"
           height="50"
           onClick={loginGoogle}

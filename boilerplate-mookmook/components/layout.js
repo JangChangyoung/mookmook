@@ -57,7 +57,7 @@ const Layout = () => {
         <Contact show={show3} onHide={handleClose3} />
         <Image
           className={style.contact}
-          src="boilerplate-mookmook\public\img\contact.png"
+          src="/assets/contact.png"
           width="50"
           height="50"
           onClick={handleShow3}
