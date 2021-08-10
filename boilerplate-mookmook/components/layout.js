@@ -9,7 +9,7 @@ import PostCreatePage from "../pages/post/create";
 import SignUpPage from "../pages/account/signUp";
 import Contact from "../pages/contact/index";
 
-import style from "../pages/style.module.scss";
+import style from "./style.module.scss";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const Layout = () => {
@@ -35,7 +35,7 @@ const Layout = () => {
             <Nav className="justify-content-start">
               <Nav.Link onClick={handleShow}>
                 <Button variant="outline-dark">
-                  <i className="bi bi-patch-plus"/> Create
+                  <i className="bi bi-patch-plus" /> Create
                 </Button>
               </Nav.Link>
             </Nav>
@@ -43,20 +43,16 @@ const Layout = () => {
           <Navbar.Brand className={style.brandName} href="/">
             Mook-Mook
           </Navbar.Brand>
-          <Navbar
-            id="basic-navbar-nav"
-            className="justify-content-end"
-          >
+          <Navbar id="basic-navbar-nav" className="justify-content-end">
             <Nav>
               <Nav.Link onClick={handleShow2}>
-                { user ? 'Logout' : 'Login' }
+                {user ? "Logout" : "Login"}
               </Nav.Link>
-              { user
-                ? <Nav.Link onClick={() => Router.push(`/user/${user.uid}`)}>
-                   MyPage
-                  </Nav.Link>
-                : null
-              }
+              {user ? (
+                <Nav.Link onClick={() => Router.push(`/user/${user.uid}`)}>
+                  MyPage
+                </Nav.Link>
+              ) : null}
             </Nav>
           </Navbar>
         </Container>
