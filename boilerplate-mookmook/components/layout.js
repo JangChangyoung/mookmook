@@ -31,16 +31,16 @@ const Layout = () => {
       <SignUpPage show={show2} onHide={handleClose2} />
       <Navbar bg="light" expand="lg">
         <Container>
-          <Navbar.Collapse id="basic-navbar-nav">
+          <Navbar id="basic-navbar-nav">
             <Nav className="justify-content-start">
               <Nav.Link onClick={handleShow}>+Create</Nav.Link>
               <Nav.Link href="#create">Book or Movie</Nav.Link>
             </Nav>
-          </Navbar.Collapse>
+          </Navbar>
           <Navbar.Brand className={style.brandName} href="/">
             Mook-Mook
           </Navbar.Brand>
-          <Navbar.Collapse
+          <Navbar
             id="basic-navbar-nav"
             className="justify-content-end"
           >
@@ -50,7 +50,7 @@ const Layout = () => {
                 MyPage
               </Nav.Link>
             </Nav>
-          </Navbar.Collapse>
+          </Navbar>
         </Container>
       </Navbar>
       <Container fluid>
