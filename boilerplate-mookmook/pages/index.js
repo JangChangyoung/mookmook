@@ -7,6 +7,7 @@ import "firebase/auth";
 import { Form } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Layout from "../components/layout";
+import styles from "./styles.module.scss";
 
 class Home extends React.Component {
   constructor(props) {
@@ -65,12 +66,36 @@ class Home extends React.Component {
               key={index}
               onClick={() => Router.push(`/post/book_${book.docID}`)}
             >
-              <img
-                width="200px"
-                height="150px"
-                src={book.imgurl}
-                alt={book.title}
-              />
+              <div className="small-4 columns">
+                <div
+                  className={styles.cardcontainer}
+                  ontouchstart="this.classList.toggle('hover');"
+                >
+                  <div className={styles.card}>
+                    <div className={styles.front}>
+                      <img
+                        key={index}
+                        width="200px"
+                        height="150px"
+                        src={book.imgurl}
+                        alt={book.title}
+                      />
+                    </div>
+                    <div className={styles.back}>
+                      <p>
+                        제목:{book.title}
+                        <br />
+                        색상: {book.color}
+                        <br />
+                        명대사: {book.line}
+                        <br />
+                        리뷰: {book.review}
+                        <br />
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </button>
           ))
         : movies.map((movie, index) => (
@@ -79,12 +104,36 @@ class Home extends React.Component {
               key={index}
               onClick={() => Router.push(`/post/movie_${movie.docID}`)}
             >
-              <img
-                width="200px"
-                height="150px"
-                src={movie.imgurl}
-                alt={movie.title}
-              />
+              <div className="small-4 columns">
+                <div
+                  className={styles.cardcontainer}
+                  ontouchstart="this.classList.toggle('hover');"
+                >
+                  <div className={styles.card}>
+                    <div className={styles.front}>
+                      <img
+                        key={index}
+                        width="200px"
+                        height="150px"
+                        src={movie.imgurl}
+                        alt={movie.title}
+                      />
+                    </div>
+                    <div className={styles.back}>
+                      <p>
+                        제목:{movie.title}
+                        <br />
+                        색상: {movie.color}
+                        <br />
+                        명대사: {movie.line}
+                        <br />
+                        리뷰: {movie.review}
+                        <br />
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </button>
           ));
     }
@@ -113,12 +162,11 @@ class Home extends React.Component {
           label="book"
           onChange={() => this.checkChange(true)}
         />
-        {
-          isLoading
+        <div className={styles.container_row}>
+          {isLoading
             ? "loading . . ."
-            : this.displayPosts({ type, movies, books })
-          // : <DisplayPosts type={type} movies={movies} books={books} />
-        }
+            : this.displayPosts({ type, movies, books })}
+        </div>
       </div>
     );
   }
