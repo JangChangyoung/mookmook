@@ -17,7 +17,7 @@ function InnerThings(props) {
         <p>{`line: ${line}`}</p>
         <p>{`review: ${review}`}</p>
         <p>{`color: ${color}`}</p>
-        <p>{`uploadTime: ${uploadTime}`}</p>
+        <p>{`uploadTime: ${uploadTime.toDate()}`}</p>
       </>
     );
   }
