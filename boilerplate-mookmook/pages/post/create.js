@@ -36,8 +36,9 @@ class PostCreatePage extends React.Component {
       const user = firebase.auth().currentUser;
       console.log(user);
       await db
-        .collection("posts")
+        .collection(type)
         .add({
+          displayName: user.displayName,
           userID: user.uid,
           imgcolor: imgcolor,
           type: type,

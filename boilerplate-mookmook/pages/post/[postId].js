@@ -4,46 +4,41 @@ import firebase from "firebase/app";
 import "firebase/firestore";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-function DisplayPost(props) {
+function InnerThings(props) {
   if (props.data !== undefined) {
-    const { color, imgurl, like, line, review, title, uploadTime, userID } =
-      props;
-
-    console.log("url:", imgurl);
+    const { color, imgurl, like, line, review, title, uploadTime, userID, displayName } = props.data;
     return (
       <>
-        <img width="500" height="500" key={title} src={imgurl} alt={title} />
-        {/* <Card style={{ width: '18rem' }}>
-        <Card.Body>
-          <Card.Title>Card Title</Card.Title>
-          <Card.Subtitle className="mb-2 text-muted">Card Subtitle</Card.Subtitle>
-          <Card.Text>
-            Some quick example text to build on the card title and make up the bulk of
-            the card's content.
-          </Card.Text>
-          <Card.Link href="#">Card Link</Card.Link>
-          <Card.Link href="#">Another Link</Card.Link>
-        </Card.Body>
-      </Card> */}
+        <img width="400" height="300" key={title} src={imgurl? imgurl : 'https://bookthumb-phinf.pstatic.net/cover/208/017/20801763.jpg?type=m1&udate=20210728'} alt={title} />
+        <p>{`title: ${title}`}</p>
+        <a href={`/user/${userID}`}>{`작성자: ${displayName}`}</a>
+        <p>{`color: ${color}`}</p>
+        <p>{`like: ${like}`}</p>
+        <p>{`line: ${line}`}</p>
+        <p>{`review: ${review}`}</p>
+        <p>{`color: ${color}`}</p>
+        <p>{`uploadTime: ${uploadTime}`}</p>
       </>
     );
   }
 }
 
-const PostPage = () => {
-  const router = useRouter();
-  const { postId } = router.query;
-  const [loading, setLoading] = useState(true);
-  let data;
+class DisplayPost extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: null,
+    }
+  }
 
-  useEffect(async () => {
-    // data request
-    setLoading(false);
-  }, []);
+  componentDidMount() {
+    this.getDocData(this.props.postId).then((data) => this.setState({ data }));
+  }
 
-  async function getDocData() {
+  getDocData = async(postId) => {
     console.log("reading doc");
     if (postId) {
+      console.log('postId is exists')
       const type = postId.split("_")[0];
       const docID = postId.split("_")[1];
       const doc = await firebase.firestore().collection(type).doc(docID).get();
@@ -55,16 +50,40 @@ const PostPage = () => {
       console.log("Document data:", doc.data());
       return doc.data();
     }
+    console.log('postId is not exists')
     return false;
   }
 
-  getDocData().then((result) => {
-    data = result;
-  });
-  console.log(data);
+  render() {
+    return(
+      <>
+        {this.state.data
+          ? <InnerThings data={this.state.data}/>
+          : 'loading . . .'
+        }
+      </>
+    );
+  }
+}
+
+const PostPage = () => {
+  const router = useRouter();
+  const { postId } = router.query;
+
+  const [loading, setLoading] = useState(true);
+
+  useEffect(async () => {
+    // data request
+    setLoading(false);
+  }, []);
 
   return (
-    <>{data ? <DisplayPost data={data} /> : <div>{`Post: ${postId}`}</div>}</>
+    <>
+      {postId
+        ? <DisplayPost postId={postId}/>
+        : <div>{`Post: ${postId}`}</div> 
+      } 
+    </>
   );
 };
 
