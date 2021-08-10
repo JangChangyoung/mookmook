@@ -1,16 +1,58 @@
-.facebook {
-  background: #4267b2;
-  border-radius: 5px;
+// .facebook {
+//   background: #4267b2;
+//   border-radius: 5px;
+//   color: white;
+//   height: 40px;
+//   text-align: center;
+//   width: 250px;
+// }
+.google {
+  width: 330px;
+  height: 35px;
+  border-radius: 4px;
+  background: #db3236;
   color: white;
-  height: 40px;
+  border: 0px transparent;
   text-align: center;
-  width: 250px;
+  display: block;
+  margin: 0px auto;
+}
+.facebook {
+  width: 330px;
+  height: 35px;
+  border-radius: 4px;
+  background: #3b5998;
+  color: white;
+  border: 0px transparent;
+  text-align: center;
+  display: block;
+  margin: 0px auto;
 }
 
-.login {
-  display: none;
+.hi {
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 30px;
 }
-
+.image {
+  display: block;
+  margin: 20px auto;
+  border-radius: 100%;
+}
+.text {
+  line-height: 30px;
+  text-align: center;
+}
+.email {
+  color: #5f6368;
+  text-align: center;
+}
+.border {
+  margin: 30px 0;
+  background-color: #ccc;
+  height: 1px;
+}
 .logout {
-  display: none;
+  display: block;
+  margin: 20px auto;
 }

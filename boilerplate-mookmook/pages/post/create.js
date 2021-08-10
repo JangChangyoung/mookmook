@@ -20,7 +20,6 @@ class PostCreatePage extends React.Component {
     // Listen to auth state changes.
     firebase.auth().onAuthStateChanged();
   }
-
   handleClick = async (data, icolor) => {
     let title = this.state.title;
     let imgurl = data;
@@ -30,30 +29,32 @@ class PostCreatePage extends React.Component {
     let line = document.getElementById("line").value;
     let review = document.getElementById("review").value;
 
-    const db = firebase.firestore();
-    const user = firebase.auth().currentUser;
-    console.log(user);
-    console.log(type);
-    await db
-      .collection(type)
-      .add({
-        userID: user.uid,
-        imgcolor: imgcolor,
-        type: type,
-        title: title,
-        imgurl: imgurl,
-        color: color,
-        line: line,
-        review: review,
-        like: 0,
-        uploadTime: firebase.firestore.FieldValue.serverTimestamp(),
-      })
-      .then(() => {
-        alert("등록되었습니다.");
-        window.location.reload();
-      });
+    if (!title || !imgurl || !imgcolor || !type || !color || !line || !review) {
+      alert("모든 값을 입력해주세요.");
+    } else {
+      const db = firebase.firestore();
+      const user = firebase.auth().currentUser;
+      console.log(user);
+      await db
+        .collection("posts")
+        .add({
+          userID: user.uid,
+          imgcolor: imgcolor,
+          type: type,
+          title: title,
+          imgurl: imgurl,
+          color: color,
+          line: line,
+          review: review,
+          like: 0,
+          uploadTime: firebase.firestore.FieldValue.serverTimestamp(),
+        })
+        .then(() => {
+          alert("등록되었습니다.");
+          window.location.reload();
+        });
+    }
   };
-
   selectTitle = (title) => {
     if (title.includes("<b>")) {
       var title = title.replace(/<b>/gi, "").replace(/<\/b>/gi, "");
@@ -98,6 +99,7 @@ class PostCreatePage extends React.Component {
                 id="title"
                 type="text"
                 value={this.state.title}
+                readOnly
                 // placeholder="write the movie title"
               />
               <br></br>

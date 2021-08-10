@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { Modal, Button, Card, Row, Col, Form } from "react-bootstrap";
+import { Modal, Button, Row, Col, Form } from "react-bootstrap";
 import ModalBody from "react-bootstrap/ModalBody";
 import ModalHeader from "react-bootstrap/ModalHeader";
 import ModalFooter from "react-bootstrap/ModalFooter";
@@ -21,18 +21,18 @@ class MovieInfo extends Component {
       <>
         <div className={style.card}>
           <body>
-            <div className="wrapper" href={id}>
-              <div className={style.product_img}>
+            <div className="wrapper">
+              <a href={id} className={style.product_img}>
                 <img src={imgurl} alt="" height="200" width="170" />
-              </div>
+              </a>
               <div className={style.product_info}>
                 <div className={style.product_text}>
                   <h1>{title.replace(/<b>/gi, "").replace(/<\/b>/gi, "")}</h1>
                   <h2>by {director.replaceAll("|", " ")}</h2>
                   <p>
-                    Actor: {actor} <br />
-                    Year: {year} <br />
-                    rate: {rating}🏆
+                    배우: {actor} <br />
+                    개봉년도: {year} <br />
+                    평점: {rating}🏆
                   </p>
                 </div>
                 <div className={style.product_price_btn}>
@@ -53,16 +53,18 @@ class BookInfo extends Component {
   constructor(props) {
     super(props);
   }
+
   lengthlimit = (title) => {
     if (title.length > 26) {
-      var titles =
-        title.replace(/<b>/gi, "").replace(/<\/b>/gi, "").substring(0, 24) +
-        "..";
+      const titles = `${title
+        .replace(/<b>/gi, "")
+        .replace(/<\/b>/gi, "")
+        .substring(0, 24)}..`;
       return titles;
-    } else {
-      return title.replace(/<b>/gi, "").replace(/<\/b>/gi, "");
     }
+    return title.replace(/<b>/gi, "").replace(/<\/b>/gi, "");
   };
+
   render() {
     const { id, year, title, imgurl, price, author, publisher, selectTitle } =
       this.props;
@@ -71,10 +73,10 @@ class BookInfo extends Component {
       <>
         <div className={style.card}>
           <body>
-            <div href={id} className="wrapper">
-              <div className={style.product_img}>
+            <div className="wrapper">
+              <a href={id} className={style.product_img}>
                 <img src={imgurl} alt="" height="200" width="170" />
-              </div>
+              </a>
               <div className={style.product_info}>
                 <div className={style.product_text}>
                   <h1>{this.lengthlimit(title)}</h1>
@@ -133,7 +135,7 @@ class ModalForm extends Component {
     const { type, isOpen, closeModal, selectTitle, handleSubmit } = this.props;
 
     return (
-      <Modal show={isOpen} onHide={closeModal} scrollable={true}>
+      <Modal show={isOpen} onHide={closeModal} scrollable>
         <ModalHeader closeButton className={style.modal_header}>
           <ModalTitle>{type} 검색하기</ModalTitle>
         </ModalHeader>

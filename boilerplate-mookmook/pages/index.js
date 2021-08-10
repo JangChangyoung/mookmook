@@ -1,4 +1,6 @@
+/* eslint-disable react/no-array-index-key */
 import React from "react";
+import Router from "next/router";
 import firebase from "firebase/app";
 import "firebase/firestore";
 import "firebase/auth";
@@ -6,11 +8,42 @@ import { Form } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Layout from "../components/layout";
 
+function DisplayPosts(props) {
+  const { type, movies, books } = props;
+  if (type !== null) {
+    return type
+      ? movies.map((movie, index) => (
+          // eslint-disable-next-line react/button-has-type
+          <button onClick={() => Router.push(`/post/movie_${movie.docID}`)}>
+            <img
+              key={index}
+              width="200px"
+              height="150px"
+              src={movie.imgurl}
+              alt={movie.title}
+            />
+          </button>
+        ))
+      : books.map((book, index) => (
+          // eslint-disable-next-line react/button-has-type
+          <button onClick={() => Router.push(`/post/book_${book.docID}`)}>
+            <img
+              key={index}
+              width="200px"
+              height="150px"
+              src={book.imgurl}
+              alt={book.title}
+            />
+          </button>
+        ));
+  }
+  return "click type";
+}
+
 class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      // posts: this.postUploading(),
       books: null,
       movies: null,
       isLoading: true,
@@ -24,10 +57,7 @@ class Home extends React.Component {
 
   changeLoading = (movies, books) => {
     if (books !== [] && movies !== []) {
-      console.log(books, movies);
       this.setState({ movies, books, isLoading: false });
-    } else {
-      this.setState({ isLoading: "error" });
     }
   };
 
@@ -47,19 +77,21 @@ class Home extends React.Component {
       ["book", "movie"].map(async (name) => {
         const docs = await this.getPosts(name);
         docs.forEach((doc) => {
-          if (name === "book") books.push(doc.data());
-          else if (name === "movie") movies.push(doc.data());
+          const data = doc.data();
+          data.docID = doc.id;
+          if (name === "book") books.push(data);
+          else if (name === "movie") movies.push(data);
         });
       })
     );
     this.changeLoading(movies, books);
   };
 
-  checkChange = (e) => this.setState({ type: e.target.value });
+  checkChange = (type) => this.setState({ type });
 
   render() {
     console.log("rendering");
-    const { movies, books, isLoading, type } = this.state;
+    const { isLoading, type, movies, books } = this.state;
 
     return (
       <div>
@@ -67,28 +99,20 @@ class Home extends React.Component {
         <Form.Check
           type="radio"
           name="type"
-          value="movie"
           label="movie"
-          onChange={(e) => this.checkChange(e)}
+          onChange={() => this.checkChange(true)}
         />
         <Form.Check
           type="radio"
           name="type"
-          value="book"
           label="book"
-          onChange={(e) => this.checkChange(e)}
+          onChange={() => this.checkChange(false)}
         />
-        {isLoading
-          ? "loading . . ."
-          : type
-          ? type === "movie"
-            ? movies.map((movie, index) => (
-                <img key={index} src={movie.imgurl} alt={movie.title} />
-              ))
-            : books.map((book, index) => (
-                <img key={index} src={book.imgurl} alt={book.title} />
-              ))
-          : null}
+        {isLoading ? (
+          "loading . . ."
+        ) : (
+          <DisplayPosts type={type} movies={movies} books={books} />
+        )}
       </div>
     );
   }

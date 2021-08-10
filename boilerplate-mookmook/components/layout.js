@@ -37,7 +37,7 @@ const Layout = () => {
               <Nav.Link href="#create">Book or Movie</Nav.Link>
             </Nav>
           </Navbar.Collapse>
-          <Navbar.Brand className={style.brandName} href="#home">
+          <Navbar.Brand className={style.brandName} href="/">
             Mook-Mook
           </Navbar.Brand>
           <Navbar.Collapse
