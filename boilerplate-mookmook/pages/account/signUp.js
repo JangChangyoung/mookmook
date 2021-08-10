@@ -9,7 +9,6 @@ import { Offcanvas, Button, Image } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import styles from "./styles.module.scss";
 import { provider, auth } from "../_app";
-import "firebaseui/dist/firebaseui.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
 const SignUpPage = ({ show, onHide }) => {
