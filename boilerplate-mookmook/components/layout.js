@@ -49,7 +49,7 @@ const Layout = () => {
                 {user ? "Logout" : "Login"}
               </Nav.Link>
               {user ? (
-                <Nav.Link onClick={() => Router.push(`/user/${user.uid}`)}>
+                <Nav.Link href={`/user/${user.uid}`}>
                   MyPage
                 </Nav.Link>
               ) : null}
@@ -73,14 +73,3 @@ const Layout = () => {
 };
 
 export default Layout;
-
-// const handleShow = () => {
-//   if(type === 'a') {
-//     setShow(true)
-//   }
-//   if(type === 'b') {
-
-//   }
-// }
-
-// const [shows, setShows] = useState({ show1: false, show2: false, show3: false});
