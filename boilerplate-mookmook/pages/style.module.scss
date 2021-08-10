@@ -7,7 +7,8 @@
 
 .brandName {
   font-family: "Bodoni Moda", serif;
-  font-size: 25px;
+  font-size: 36px;
+  font-weight: bold;
   position: absolute;
   left: 50%;
   top: 50%;
@@ -15,10 +16,3 @@
   text-align: center;
 }
 
-.login {
-  display: none;
-}
-
-.logout {
-  display: none;
-}

@@ -1,7 +1,7 @@
 /* eslint-disable no-restricted-globals */
 import React, { useState } from "react";
 import Router from "next/router";
-import { Navbar, Nav, Container, Image } from "react-bootstrap";
+import { Navbar, Nav, Container, Image, Button } from "react-bootstrap";
 
 import firebase from "firebase";
 
@@ -33,8 +33,11 @@ const Layout = () => {
         <Container>
           <Navbar id="basic-navbar-nav">
             <Nav className="justify-content-start">
-              <Nav.Link onClick={handleShow}>+Create</Nav.Link>
-              <Nav.Link href="#create">Book or Movie</Nav.Link>
+              <Nav.Link onClick={handleShow}>
+                <Button variant="outline-dark">
+                  <i className="bi bi-patch-plus"/> Create
+                </Button>
+              </Nav.Link>
             </Nav>
           </Navbar>
           <Navbar.Brand className={style.brandName} href="/">
@@ -45,10 +48,15 @@ const Layout = () => {
             className="justify-content-end"
           >
             <Nav>
-              <Nav.Link onClick={handleShow2}>Login</Nav.Link>
-              <Nav.Link onClick={() => Router.push(`/user/${user.uid}`)}>
-                MyPage
+              <Nav.Link onClick={handleShow2}>
+                { user ? 'Logout' : 'Login' }
               </Nav.Link>
+              { user
+                ? <Nav.Link onClick={() => Router.push(`/user/${user.uid}`)}>
+                   MyPage
+                  </Nav.Link>
+                : null
+              }
             </Nav>
           </Navbar>
         </Container>
