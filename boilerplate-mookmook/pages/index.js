@@ -66,6 +66,9 @@ class Home extends React.Component {
               key={index}
               onClick={() => Router.push(`/post/book_${book.docID}`)}
             >
+              {/* --------------------------- */}
+
+              {/* --------------------------- */}
               <div className="small-4 columns">
                 <div
                   className={styles.cardcontainer}
@@ -123,7 +126,11 @@ class Home extends React.Component {
                       <p>
                         제목:{movie.title}
                         <br />
-                        색상: {movie.color}
+                        색상:
+                        <div
+                          className={styles.colorbox}
+                          style={{ backgroundColor: movie.color }}
+                        />
                         <br />
                         명대사: {movie.line}
                         <br />
