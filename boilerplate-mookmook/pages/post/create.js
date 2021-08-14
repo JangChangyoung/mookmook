@@ -77,6 +77,7 @@ class PostCreatePage extends React.Component {
           review: review,
           like: 0,
           uploadTime: datetime,
+          likeArray: [],
         })
         .then(() => {
           alert("등록되었습니다.");
