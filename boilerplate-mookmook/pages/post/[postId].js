@@ -38,9 +38,19 @@ class DisplayPost extends React.Component {
     return false;
   }
 
+  changeLike = (equal) => {
+    equal ? alert('자신의 글은 좋아요 할 수 없어요!') : this.setState({myLike: !myLike});
+  }
+
   innerThings = () => {
+    const user = firebase.auth().currentUser;
     const { color, imgcolor, imgurl, like, line, review, title, uploadTime, userID, displayName } = this.state.data;
     const { myLike } = this.state;
+    let equal = false;
+    
+    if (user.uid === userID) {
+      equal = true;
+    }
 
     return (
       <div className={styles.container} style={{backgroundColor: `${imgcolor}55`}}>
@@ -49,7 +59,7 @@ class DisplayPost extends React.Component {
           <div className={styles.cardGroup}>
             <span className={styles.cardTitle}>{title}</span>
             <span className={styles.cardLike}>
-              <i className={myLike ? "like bi bi-heart-fill" : "like bi bi-heart"} style={{fontSize: '24px', color: '#ff008a'}} onClick={() => {this.setState({myLike: !myLike})} }/>
+              <i className={myLike ? "like bi bi-heart-fill" : "like bi bi-heart"} style={{fontSize: '24px', color: '#ff008a'}} onClick={() => this.changeLike(equal) }/>
               <p>{myLike ? like+1 : like}</p>
             </span>
           </div>
