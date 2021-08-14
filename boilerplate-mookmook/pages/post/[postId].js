@@ -1,33 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { useRouter, Card } from "next/router";
+import { useRouter } from "next/router";
 import firebase from "firebase/app";
 import "firebase/firestore";
+import styles from "./style.module.scss";
 import "bootstrap/dist/css/bootstrap.min.css";
-
-function InnerThings(props) {
-  if (props.data !== undefined) {
-    const { color, imgurl, like, line, review, title, uploadTime, userID, displayName } = props.data;
-    return (
-      <>
-        <img width="400" height="300" key={title} src={imgurl? imgurl : 'https://bookthumb-phinf.pstatic.net/cover/208/017/20801763.jpg?type=m1&udate=20210728'} alt={title} />
-        <p>{`title: ${title}`}</p>
-        <a href={`/user/${userID}`}>{`작성자: ${displayName}`}</a>
-        <p>{`color: ${color}`}</p>
-        <p>{`like: ${like}`}</p>
-        <p>{`line: ${line}`}</p>
-        <p>{`review: ${review}`}</p>
-        <p>{`color: ${color}`}</p>
-        <p>{`uploadTime: ${uploadTime.toDate()}`}</p>
-      </>
-    );
-  }
-}
+import "bootstrap-icons/font/bootstrap-icons.css";
 
 class DisplayPost extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       data: null,
+      myLike: null,
     }
   }
 
@@ -54,11 +38,46 @@ class DisplayPost extends React.Component {
     return false;
   }
 
+  innerThings = () => {
+    const { color, imgcolor, imgurl, like, line, review, title, uploadTime, userID, displayName } = this.state.data;
+    const { myLike } = this.state;
+
+    return (
+      <div className={styles.container} style={{backgroundColor: `${imgcolor}55`}}>
+        <img className={styles.cardImg} width="400" height="300" key={title} src={imgurl || 'https://bookthumb-phinf.pstatic.net/cover/208/017/20801763.jpg?type=m1&udate=20210728'} alt={title} />
+        <div className={styles.cardText}>
+          <div className={styles.cardGroup}>
+            <span className={styles.cardTitle}>{title}</span>
+            <span className={styles.cardLike}>
+              <i className={myLike ? "like bi bi-heart-fill" : "like bi bi-heart"} style={{fontSize: '24px', color: '#ff008a'}} onClick={() => {this.setState({myLike: !myLike})} }/>
+              <p>{myLike ? like+1 : like}</p>
+            </span>
+          </div>
+          <div>
+            <a href={`/user/${userID}`} className={styles.cardUser}>{displayName}</a>
+            <span className={styles.cardColor} style={{backgroundColor: `${color}`}}/>
+            <span className={styles.cardTime}>{uploadTime}</span>
+          </div> 
+          <div className={styles.cardLine}>
+            <div><img alt="quote" width="30" height="30" src="/assets/quote1.png"/></div>
+            <p className={styles.cardQuote}>{line}</p>
+            <div><img alt="quote" width="30" height="30"src="/assets/quote2.png"/></div>
+          </div>
+          <div className={styles.cardLine}>
+            <p className={styles.cardReview}>{review}</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   render() {
+    const { data } = this.state;
+
     return(
       <>
-        {this.state.data
-          ? <InnerThings data={this.state.data}/>
+        { data
+          ? this.innerThings()
           : 'loading . . .'
         }
       </>

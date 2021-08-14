@@ -20,6 +20,33 @@ class PostCreatePage extends React.Component {
     // Listen to auth state changes.
     firebase.auth().onAuthStateChanged();
   }
+  
+  getTime = () => {
+    let today = new Date();   
+
+    let year = today.getFullYear(); // 년도
+    let month = today.getMonth() + 1;  // 월
+    let date = today.getDate();  // 날짜
+    let day = today.getDay();  // 요일
+    switch (day) {
+      case 0: day = 'Mon';
+              break;
+      case 1: day = 'Tue';
+              break;
+      case 2: day = 'Wed';
+              break;
+      case 3: day = 'Thu';
+              break;
+      case 4: day = 'Fri';
+              break;
+      case 5: day = 'Sat';
+              break;
+      case 6: day = 'Sun';
+              break;
+    }
+    return (year + '/' + month + '/' + date + ' ' +  day);
+  }
+
   handleClick = async (data, icolor) => {
     let title = this.state.title;
     let imgurl = data;
@@ -28,6 +55,7 @@ class PostCreatePage extends React.Component {
     let color = document.getElementById("color").value;
     let line = document.getElementById("line").value;
     let review = document.getElementById("review").value;
+    let datetime = this.getTime();
 
     if (!title || !imgurl || !imgcolor || !type || !color || !line || !review) {
       alert("모든 값을 입력해주세요.");
@@ -48,7 +76,7 @@ class PostCreatePage extends React.Component {
           line: line,
           review: review,
           like: 0,
-          uploadTime: firebase.firestore.FieldValue.serverTimestamp(),
+          uploadTime: datetime,
         })
         .then(() => {
           alert("등록되었습니다.");

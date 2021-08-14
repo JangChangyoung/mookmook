@@ -1,6 +1,6 @@
 /* eslint-disable no-restricted-globals */
 import React, { useState } from "react";
-import Router from "next/router";
+// import Router from "next/router";
 import { Navbar, Nav, Container, Image, Button } from "react-bootstrap";
 
 import firebase from "firebase";

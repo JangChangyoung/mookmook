@@ -6,8 +6,6 @@ import { Form } from "react-bootstrap";
 import PostDelete from "pages/post/delete";
 import Layout from "../../components/layout";
 import "bootstrap/dist/css/bootstrap.min.css";
-// import { resolveHref } from "next/dist/next-server/lib/router/router";
-// import { set } from "immutable";
 
 class UserPost extends React.Component {
   constructor(props) {
@@ -17,7 +15,7 @@ class UserPost extends React.Component {
       books: null,
       movies: null,
       isLoading: true,
-      isHost: true,
+      isHost: false,
       type: null,
     };
   }
@@ -25,26 +23,6 @@ class UserPost extends React.Component {
   componentDidMount() {
     this.postUploading();
   }
-
-  changeLoading = (movies, books) => {
-    if (books !== [] && movies !== []) {
-      this.setState({ movies, books, isLoading: false });
-    } else {
-      this.setState({ isLoading: "error" });
-    }
-  };
-
-  getPosts = (name) => {
-    const { hostID } = this.props;
-    return new Promise((resolve, reject) => {
-      const data = firebase
-        .firestore()
-        .collection(name)
-        .where("userID", "==", hostID)
-        .get();
-      resolve(data);
-    });
-  };
 
   postUploading = async () => {
     console.log("loading");
@@ -63,12 +41,40 @@ class UserPost extends React.Component {
     this.changeLoading(movies, books);
   };
 
+  changeLoading = (movies, books) => {
+    const { hostID } = this.props;
+    const { guestID } = this.props;
+
+    if (books !== [] && movies !== []) {
+      this.setState({ movies, books, isLoading: false });
+    } else {
+      this.setState({ isLoading: "error" });
+    }
+
+    if (hostID === guestID) {
+      this.setState({ isHost: true });
+    } else {
+      this.setState({ isHost: false });
+    }
+  };
+
+  getPosts = (name) => {
+    const { hostID } = this.props;
+    return new Promise((resolve, reject) => {
+      const data = firebase
+        .firestore()
+        .collection(name)
+        .where("userID", "==", hostID)
+        .get();
+      resolve(data);
+    });
+  };
+
   checkChange = (e) => this.setState({ type: e.target.value });
 
   render() {
     console.log("rendering");
     const { movies, books, isHost, isLoading, type } = this.state;
-    // const visitor = firebase.auth().currentUser;
 
     return (
       <div>
@@ -115,18 +121,15 @@ class UserPost extends React.Component {
 const UserPage = () => {
   const router = useRouter();
   const hostID = router.query.userId;
-
-  // const [loading, setLoading] = useState(true);
-  // useEffect(() => {
-  //   // data request
-  //   setLoading(false);
-  // }, []);
+  const guestID = firebase.auth().currentUser.uid;
+  console.log(hostID);
+  console.log(guestID);
 
   return (
     <div>
       <Layout />
       {`${hostID}`}님의 컬렉션입니다
-      {hostID ? <UserPost hostID={hostID} /> : null}
+      {hostID ? <UserPost hostID={hostID} guestID={guestID} /> : null}
     </div>
   );
 };

@@ -5,6 +5,7 @@ import firebase from "firebase/app";
 import "firebase/firestore";
 import "firebase/auth";
 import { Form } from "react-bootstrap";
+import Skeleton, { SkeletonTheme} from 'react-loading-skeleton';
 import "bootstrap/dist/css/bootstrap.min.css";
 import Layout from "../components/layout";
 import styles from "./styles.module.scss";
@@ -149,6 +150,16 @@ class Home extends React.Component {
 
   checkChange = (type) => this.setState({ type });
 
+  loadingSkeleton = () => {
+    return(
+      <SkeletonTheme color="#202020" highlightColor="#444">
+        <p>
+          <Skeleton width={100} duration={3} count={3} />
+        </p>
+      </SkeletonTheme>
+    );
+  }
+
   render() {
     console.log("rendering");
     const { isLoading, type, movies, books } = this.state;
@@ -171,7 +182,7 @@ class Home extends React.Component {
         />
         <div className={styles.container_row}>
           {isLoading
-            ? "loading . . ."
+            ? this.loadingSkeleton()
             : this.displayPosts({ type, movies, books })}
         </div>
       </div>
