@@ -27,6 +27,7 @@ const SignUpPage = ({ show, onHide }) => {
 
   function logout() {
     alert("계정이 로그아웃 되었습니다.");
+    window.location.reload();
     auth()
       .signOut()
       .catch((err) => {
