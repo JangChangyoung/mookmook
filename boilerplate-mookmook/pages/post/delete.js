@@ -12,7 +12,6 @@ class PostDelete extends React.Component {
   postDelete = () => {
     const { docID, type } = this.props;
     const db = firebase.firestore();
-    const user = firebase.auth().currentUser;
 
     let post = null;
     type === "movie"
@@ -24,7 +23,7 @@ class PostDelete extends React.Component {
       .delete()
       .then(() => {
         alert("삭제되었습니다.");
-        // render mypage옮기기
+        // 이전 페이지로 돌아가는 코드 추가하기
       })
       .catch((error) => {
         console.error("Error removing document: ", error);
@@ -33,7 +32,10 @@ class PostDelete extends React.Component {
 
   render() {
     const { postDelete } = this;
-    return <button onClick={() => postDelete()}>삭제</button>;
+    const { postId, type } = this.props;
+
+    return <span><i className="delete bi bi-trash" style={{fontSize: '24px'}} onClick={() => postDelete(postId, type) } /></span>
+
   }
 }
 

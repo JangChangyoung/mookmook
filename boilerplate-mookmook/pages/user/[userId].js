@@ -10,6 +10,21 @@ import "bootstrap/dist/css/bootstrap.min.css";
 class UserPost extends React.Component {
   constructor(props) {
     super(props);
+    
+    let guestID = firebase.auth().currentUser;
+    const hostID = this.props.hostID;
+
+  //   console.log(hostID)
+  //   if (guestID) {
+  //     console.log('id: ',guestID.uid, hostID);
+  //     guestID = guestID.uid;
+  //     if (hostID === guestID) {
+  //       isHost = true;
+  //       console.log(isHost);
+  //     }
+  // }
+
+
     this.state = {
       books: null,
       movies: null,
@@ -17,6 +32,7 @@ class UserPost extends React.Component {
       isHost: this.props.isHost,
       type: null,
     };
+
   }
 
   componentDidMount() {
@@ -122,21 +138,12 @@ class UserPost extends React.Component {
 const UserPage = () => {
   const router = useRouter();
   const hostID = router.query.userId;
-  let guestID = firebase.auth().currentUser;
-  let isHost = false;
-
-  if (guestID) {
-    guestID = guestID.uid;
-    if (hostID === guestID) {
-      isHost = true;
-    }
-  }
 
   return (
     <div>
       <Layout />
       {`${hostID}`}님의 컬렉션입니다
-      {hostID ? <UserPost isHost={isHost} hostID={hostID}/> : null}
+      {hostID ? <UserPost hostID={hostID} /> : null}
     </div>
   );
 };

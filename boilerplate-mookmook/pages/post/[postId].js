@@ -15,6 +15,7 @@ import { useRouter } from "next/router";
 import firebase from "firebase/app";
 import Layout from "../../components/layout";
 import "firebase/firestore";
+import PostDelete from './delete';
 
 import styles from "./style.module.scss";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -50,7 +51,7 @@ class DisplayPost extends React.Component {
 
       if (equal === false) { // 본인 글이 아닌 경우
         const myLike = this.checkLike(likeArray, currentUser); // 해당 유저가 like를 눌렀는지 확인
-        console.log('myLike: ',myLike)
+        console.log('myLike: ',myLike);
         this.setState({ myLike });
       }
     })
@@ -127,7 +128,7 @@ class DisplayPost extends React.Component {
 
   innerThings = () => {
     const { postId, color, imgcolor, imgurl, line, review, title, uploadTime, userID, displayName, type, likeArray } = this.state.data;
-    const { myLike } = this.state;
+    const { myLike, equal } = this.state;
 
     return (
       <div className={styles.container} style={{backgroundColor: `${imgcolor}55`}}>
@@ -139,6 +140,7 @@ class DisplayPost extends React.Component {
               <i className={myLike ? "like bi bi-heart-fill" : "like bi bi-heart"} style={{fontSize: '24px', color: '#ff008a'}} onClick={() => this.changeLike(postId, type, likeArray) }/>
               <p>{myLike ? likeArray.length : likeArray.length}</p>
             </span>
+            { equal ? <PostDelete postId={postId} type={type} />: null}
           </div>
           <div>
             <a href={`/user/${userID}`} className={styles.cardUser}>{displayName}</a>
