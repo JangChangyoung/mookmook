@@ -131,8 +131,10 @@
 
 /* postId */
 .container {
-  height: 800px;
+  height: 70%;
+  min-height: 400px;
   width: 80%;
+  min-width: 700px;
   border-radius: 30px;
   font-family: 'Noto Sans KR', sans-serif;
 
@@ -211,6 +213,9 @@
   margin-top: 20px;
   width: 100%;
 }
-.delete:hover {
+.trash {
+
+}
+.trash:hover {
   cursor: pointer;
 }
