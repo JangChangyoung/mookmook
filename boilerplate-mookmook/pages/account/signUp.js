@@ -5,6 +5,7 @@
 /* eslint-disable react/button-has-type */
 import React from "react";
 import { useSelector } from "react-redux";
+import { useRouter } from "next/router";
 import { Offcanvas, Button, Image } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import styles from "./styles.module.scss";
@@ -16,7 +17,8 @@ const SignUpPage = ({ show, onHide }) => {
   const displayName = account.get("displayName");
   const photoURL = account.get("photoURL");
   const email = account.get("email");
-
+  const router = useRouter();
+  
   function loginFacebook() {
     auth().signInWithPopup(provider.facebook);
   }
@@ -27,12 +29,12 @@ const SignUpPage = ({ show, onHide }) => {
 
   function logout() {
     alert("계정이 로그아웃 되었습니다.");
-    window.location.reload();
     auth()
       .signOut()
       .catch((err) => {
         console.error("logout error: ", err);
       });
+    
   }
 
   function Loging() {

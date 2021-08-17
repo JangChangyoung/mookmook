@@ -2,7 +2,7 @@
 import React from "react";
 import firebase from "firebase";
 import "bootstrap/dist/css/bootstrap.min.css";
-
+import styles from "./style.module.scss";
 
 class PostDelete extends React.Component {
   constructor(props) {
@@ -28,10 +28,13 @@ class PostDelete extends React.Component {
   };
 
   render() {
-    const { postDelete } = this;
     const { postId, type } = this.props;
 
-    return <span className="trash"><i className="trash bi bi-trash" style={{fontSize: '24px'}} onClick={() => postDelete(postId, type) } /></span>
+    return (
+      <span className={styles.icon}>
+        <i className="bi bi-trash" style={{fontSize: '18px'}} onClick={() => this.postDelete(postId, type) } />
+      </span>
+    )
   }
 }
 

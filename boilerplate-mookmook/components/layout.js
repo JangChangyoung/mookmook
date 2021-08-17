@@ -1,6 +1,5 @@
 /* eslint-disable no-restricted-globals */
 import React, { useState } from "react";
-// import Router from "next/router";
 import { Navbar, Nav, Container, Image, Button } from "react-bootstrap";
 
 import firebase from "firebase";
@@ -18,9 +17,11 @@ const Layout = () => {
   const [show, setShow] = useState(false);
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
+
   const [show2, setShow2] = useState(false);
   const handleShow2 = () => setShow2(true);
   const handleClose2 = () => setShow2(false);
+  
   const [show3, setShow3] = useState(false);
   const handleShow3 = () => setShow3(true);
   const handleClose3 = () => setShow3(false);

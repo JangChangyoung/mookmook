@@ -1,3 +1,7 @@
+/* eslint-disable prefer-const */
+/* eslint-disable react/no-access-state-in-setstate */
+/* eslint-disable react/no-unused-state */
+/* eslint-disable no-unused-expressions */
 /* eslint-disable no-return-assign */
 /* eslint-disable prefer-destructuring */
 /* eslint-disable no-plusplus */
@@ -13,6 +17,7 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import firebase from "firebase/app";
+import { Button, FloatingLabel, Form } from "react-bootstrap";
 import Layout from "../../components/layout";
 import "firebase/firestore";
 import PostDelete from './delete';
@@ -29,6 +34,7 @@ class DisplayPost extends React.Component {
       equal: null, // currentUser === user.uid 인지 여부
       myLike: false, // currentUser !== user.uid 일 때, 해당 게시글에 좋아요를 눌렀는지 여부
       currentUser: null,
+      update: false,
     }
   }
 
@@ -38,7 +44,7 @@ class DisplayPost extends React.Component {
       const user = firebase.auth().currentUser;
       if (user) {
         const currentUser = user.uid;
-        this.setState({ data, currentUser });
+        this.setState({ data, currentUser, updateData: {line: data.line, review: data.review} });
         return this.checkUser(data.userID);
       }
       alert('로그인을 해주세요!');
@@ -126,9 +132,31 @@ class DisplayPost extends React.Component {
       .update({ likeArray });
   }
 
+  postUpdate = () => {
+    this.setState({ update: true });
+  }
+
+  handleChange = (type, e) => {
+    let data = this.state.data;
+
+    type==='line' 
+      ? data.line = e.target.value 
+      : data.review = e.target.value;
+    this.setState({ data });
+  }
+
+  handleClick = () => {
+    const { type, postId, line, review } = this.state.data;
+    const db = firebase.firestore();
+
+    db.collection(type).doc(postId).update({ line, review });
+
+    this.setState({ update: false });
+  }
+
   innerThings = () => {
     const { postId, color, imgcolor, imgurl, line, review, title, uploadTime, userID, displayName, type, likeArray } = this.state.data;
-    const { myLike, equal } = this.state;
+    const { myLike, equal, update } = this.state;
 
     return (
       <div className={styles.container} style={{backgroundColor: `${imgcolor}55`}}>
@@ -136,24 +164,49 @@ class DisplayPost extends React.Component {
         <div className={styles.cardText}>
           <div className={styles.cardGroup}>
             <span className={styles.cardTitle}>{title}</span>
-            <span className={styles.cardLike}>
-              <i className={myLike ? "like bi bi-heart-fill" : "like bi bi-heart"} style={{fontSize: '24px', color: '#ff008a'}} onClick={() => this.changeLike(postId, type, likeArray) }/>
-              <p>{myLike ? likeArray.length : likeArray.length}</p>
-            </span>
-            { equal ? <PostDelete postId={postId} type={type} />: null}
+
+            { update 
+              ? null
+              : <>
+                { equal 
+                  ? <>
+                      <span className={styles.cardLike}>
+                        <i className={myLike ? "like bi bi-heart-fill" : "like bi bi-heart"} style={{fontSize: '24px', color: '#ff008a'}} onClick={() => this.changeLike(postId, type, likeArray) }/>
+                        <p>{likeArray.length}</p>
+                      </span>
+                      <span className={styles.icon}>
+                        <i className="bi bi-pencil-square" style={{fontSize: '18px'}} onClick={() => this.postUpdate() }/>
+                      </span>
+                      <PostDelete postId={postId} type={type} line={line} review={review} />
+                    </> 
+                  : null
+                }
+              </>
+            }
           </div>
+
           <div>
             <a href={`/user/${userID}`} className={styles.cardUser}>{displayName}</a>
             <span className={styles.cardColor} style={{backgroundColor: `${color}`}}/>
             <span className={styles.cardTime}>{uploadTime}</span>
           </div> 
+
           <div className={styles.cardLine}>
             <div><img alt="quote" width="30" height="30" src="/assets/quote1.png"/></div>
-            <p className={styles.cardQuote}>{line}</p>
+            { update 
+              ? <Form.Control as="textarea" rows={2} defaultValue={line} onChange={(e) => this.handleChange('line', e)} style={{width:'100%', resize: 'none'}}/>
+              : <p className={styles.cardQuote}>{line}</p> 
+            }
             <div><img alt="quote" width="30" height="30"src="/assets/quote2.png"/></div>
           </div>
           <div className={styles.cardLine}>
-            <p className={styles.cardReview}>{review}</p>
+            { update 
+              ? <Form.Control as="textarea" rows={5} defaultValue={review} onChange={(e) => this.handleChange('review', e)} style={{width:'100%', resize: 'none'}}/>
+              : <p className={styles.cardReview}>{review}</p> 
+            }
+          </div>
+          <div className={styles.update} >
+            { update ? <Button variant="secondary" onClick={this.handleClick}>Update</Button>: null }
           </div>
         </div>
       </div>

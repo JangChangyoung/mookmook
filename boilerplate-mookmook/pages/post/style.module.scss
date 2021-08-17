@@ -166,6 +166,7 @@
 }
 .cardLike {
   margin-top: 15px;
+  margin-right: 20px;
   height: 40px;
   width: 24px;
 }
@@ -213,9 +214,14 @@
   margin-top: 20px;
   width: 100%;
 }
-.trash {
-
+.icon {
+  margin: auto 10px;
 }
-.trash:hover {
+.icon:hover {
   cursor: pointer;
+  color: #0a58ca
+}
+.update {
+  text-align: center;
+  margin: 20px auto;
 }
