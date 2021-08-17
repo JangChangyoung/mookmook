@@ -11,11 +11,10 @@ class UserPost extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      // posts: this.postUploading(),
       books: null,
       movies: null,
       isLoading: true,
-      isHost: false,
+      isHost: this.props.isHost,
       type: null,
     };
   }
@@ -38,12 +37,14 @@ class UserPost extends React.Component {
         });
       })
     );
+    
+    console.log('books: ',books, 'movies: ',movies);
     this.changeLoading(movies, books);
   };
 
   changeLoading = (movies, books) => {
-    const { hostID } = this.props;
-    const { guestID } = this.props;
+    // const { hostID } = this.props;
+    // const { guestID } = this.props;
 
     if (books !== [] && movies !== []) {
       this.setState({ movies, books, isLoading: false });
@@ -51,11 +52,11 @@ class UserPost extends React.Component {
       this.setState({ isLoading: "error" });
     }
 
-    if (hostID === guestID) {
-      this.setState({ isHost: true });
-    } else {
-      this.setState({ isHost: false });
-    }
+    // if (hostID === guestID) {
+    //   this.setState({ isHost: true });
+    // } else {
+    //   this.setState({ isHost: false });
+    // }
   };
 
   getPosts = (name) => {
@@ -100,11 +101,11 @@ class UserPost extends React.Component {
                 <div>
                   <img src={movie[1].imgurl} alt={movie[1].title} />
                   {isHost ? (
-                    <PostDelete key={movie[0]} type="movie" docID={movie[0]} />
+                    <PostDelete key={movie[0]}  type="movie" docID={movie[0]} />
                   ) : null}
                 </div>
               ))
-            : books.map((book, index) => (
+            : books.map((book) => (
                 <div>
                   <img src={book[1].imgurl} alt={book[1].title} />
                   {isHost ? (
@@ -121,15 +122,21 @@ class UserPost extends React.Component {
 const UserPage = () => {
   const router = useRouter();
   const hostID = router.query.userId;
-  const guestID = firebase.auth().currentUser.uid;
-  console.log(hostID);
-  console.log(guestID);
+  let guestID = firebase.auth().currentUser;
+  let isHost = false;
+
+  if (guestID) {
+    guestID = guestID.uid;
+    if (hostID === guestID) {
+      isHost = true;
+    }
+  }
 
   return (
     <div>
       <Layout />
       {`${hostID}`}님의 컬렉션입니다
-      {hostID ? <UserPost hostID={hostID} guestID={guestID} /> : null}
+      {hostID ? <UserPost isHost={isHost} hostID={hostID}/> : null}
     </div>
   );
 };
