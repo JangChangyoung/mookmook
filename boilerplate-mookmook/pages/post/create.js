@@ -12,6 +12,7 @@ class PostCreatePage extends React.Component {
     this.state = {
       title: null,
       imgurl: null,
+      titleimg: null,
       type: null,
     };
   }
@@ -50,6 +51,7 @@ class PostCreatePage extends React.Component {
   handleClick = async (data, icolor) => {
     let title = this.state.title;
     let imgurl = data;
+    let titleimg = this.state.titleimg;
     let imgcolor = icolor;
     let type = this.state.type;
     let color = document.getElementById("color").value;
@@ -72,6 +74,7 @@ class PostCreatePage extends React.Component {
           type: type,
           title: title,
           imgurl: imgurl,
+          titleimg: titleimg,
           color: color,
           line: line,
           review: review,
@@ -84,11 +87,11 @@ class PostCreatePage extends React.Component {
         });
     }
   };
-  selectTitle = (title) => {
+  selectTitle = (title, titleimg) => {
     if (title.includes("<b>")) {
       var title = title.replace(/<b>/gi, "").replace(/<\/b>/gi, "");
     }
-    this.setState({ title: title });
+    this.setState({ title: title, titleimg: titleimg });
   };
   radioChange = (e) => this.setState({ type: e.target.value });
   render() {

@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 /* eslint-disable react/button-has-type */
 /* eslint-disable react/no-array-index-key */
 import React from "react";
@@ -6,7 +7,7 @@ import firebase from "firebase/app";
 import "firebase/firestore";
 import "firebase/auth";
 import { Form } from "react-bootstrap";
-import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Layout from "../components/layout";
 import styles from "./styles.module.scss";
@@ -63,9 +64,15 @@ class Home extends React.Component {
     if (movies || books) {
       return type
         ? books.map((book, index) => (
-            <button key={index} onClick={() => Router.push(`/post/book_${book.docID}`)} >
+            <button
+              key={index}
+              onClick={() => Router.push(`/post/book_${book.docID}`)}
+            >
               <div className="small-4 columns">
-                <div className={styles.cardcontainer}ontouchstart="this.classList.toggle('hover');" >
+                <div
+                  className={styles.cardcontainer}
+                  ontouchstart="this.classList.toggle('hover');"
+                >
                   <div className={styles.card}>
                     <div className={styles.front}>
                       <img
@@ -77,12 +84,33 @@ class Home extends React.Component {
                       />
                     </div>
                     <div className={styles.back}>
-                      <p>
-                        제목:{book.title}<br />
-                        색상: {book.color}<br />
-                        명대사: {book.line}<br />
-                        리뷰: {book.review}<br />
-                      </p>
+                      <div className={styles.detail_card}>
+                        <img
+                          key={index}
+                          width="85px"
+                          height="120px"
+                          src={book.titleimg}
+                          alt=""
+                          className={styles.detail_image}
+                        />
+                        <div className={styles.aboutinfo}>
+                          <div className={styles.detail_title}>
+                            {book.title}
+                          </div>
+                          <div className={styles.infobox}>
+                            <div
+                              className={styles.colorbox}
+                              style={{ backgroundColor: book.color }}
+                            />
+                            <div className={styles.username}>
+                              by {book.displayName}
+                            </div>
+                          </div>
+                          <div className={styles.famoustext}>
+                            " {book.line} "
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -110,20 +138,33 @@ class Home extends React.Component {
                       />
                     </div>
                     <div className={styles.back}>
-                      <p>
-                        제목:{movie.title}
-                        <br />
-                        색상:
-                        <div
-                          className={styles.colorbox}
-                          style={{ backgroundColor: movie.color }}
+                      <div className={styles.detail_card}>
+                        <img
+                          key={index}
+                          width="85px"
+                          height="120px"
+                          src={movie.titleimg}
+                          alt=""
+                          className={styles.detail_image}
                         />
-                        <br />
-                        명대사: {movie.line}
-                        <br />
-                        리뷰: {movie.review}
-                        <br />
-                      </p>
+                        <div className={styles.aboutinfo}>
+                          <div className={styles.detail_title}>
+                            {movie.title}
+                          </div>
+                          <div className={styles.infobox}>
+                            <div
+                              className={styles.colorbox}
+                              style={{ backgroundColor: movie.color }}
+                            />
+                            <div className={styles.username}>
+                              by {movie.displayName}
+                            </div>
+                          </div>
+                          <div className={styles.famoustext}>
+                            " {movie.line} "
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -137,19 +178,22 @@ class Home extends React.Component {
   checkChange = (type) => this.setState({ type });
 
   loadingSkeleton = () => {
-    return(
-      [...Array(16).keys()].map((v, i) => {
-        return (
-          <div className={styles["skeleton-wrapper"]} key={String(i)}>
-            <SkeletonTheme color="#f2f2f2" highlightColor="#ddd">
-              <Skeleton variant="rect" height={150} width={200} animation="wave" />
-            </SkeletonTheme>
-          </div>
-        );
-      })
-    );
-  }
-  
+    return [...Array(16).keys()].map((v, i) => {
+      return (
+        <div className={styles["skeleton-wrapper"]} key={String(i)}>
+          <SkeletonTheme color="#f2f2f2" highlightColor="#ddd">
+            <Skeleton
+              variant="rect"
+              height={150}
+              width={200}
+              animation="wave"
+            />
+          </SkeletonTheme>
+        </div>
+      );
+    });
+  };
+
   render() {
     console.log("rendering");
     const { isLoading, type, movies, books } = this.state;
@@ -171,7 +215,7 @@ class Home extends React.Component {
           onChange={() => this.checkChange(true)}
         />
         <div className={styles.container_row}>
-        {isLoading
+          {isLoading
             ? this.loadingSkeleton()
             : this.displayPosts({ type, movies, books })}
         </div>

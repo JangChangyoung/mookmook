@@ -1,7 +1,8 @@
 // Include Foundation 5.0.2
 @import "~compass-mixins/lib/compass/css3";
+@import "@kfonts/nanum-square-ac-otf";
 @import "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css";
-
+@import "https://fonts.googleapis.com/css?family=Roboto:300,400,700&display=swap";
 // Flip cards
 $rotate: 180deg;
 $cardWidth: 200px;
@@ -14,24 +15,15 @@ $scale: 2;
   margin-bottom: 20px;
 }
 
-
 .container_row {
   width: 100%;
-  padding: 30px 80px 30px 80px;
+  padding: 30px 120px 30px 180px;
   height: 100%;
-  display: flex;
-  flex-direction: row-reverse;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
   flex-wrap: wrap;
-  justify-content: space-around;
-}
-.colorbox {
-  width: 10px;
-  height: 10px;
-  margin-left: 5px;
-  margin-bottom: 1px;
-  display: inline-block;
-  background-color: #ccc;
-  align-items: center;
+  // justify-content: space-around;
 }
 .cardcontainer {
   width: $cardWidth;
@@ -65,7 +57,7 @@ $scale: 2;
       z-index: 2;
     }
     .back {
-      background: #f8f8f8;
+      background: #ffffff00;
       @include transform(rotateY($rotate));
     }
   }
@@ -73,94 +65,98 @@ $scale: 2;
 // end Flip cards
 
 //Card Detail Start
+/* Rectangle 1 */
 
-@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Bree+Serif&family=EB+Garamond:ital,wght@0,500;1,800&display=swap");
-
-.container {
-  box-shadow: 0 15px 30px 1px grey;
-  background: rgba(255, 255, 255, 0.9);
-  text-align: center;
-  border-radius: 5px;
-  overflow: hidden;
-  margin: 5em auto;
-  height: 350px;
-  width: 700px;
+.detail_card {
+  position: absolute;
+  width: 250px;
+  height: 150px;
+  border: solid 0.02em;
+  border-color: #adadad;
+  background: #ffffff;
 }
 
-.product_details {
+.detail_image {
+  width: 85px;
+  height: 120px;
+  float: left;
+  position: relative;
+  top: 15px;
+  margin-left: 8px;
+}
+
+.aboutinfo {
+  width: 145px;
+  height: 150px;
+  float: left;
+  padding-top: 26px;
+  padding-bottom: 20px;
+  margin-left: 8px;
+}
+
+/* 나니아연대기: 마녀와 사자 */
+
+.detail_title {
   position: relative;
   text-align: left;
-  overflow: hidden;
-  padding: 30px;
-  height: 100%;
+  font-family: "nanum-square-ac-otf";
+  font-style: normal;
+  font-weight: bold;
+  font-size: 12px;
+  line-height: 17px;
+  margin-bottom: 7px;
+  color: #000000;
+}
+.infobox {
+  position: relative;
+  display: block;
+  width: 145px;
+  height: 12px;
+}
+
+.colorbox {
   float: left;
-  width: 40%;
+  display: inline;
+  width: 11px;
+  height: 11px;
+  display: inline-block;
+  background-color: #ccc;
+  margin-left: 2px;
+  margin-right: 5px;
+  margin-bottom: 10px;
 }
 
-.product_details h1 {
-  font-family: "Bebas Neue", cursive;
-  display: inline-block;
+/* by username */
+
+.username {
+  float: left;
+  display: inline;
+  margin-top: 0.5px;
+  font-family: "nanum-square-ac-otf";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 7px;
+  // line-height: px;
+  color: #242424;
+
+  margin-bottom: 10px;
+}
+
+/* “ 마녀는 절대 울지 않지 꼬마야 너 터키쉬 젤리 먹을래?? “ */
+
+.famoustext {
   position: relative;
-  font-size: 30px;
-  color: #344055;
-  margin: 0;
+  margin-top: 10px;
+  width: 145px;
+  height: auto;
+  padding-left: 3px;
+  padding-right: 5px;
+  font-family: "nanum-square-ac-otf";
+  font-style: normal;
+  font-weight: 300;
+  font-size: 10px;
+  line-height: 11px;
+  text-align: left;
+  word-break: break-all;
+  color: #4b4b4b;
 }
-
-.product_details h1:before {
-  position: absolute;
-  content: "";
-  right: 0%;
-  top: 0%;
-  font-family: "Bree Serif", serif;
-  display: inline-block;
-  background: #ffe6e6;
-  border-radius: 5px;
-  font-size: 14px;
-  padding: 5px;
-  color: white;
-  margin: 0;
-}
-
-.product_details > p {
-  font-family: "EB Garamond", serif;
-  text-align: center;
-  font-size: 18px;
-  color: #7d7d7d;
-}
-.control {
-  position: absolute;
-  bottom: 20%;
-  left: 22.8%;
-}
-// .btn {
-//   transform: translateY(0px);
-//   transition: 0.3s linear;
-//   background: #809fff;
-//   border-radius: 5px;
-//   position: relative;
-//   overflow: hidden;
-//   cursor: pointer;
-//   outline: none;
-//   border: none;
-//   color: #eee;
-//   padding: 0;
-//   margin: 0;
-// }
-
-.product_image {
-  /* 	transition: all 0.3s ease-out; */
-  display: inline-block;
-  position: relative;
-  overflow: hidden;
-  height: 100%;
-  float: right;
-  width: 45%;
-  display: inline-block;
-}
-
-.img {
-  width: 100%;
-  height: 100%;
-}
-
-// Card Detail End

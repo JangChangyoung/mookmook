@@ -1,3 +1,6 @@
+/* eslint-disable react/prefer-stateless-function */
+/* eslint-disable no-useless-constructor */
+/* eslint-disable max-classes-per-file */
 import React, { Component } from "react";
 import axios from "axios";
 import { Modal, Button, Row, Col, Form } from "react-bootstrap";
@@ -36,7 +39,10 @@ class MovieInfo extends Component {
                   </p>
                 </div>
                 <div className={style.product_price_btn}>
-                  <button type="button" onClick={() => selectTitle(title)}>
+                  <button
+                    type="button"
+                    onClick={() => selectTitle(title, imgurl)}
+                  >
                     Select
                   </button>
                 </div>
@@ -88,7 +94,10 @@ class BookInfo extends Component {
                   </p>
                 </div>
                 <div className={style.product_price_btn}>
-                  <button type="button" onClick={() => selectTitle(title)}>
+                  <button
+                    type="button"
+                    onClick={() => selectTitle(title, imgurl)}
+                  >
                     Select
                   </button>
                 </div>
