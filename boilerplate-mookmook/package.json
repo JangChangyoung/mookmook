@@ -8,6 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@kfonts/nanum-square-ac-otf": "^0.1.0",
     "axios": "^0.21.1",
     "babel-eslint": "^10.1.0",
     "bootstrap": "^5.0.2",
