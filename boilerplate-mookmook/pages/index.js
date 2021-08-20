@@ -178,7 +178,7 @@ class Home extends React.Component {
   checkChange = (type) => this.setState({ type });
 
   loadingSkeleton = () => {
-    return [...Array(16).keys()].map((v, i) => {
+    return [...Array(50).keys()].map((v, i) => {
       return (
         <div className={styles["skeleton-wrapper"]} key={String(i)}>
           <SkeletonTheme color="#f2f2f2" highlightColor="#ddd">
