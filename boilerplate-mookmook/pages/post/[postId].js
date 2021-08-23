@@ -165,15 +165,15 @@ class DisplayPost extends React.Component {
           <div className={styles.cardGroup}>
             <span className={styles.cardTitle}>{title}</span>
 
+            <span className={styles.cardLike}>
+              <i className={myLike ? "like bi bi-heart-fill" : "like bi bi-heart"} style={{fontSize: '24px', color: '#ff008a'}} onClick={() => this.changeLike(postId, type, likeArray) }/>
+              <p>{likeArray.length}</p>
+            </span>
             { update 
               ? null
               : <>
                 { equal 
                   ? <>
-                      <span className={styles.cardLike}>
-                        <i className={myLike ? "like bi bi-heart-fill" : "like bi bi-heart"} style={{fontSize: '24px', color: '#ff008a'}} onClick={() => this.changeLike(postId, type, likeArray) }/>
-                        <p>{likeArray.length}</p>
-                      </span>
                       <span className={styles.icon}>
                         <i className="bi bi-pencil-square" style={{fontSize: '18px'}} onClick={() => this.postUpdate() }/>
                       </span>
