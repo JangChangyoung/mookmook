@@ -161,3 +161,60 @@ $scale: 2;
   word-break: break-all;
   color: #4b4b4b;
 }
+
+// switch button
+.switch {
+  position: relative;
+  width: 120px;
+  height: 40px;
+  display: inline-block;
+  margin-left: 20px;
+  margin-top: 20px;
+}
+.switch input {
+  display: none;
+}
+.switch span {
+  position: absolute;
+  background-color: #eeeeee;
+  border-radius: 100px;
+  box-shadow: 0 0px 20px #eeeeee;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+.switch span::before {
+  content: "";
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #aaa;
+  top: 5px;
+  left: 5px;
+  transition: 0.8s;
+}
+.switch span::after {
+  content: "Movie";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-size: 15px;
+  font-family: "nanum-square-ac-otf";
+  transform: translate(-50%, -50%);
+  font-weight: 600;
+  color: #aaa;
+}
+.switch input:checked + span {
+  background-color: #3a96ff;
+  box-shadow: 0 0px 20px #3a96ffcc;
+}
+.switch input:checked + span::before {
+  transform: translateX(80px);
+  background-color: #fff;
+}
+.switch input:checked + span::after {
+  content: "Book";
+  color: white;
+}

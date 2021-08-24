@@ -6,7 +6,7 @@ import Router from "next/router";
 import firebase from "firebase/app";
 import "firebase/firestore";
 import "firebase/auth";
-import { Form } from "react-bootstrap";
+// import { Form } from "react-bootstrap";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Layout from "../components/layout";
@@ -19,7 +19,7 @@ class Home extends React.Component {
       books: null,
       movies: null,
       isLoading: true,
-      type: null,
+      type: false,
     };
   }
 
@@ -201,7 +201,15 @@ class Home extends React.Component {
     return (
       <div>
         <Layout />
-        <Form.Check
+        <label htmlFor="switch-id" className={styles.switch}>
+          <input
+            type="checkbox"
+            onChange={() => this.checkChange(!type)}
+            id="switch-id"
+          />
+          <span />
+        </label>
+        {/* <Form.Check
           type="radio"
           name="type"
           label="movie"
@@ -213,7 +221,7 @@ class Home extends React.Component {
           name="type"
           label="book"
           onChange={() => this.checkChange(true)}
-        />
+        /> */}
         <div className={styles.container_row}>
           {isLoading
             ? this.loadingSkeleton()

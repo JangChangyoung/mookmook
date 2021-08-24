@@ -21,7 +21,7 @@ const Layout = () => {
   const [show2, setShow2] = useState(false);
   const handleShow2 = () => setShow2(true);
   const handleClose2 = () => setShow2(false);
-  
+
   const [show3, setShow3] = useState(false);
   const handleShow3 = () => setShow3(true);
   const handleClose3 = () => setShow3(false);
@@ -50,9 +50,7 @@ const Layout = () => {
                 {user ? "Logout" : "Login"}
               </Nav.Link>
               {user ? (
-                <Nav.Link href={`/user/${user.uid}`}>
-                  MyPage
-                </Nav.Link>
+                <Nav.Link href={`/user/${user.uid}`}>MyPage</Nav.Link>
               ) : null}
             </Nav>
           </Navbar>
