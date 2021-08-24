@@ -72,7 +72,7 @@ class Home extends React.Component {
   };
 
   getPosts = (name) => {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       const data = firebase
         .firestore()
         .collection(name)
@@ -231,15 +231,17 @@ class Home extends React.Component {
     return (
       <div>
         <Layout />
-        <label htmlFor="switch-id" className={styles.switch}>
-          <input
-            type="checkbox"
-            onChange={() => this.checkChange(!type)}
-            id="switch-id"
-          />
-          <span />
-        </label>
-
+        <div className={styles['main-container']}>
+          <label htmlFor="switch-id" className={styles.switch}>
+            <input
+              type="checkbox"
+              onChange={() => this.checkChange(!type)}
+              id="switch-id"
+            />
+            <span />
+          </label>
+        </div>
+        
         <div className={styles.container_row}>
           {isLoading
             ? this.loadingSkeleton()

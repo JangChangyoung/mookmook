@@ -1,3 +1,6 @@
+/* eslint-disable react/no-array-index-key */
+/* eslint-disable react/prop-types */
+/* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/prefer-stateless-function */
 /* eslint-disable no-useless-constructor */
 /* eslint-disable max-classes-per-file */
@@ -139,6 +142,12 @@ class ModalForm extends Component {
     }
   };
 
+  handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+    }
+  }
+
   render() {
     const { items } = this.state;
     const { type, isOpen, closeModal, selectTitle, handleSubmit } = this.props;
@@ -153,6 +162,7 @@ class ModalForm extends Component {
             <Row className={style.search_bar}>
               <Col sm={9}>
                 <Form.Control
+                  onKeyPress={e => this.handleKeyPress(e,type)}
                   type="text"
                   onChange={this.handleChange}
                   value={this.state.search}
