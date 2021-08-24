@@ -77,6 +77,7 @@ class Home extends React.Component {
         .firestore()
         .collection(name)
         .orderBy("imgcolor", "desc")
+        .limit(32)
         .get();
       resolve(data);
     });
