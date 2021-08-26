@@ -27,31 +27,6 @@ class Home extends React.Component {
     this.postUploading();
   }
 
-  // convertColor(e) {
-  //   color = e;
-  //   if (color == "") {
-  //     validateColor();
-  //     return;
-  //   }
-  //   color = color.toLowerCase();
-  //   c = w3color(color);
-
-  //   return c.toHslString();
-  // }
-
-  // sortByHue() {
-  //   colors.sort((a, b) => {
-  //     return (
-  //       convertColor(a).split("(")[1].split(",")[0] -
-  //       convertColor(b).split("(")[1].split(",")[0]
-  //     );
-  //   });
-  //   $("main").html("");
-  //   colors.forEach((item) => {
-  //     $("main").append(`<div style="background-color:${item}">${item}</div>`);
-  //   });
-  // }
-
   postUploading = async () => {
     console.log("loading");
     const books = [];
@@ -76,7 +51,7 @@ class Home extends React.Component {
       const data = firebase
         .firestore()
         .collection(name)
-        .orderBy("imgcolor", "desc")
+        .orderBy("colorhue")
         .limit(32)
         .get();
       resolve(data);

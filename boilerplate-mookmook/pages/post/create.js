@@ -14,6 +14,7 @@ class PostCreatePage extends React.Component {
       imgurl: null,
       titleimg: null,
       type: null,
+      colorhue: null,
     };
   }
 
@@ -21,32 +22,73 @@ class PostCreatePage extends React.Component {
     // Listen to auth state changes.
     firebase.auth().onAuthStateChanged();
   }
-  
+  sortColors(color) {
+    /* Get the hex value without hash symbol. */
+    var hex = color.substring(1);
+
+    var r = parseInt(hex.substring(0, 2), 16) / 255;
+    var g = parseInt(hex.substring(2, 4), 16) / 255;
+    var b = parseInt(hex.substring(4, 6), 16) / 255;
+    /* Getting the Max and Min values for Chroma. */
+    var max = Math.max.apply(Math, [r, g, b]);
+    var min = Math.min.apply(Math, [r, g, b]);
+
+    /* Variables for HSV value of hex color. */
+    var chr = max - min;
+    var hue = 0;
+    var val = max;
+    var sat = 0;
+
+    if (val > 0) {
+      sat = chr / val;
+      if (sat > 0) {
+        if (r == max) {
+          hue = 60 * ((g - min - (b - min)) / chr);
+          if (hue < 0) {
+            hue += 360;
+          }
+        } else if (g == max) {
+          hue = 120 + 60 * ((b - min - (r - min)) / chr);
+        } else if (b == max) {
+          hue = 240 + 60 * ((r - min - (g - min)) / chr);
+        }
+      }
+    }
+    /* Sort by Hue. */
+    return hue;
+  }
   getTime = () => {
-    let today = new Date();   
+    let today = new Date();
 
     let year = today.getFullYear(); // 년도
-    let month = today.getMonth() + 1;  // 월
-    let date = today.getDate();  // 날짜
-    let day = today.getDay();  // 요일
+    let month = today.getMonth() + 1; // 월
+    let date = today.getDate(); // 날짜
+    let day = today.getDay(); // 요일
     switch (day) {
-      case 0: day = 'Mon';
-              break;
-      case 1: day = 'Tue';
-              break;
-      case 2: day = 'Wed';
-              break;
-      case 3: day = 'Thu';
-              break;
-      case 4: day = 'Fri';
-              break;
-      case 5: day = 'Sat';
-              break;
-      case 6: day = 'Sun';
-              break;
+      case 0:
+        day = "Mon";
+        break;
+      case 1:
+        day = "Tue";
+        break;
+      case 2:
+        day = "Wed";
+        break;
+      case 3:
+        day = "Thu";
+        break;
+      case 4:
+        day = "Fri";
+        break;
+      case 5:
+        day = "Sat";
+        break;
+      case 6:
+        day = "Sun";
+        break;
     }
-    return (year + '/' + month + '/' + date + ' ' +  day);
-  }
+    return year + "/" + month + "/" + date + " " + day;
+  };
 
   handleClick = async (data, icolor) => {
     let title = this.state.title;
@@ -57,6 +99,7 @@ class PostCreatePage extends React.Component {
     let color = document.getElementById("color").value;
     let line = document.getElementById("line").value;
     let review = document.getElementById("review").value;
+    let colorhue = this.sortColors(imgcolor);
     let datetime = this.getTime();
 
     if (!title || !imgurl || !imgcolor || !type || !color || !line || !review) {
@@ -76,6 +119,7 @@ class PostCreatePage extends React.Component {
           imgurl: imgurl,
           titleimg: titleimg,
           color: color,
+          colorhue: colorhue,
           line: line,
           review: review,
           uploadTime: datetime,
