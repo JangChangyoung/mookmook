@@ -183,7 +183,7 @@ class Home extends React.Component {
   checkChange = (type) => this.setState({ type });
 
   loadingSkeleton = () => {
-    return [...Array(50).keys()].map((v, i) => {
+    return [...Array(32).keys()].map((v, i) => {
       return (
         <div className={styles["skeleton-wrapper"]} key={String(i)}>
           <SkeletonTheme color="#f2f2f2" highlightColor="#ddd">
@@ -206,7 +206,7 @@ class Home extends React.Component {
     return (
       <div>
         <Layout />
-        <div className={styles['main-container']}>
+        <div className={styles["main-container"]}>
           <label htmlFor="switch-id" className={styles.switch}>
             <input
               type="checkbox"
@@ -216,7 +216,7 @@ class Home extends React.Component {
             <span />
           </label>
         </div>
-        
+
         <div className={styles.container_row}>
           {isLoading
             ? this.loadingSkeleton()
