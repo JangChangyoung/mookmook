@@ -81,6 +81,11 @@ class Home extends React.Component {
                   <div className={styles.card}>
                     <div className={styles.front}>
                       <img
+                        // 이거 테두리 색 씌우는건데 안한게 나은것 같아서 일단은 주석!
+                        // style={{
+                        //   border: "solid 0.7rem",
+                        //   borderColor: book.imgcolor,
+                        // }}
                         key={index}
                         width="200px"
                         height="150px"
@@ -135,6 +140,11 @@ class Home extends React.Component {
                   <div className={styles.card}>
                     <div className={styles.front}>
                       <img
+                        // 이거 테두리 색 씌우는건데 안한게 나은것 같아서 일단은 주석!
+                        // style={{
+                        //   border: "solid 0.7rem",
+                        //   borderColor: movie.imgcolor,
+                        // }}
                         key={index}
                         width="200px"
                         height="150px"
