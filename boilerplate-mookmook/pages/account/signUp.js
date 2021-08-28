@@ -17,8 +17,7 @@ const SignUpPage = ({ show, onHide }) => {
   const displayName = account.get("displayName");
   const photoURL = account.get("photoURL");
   const email = account.get("email");
-  const router = useRouter();
-  
+
   function loginFacebook() {
     auth().signInWithPopup(provider.facebook);
   }
@@ -34,7 +33,6 @@ const SignUpPage = ({ show, onHide }) => {
       .catch((err) => {
         console.error("logout error: ", err);
       });
-    
   }
 
   function Loging() {

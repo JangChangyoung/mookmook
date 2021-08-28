@@ -1,5 +1,6 @@
 /* eslint-disable no-restricted-globals */
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { Navbar, Nav, Container, Image, Button } from "react-bootstrap";
 
 import firebase from "firebase";
@@ -12,7 +13,8 @@ import style from "./style.module.scss";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const Layout = () => {
-  const user = firebase.auth().currentUser;
+  const account = useSelector((store) => store.account);
+  const user = account.get("uid");
 
   const [show, setShow] = useState(false);
   const handleShow = () => setShow(true);
@@ -49,9 +51,7 @@ const Layout = () => {
               <Nav.Link onClick={handleShow2}>
                 {user ? "Logout" : "Login"}
               </Nav.Link>
-              {user ? (
-                <Nav.Link href={`/user/${user.uid}`}>MyPage</Nav.Link>
-              ) : null}
+              {user ? <Nav.Link href={`/user/${user}`}>MyPage</Nav.Link> : null}
             </Nav>
           </Navbar>
         </Container>
