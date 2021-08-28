@@ -1,8 +1,15 @@
 /* eslint-disable */
 import React from "react";
 import firebase from "firebase";
-import { Offcanvas, Form, FormGroup, ButtonGroup, ToggleButton, InputGroup } from "react-bootstrap";
-import { CirclePicker } from 'react-color';
+import {
+  Offcanvas,
+  Form,
+  FormGroup,
+  ButtonGroup,
+  ToggleButton,
+  InputGroup,
+} from "react-bootstrap";
+import { CirclePicker } from "react-color";
 import ImageCrop from "./crop";
 import Search from "./search";
 
@@ -16,7 +23,7 @@ class PostCreatePage extends React.Component {
       title: null,
       imgurl: null,
       titleimg: null,
-      type: 'movie',
+      type: "movie",
       colorhue: null,
     };
   }
@@ -99,7 +106,7 @@ class PostCreatePage extends React.Component {
     let titleimg = this.state.titleimg;
     let imgcolor = icolor;
     let type = this.state.type;
-    let color = document.getElementsByClassName('circle-picker').value;
+    let color = document.getElementsByClassName("circle-picker").value;
     let line = document.getElementById("line").value;
     let review = document.getElementById("review").value;
     let colorhue = this.sortColors(imgcolor);
@@ -140,52 +147,60 @@ class PostCreatePage extends React.Component {
     }
     this.setState({ title: title, titleimg: titleimg });
   };
-  radioChange = (e) => {console.log(e); this.setState({ type: e.target.value });}
+  radioChange = (e) => {
+    console.log(e);
+    this.setState({ type: e.target.value });
+  };
 
   handleColor = (e) => {
     console.log(e.hex);
-    console.log(document.getElementsByClassName('circle-picker'))
-    document.getElementsByClassName('circle-picker').value = e.hex;
-    console.log(document.getElementsByClassName('circle-picker').value)
+    console.log(document.getElementsByClassName("circle-picker"));
+    document.getElementsByClassName("circle-picker").value = e.hex;
+    console.log(document.getElementsByClassName("circle-picker").value);
 
     const selectedElement = document.querySelector(`[title='${e.hex}']`);
-    console.log(selectedElement)
-  }
+    console.log(selectedElement);
+  };
 
   render() {
     const radios = [
-      { type: 'movie', value: '1' },
-      { type: 'book', value: '2' },
+      { type: "movie", value: "1" },
+      { type: "book", value: "2" },
     ];
 
     return (
-      <Offcanvas className={style['post-container']} show={this.props.show} onHide={this.props.onHide}>
+      <Offcanvas
+        className={style["post-container"]}
+        show={this.props.show}
+        onHide={this.props.onHide}
+      >
         <Offcanvas.Header closeButton>
-          <Offcanvas.Title className={style['post-header']}>Post your review</Offcanvas.Title>
+          <Offcanvas.Title className={style["post-header"]}>
+            Post your review
+          </Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
-
-          <div className={style['post-component']}>
-            <p className={style['post-title']}>Choose type</p>
-              {radios.map((radio, idx) => (
-                <ToggleButton
-                  className={style.toggleButton}
-                  key={idx}
-                  id={`radio-${idx}`}
-                  name="radio"
-                  type="radio"
-                  variant="outline-secondary"
-                  value={radio.type}
-                  checked={this.state.type===radio.type}
-                  onChange={(e) => this.radioChange(e)}
-                >
-                  {radio.type}
-                </ToggleButton>
-              ))}
+          <div className={style["post-component"]}>
+            <p className={style["post-title"]}>Choose type</p>
+            {radios.map((radio, idx) => (
+              <ToggleButton
+                className={style.toggleButton}
+                key={idx}
+                id={`radio-${idx}`}
+                name="radio"
+                type="radio"
+                variant="outline-secondary"
+                value={radio.type}
+                checked={this.state.type === radio.type}
+                onChange={(e) => this.radioChange(e)}
+              >
+                {radio.type}
+              </ToggleButton>
+            ))}
           </div>
 
-          <div className={style['post-component']}>
-            <p className={style['post-title']}>Write your review</p>
+          <div className={style["post-component"]}>
+            <p className={style["post-title"]}>Write your review</p>
             <Form>
               <Form.Label>Title</Form.Label>
               <InputGroup className="mb-3">
@@ -195,7 +210,7 @@ class PostCreatePage extends React.Component {
                   value={this.state.title}
                   readOnly
                 />
-                
+
                 <Search
                   type={this.state.type}
                   title={this.state.title}
@@ -203,7 +218,6 @@ class PostCreatePage extends React.Component {
                 />
               </InputGroup>
               <br />
-
 
               <Form.Label htmlFor="exampleColorInput">Color</Form.Label>
               <CirclePicker
@@ -214,24 +228,31 @@ class PostCreatePage extends React.Component {
               />
               <br />
 
-
               <FormGroup>
                 <Form.Label>Famous line</Form.Label>
-                <Form.Control id="line" as="textarea" rows={2} style={{width:'100%', resize: 'none'}}/>
+                <Form.Control
+                  id="line"
+                  as="textarea"
+                  rows={2}
+                  style={{ width: "100%", resize: "none" }}
+                />
               </FormGroup>
               <br />
 
-
               <Form.Group>
                 <Form.Label>Review</Form.Label>
-                <Form.Control id="review" as="textarea" rows={3} style={{width:'100%', resize: 'none'}}/>
+                <Form.Control
+                  id="review"
+                  as="textarea"
+                  rows={3}
+                  style={{ width: "100%", resize: "none" }}
+                />
               </Form.Group>
               <br />
             </Form>
           </div>
 
           <ImageCrop handleClick={this.handleClick} />
-
         </Offcanvas.Body>
       </Offcanvas>
     );
