@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 /* eslint-disable react/sort-comp */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable react/state-in-constructor */
@@ -13,8 +14,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "react-image-crop/dist/ReactCrop.css";
 import style from "./style.module.scss";
 import "bootstrap-icons/font/bootstrap-icons.css";
-
-const Loading = () => <div>Loading...</div>;
 
 class ImageCrop extends PureComponent {
   constructor(props) {
@@ -119,101 +118,116 @@ class ImageCrop extends PureComponent {
       <>
         <div className={style['post-component']}>
           <p className={style['post-title']}>Upload your File</p>
-          
-          <Form.Group controlId="formFile" className="mb-3">
-            <Form.Label htmlFor="exampleFormControlFile1" className={style['upload-container']}>
-              <i className="bi bi-file-earmark-plus"/>
-                Upload
-            </Form.Label>
-            <Form.Control
-              type="file"
-              id="exampleFormControlFile1"
-              accept="image/*"
-              onChange={this.onSelectFile}
-            />
+
+          <Form>
+            <Form.Group controlId="formFile" className="mb-3">
+            { src 
+              ? <>
+                  <Form.Label>Uploaded image</Form.Label>
+                  <ReactCrop
+                    src={src}
+                    crop={crop}
+                    ruleOfThirds
+                    onImageLoaded={this.onImageLoaded}
+                    onComplete={this.onCropComplete}
+                    onChange={this.onCropChange}
+                  />
+                  <br />
+                </>
+              : <>
+                  <Form.Label htmlFor="exampleFormControlFile1" className={style['upload-container']}>
+                    <i className="bi bi-file-earmark-plus"/>
+                      Upload
+                  </Form.Label>
+                  <Form.Control
+                    type="file"
+                    id="exampleFormControlFile1"
+                    accept="image/*"
+                    onChange={this.onSelectFile}
+                  />
+                </>
+            }
           </Form.Group>
 
-          {src && (
-            <ReactCrop
-              src={src}
-              crop={crop}
-              ruleOfThirds
-              onImageLoaded={this.onImageLoaded}
-              onComplete={this.onCropComplete}
-              onChange={this.onCropChange}
-            />
-          )}
           {croppedImageUrl && (
-            <img
-              className="croppedImg"
-              alt="Crop"
-              style={{ maxWidth: "100%" }}
-              src={croppedImageUrl}
-            />
-          )}
-          <br />
+            <>
+              <Form.Group>
+                <Form.Label>Cropped image</Form.Label>
+                <br />
+                <img
+                  className="croppedImg"
+                  alt="Crop"
+                  style={{ maxWidth: "100%" }}
+                  src={croppedImageUrl}
+                />
+              </Form.Group>
 
-          <Color src={croppedImageUrl} crossOrigin="anonymous" format="hex">
-            {({ data, loading }) => {
-              if (loading) return <Loading />;
-              return (
-                <>
-                  Predominat color:
-                  <br />
-                  <Button
-                    style={{
-                      background: data,
-                      borderColor: "#ffffff",
-                      color: data,
+              <Form.Group>
+                <Form.Label>Extracted color</Form.Label>
+                <ButtonGroup>
+                  <Color src={croppedImageUrl} crossOrigin="anonymous" format="hex">
+                    {({ data, loading }) => {
+                      return(
+                        loading
+                          ? <div>loading...</div>
+                          : <Button
+                              style={{
+                                background: data,
+                                color: data,
+                                borderColor: "transparent",
+                                width: "80px",
+                                height: "30px",
+                                marginRight: "5px"
+                              }}
+                              value={data}
+                              onClick={() => this.icolorpick(data)}
+                            >
+                              {data}
+                            </Button>
+                      );
                     }}
-                    value={data}
-                    onClick={() => this.icolorpick(data)}
+                  </Color>
+
+                  <Palette
+                    src={croppedImageUrl}
+                    crossOrigin="anonymous"
+                    format="hex"
+                    colorCount={4}
                   >
-                    {data}
-                  </Button>
-                </>
-              );
-            }}
-          </Color>
-
-          <Palette
-            src={croppedImageUrl}
-            crossOrigin="anonymous"
-            format="hex"
-            colorCount={4}
-          >
-            {({ data, loading }) => {
-              if (loading) return <Loading />;
-
-              return (
-                <div>
-                  Palette:
-                  <ButtonGroup aria-label="Basic example">
-                    {data &&
-                      data.map((color, index) => (
-                        <Button
-                          style={{
-                            background: color,
-                            color,
-                            borderColor: "#ffffff",
-                          }}
-                          key={index}
-                          value={color}
-                          onClick={() => this.icolorpick(color)}
-                        >
-                          {color}
-                        </Button>
-                      ))}
-                  </ButtonGroup>
-                </div>
-              );
-            }}
-          </Palette>
+                    {({ data, loading }) => {
+                      return(                  
+                        loading
+                          ? <div>loading...</div>
+                          : <>
+                              {data &&
+                                data.map((color, index) => (
+                                  <Button
+                                    style={{
+                                      background: color,
+                                      color,
+                                      borderColor: "transparent",
+                                      width: "80px",
+                                      height: "30px",
+                                      marginRight: "5px"
+                                    }}
+                                    key={index}
+                                    value={color}
+                                    onClick={() => this.icolorpick(color)}
+                                  >
+                                    {color}
+                                  </Button>
+                                ))}
+                            </>
+                      );
+                    }}
+                  </Palette>
+                </ButtonGroup>
+              </Form.Group>
+            </>
+          )}
+          </Form>
         </div>
         
-        <br />
-
-
         <Button
           className={style.submit}
           onClick={() => this.props.handleClick(croppedImageJPG, icolor)}

@@ -5,12 +5,12 @@
 /* eslint-disable react/button-has-type */
 import React from "react";
 import { useSelector } from "react-redux";
-import { useRouter } from "next/router";
 import { Offcanvas, Button, Image } from "react-bootstrap";
-import "bootstrap/dist/css/bootstrap.min.css";
-import styles from "./styles.module.scss";
 import { provider, auth } from "../_app";
+
+import styles from "./styles.module.scss";
 import "bootstrap-icons/font/bootstrap-icons.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const SignUpPage = ({ show, onHide }) => {
   const account = useSelector((store) => store.account);
@@ -59,7 +59,7 @@ const SignUpPage = ({ show, onHide }) => {
       );
     }
     return (
-      <>
+      <div className={styles['post-component']}>
         <p className={styles.hi}>{`${displayName}님, 안녕하세요 !`}</p>
         <Image className={styles.image} src={photoURL} width="80" height="80" />
         <div className={styles.text}>{displayName}</div>
@@ -67,19 +67,19 @@ const SignUpPage = ({ show, onHide }) => {
         <div className={styles.border} />
         <Button
           className={styles.logout}
-          variant="outline-secondary"
+          variant="secondary"
           onClick={logout}
         >
           Logout
         </Button>
-      </>
+      </div>
     );
   }
 
   return (
-    <Offcanvas show={show} onHide={onHide} placement="end">
+    <Offcanvas className={styles['post-container']} show={show} onHide={onHide} placement="end">
       <Offcanvas.Header closeButton>
-        <Offcanvas.Title>SignUp</Offcanvas.Title>
+        <Offcanvas.Title className={styles['post-header']}>Sign</Offcanvas.Title>
       </Offcanvas.Header>
       <Offcanvas.Body>
         <Loging />

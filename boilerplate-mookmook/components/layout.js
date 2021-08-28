@@ -3,8 +3,6 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { Navbar, Nav, Container, Image, Button } from "react-bootstrap";
 
-import firebase from "firebase";
-
 import PostCreatePage from "../pages/post/create";
 import SignUpPage from "../pages/account/signUp";
 import Contact from "../pages/contact/index";
@@ -32,26 +30,26 @@ const Layout = () => {
     <>
       <PostCreatePage show={show} onHide={handleClose} />
       <SignUpPage show={show2} onHide={handleClose2} />
-      <Navbar bg="light" expand="lg">
+      <Navbar style={{backgroundColor:"#003366"}} expand="lg">
         <Container>
           <Navbar id="basic-navbar-nav">
             <Nav className="justify-content-start">
               <Nav.Link onClick={handleShow}>
-                <Button variant="outline-dark">
+                <Button variant="outline-light">
                   <i className="bi bi-patch-plus" /> Create
                 </Button>
               </Nav.Link>
             </Nav>
           </Navbar>
-          <Navbar.Brand className={style.brandName} href="/">
+          <Navbar.Brand className={style.brandName} style={{color:'white'}} href="/">
             Mook-Mook
           </Navbar.Brand>
           <Navbar id="basic-navbar-nav" className="justify-content-end">
             <Nav>
-              <Nav.Link onClick={handleShow2}>
+              <Nav.Link onClick={handleShow2} style={{color:'white'}}>
                 {user ? "Logout" : "Login"}
               </Nav.Link>
-              {user ? <Nav.Link href={`/user/${user}`}>MyPage</Nav.Link> : null}
+              {user ? <Nav.Link href={`/user/${user}`} style={{color:'white'}}>MyPage</Nav.Link> : null}
             </Nav>
           </Navbar>
         </Container>

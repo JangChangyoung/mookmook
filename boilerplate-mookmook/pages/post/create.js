@@ -161,14 +161,15 @@ class PostCreatePage extends React.Component {
     return (
       <Offcanvas className={style['post-container']} show={this.props.show} onHide={this.props.onHide}>
         <Offcanvas.Header closeButton>
-          <Offcanvas.Title>Post your review</Offcanvas.Title>
+          <Offcanvas.Title className={style['post-header']}>Post your review</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
 
           <div className={style['post-component']}>
-            <ButtonGroup className="mb-2">
+            <p className={style['post-title']}>Choose type</p>
               {radios.map((radio, idx) => (
                 <ToggleButton
+                  className={style.toggleButton}
                   key={idx}
                   id={`radio-${idx}`}
                   name="radio"
@@ -181,8 +182,10 @@ class PostCreatePage extends React.Component {
                   {radio.type}
                 </ToggleButton>
               ))}
-            </ButtonGroup>
+          </div>
 
+          <div className={style['post-component']}>
+            <p className={style['post-title']}>Write your review</p>
             <Form>
               <Form.Label>Title</Form.Label>
               <InputGroup className="mb-3">
@@ -206,7 +209,6 @@ class PostCreatePage extends React.Component {
               <CirclePicker
                 width="100%"
                 id="color"
-
                 value="color"
                 onChange={this.handleColor}
               />
