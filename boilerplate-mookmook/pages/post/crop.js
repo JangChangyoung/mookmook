@@ -10,6 +10,7 @@ import Color, { Palette } from "color-thief-react";
 import { Button, Form, ButtonGroup } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "react-image-crop/dist/ReactCrop.css";
+import style from "./style.module.scss";
 
 const Loading = () => <div>Loading...</div>;
 
@@ -50,7 +51,7 @@ class ImageCrop extends PureComponent {
     this.makeClientCrop(crop);
   };
 
-  onCropChange = (crop, percentCrop) => {
+  onCropChange = (crop) => {
     // You could also use percentCrop:
     // this.setState({ crop: percentCrop });
     this.setState({ crop });
@@ -114,36 +115,39 @@ class ImageCrop extends PureComponent {
 
     return (
       <>
-        <Form.Group controlId="formFile" className="mb-3">
-          <Form.Label htmlFor="exampleFormControlFile1">File Submit</Form.Label>
-          <Form.Control
-            type="file"
-            id="exampleFormControlFile1"
-            accept="image/*"
-            onChange={this.onSelectFile}
-          />
-        </Form.Group>
+        <div className={style['post-component']}>
+          <p className={style['post-title']}>Upload your File</p>
+          
+          <Form.Group controlId="formFile" className="mb-3">
+            <Form.Label htmlFor="exampleFormControlFile1">Upload</Form.Label>
+            <Form.Control
+              type="file"
+              id="exampleFormControlFile1"
+              accept="image/*"
+              onChange={this.onSelectFile}
+            />
+          </Form.Group>
 
-        {src && (
-          <ReactCrop
-            src={src}
-            crop={crop}
-            ruleOfThirds
-            onImageLoaded={this.onImageLoaded}
-            onComplete={this.onCropComplete}
-            onChange={this.onCropChange}
-          />
-        )}
-        {croppedImageUrl && (
-          <img
-            className="croppedImg"
-            alt="Crop"
-            style={{ maxWidth: "100%" }}
-            src={croppedImageUrl}
-          />
-        )}
-        <br />
-        <>
+          {src && (
+            <ReactCrop
+              src={src}
+              crop={crop}
+              ruleOfThirds
+              onImageLoaded={this.onImageLoaded}
+              onComplete={this.onCropComplete}
+              onChange={this.onCropChange}
+            />
+          )}
+          {croppedImageUrl && (
+            <img
+              className="croppedImg"
+              alt="Crop"
+              style={{ maxWidth: "100%" }}
+              src={croppedImageUrl}
+            />
+          )}
+          <br />
+
           <Color src={croppedImageUrl} crossOrigin="anonymous" format="hex">
             {({ data, loading }) => {
               if (loading) return <Loading />;
@@ -166,6 +170,7 @@ class ImageCrop extends PureComponent {
               );
             }}
           </Color>
+
           <Palette
             src={croppedImageUrl}
             crossOrigin="anonymous"
@@ -199,10 +204,13 @@ class ImageCrop extends PureComponent {
               );
             }}
           </Palette>
-        </>
+        </div>
+        
         <br />
+
+
         <Button
-          className="confirm"
+          className={style.submit}
           onClick={() => this.props.handleClick(croppedImageJPG, icolor)}
           as="input"
           type="submit"

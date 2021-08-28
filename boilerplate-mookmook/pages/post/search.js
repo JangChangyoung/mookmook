@@ -247,7 +247,7 @@ class Search extends React.Component {
       <>
         {type ? (
           <Button variant="outline-primary" onClick={this.openModal}>
-            Search {type}
+            Search
           </Button>
         ) : null}
         {this.state.isOpen ? (
