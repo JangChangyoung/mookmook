@@ -8,9 +8,11 @@ import React, { PureComponent } from "react";
 import ReactCrop from "react-image-crop";
 import Color, { Palette } from "color-thief-react";
 import { Button, Form, ButtonGroup } from "react-bootstrap";
+
 import "bootstrap/dist/css/bootstrap.min.css";
 import "react-image-crop/dist/ReactCrop.css";
 import style from "./style.module.scss";
+import "bootstrap-icons/font/bootstrap-icons.css";
 
 const Loading = () => <div>Loading...</div>;
 
@@ -119,7 +121,10 @@ class ImageCrop extends PureComponent {
           <p className={style['post-title']}>Upload your File</p>
           
           <Form.Group controlId="formFile" className="mb-3">
-            <Form.Label htmlFor="exampleFormControlFile1">Upload</Form.Label>
+            <Form.Label htmlFor="exampleFormControlFile1" className={style['upload-container']}>
+              <i className="bi bi-file-earmark-plus"/>
+                Upload
+            </Form.Label>
             <Form.Control
               type="file"
               id="exampleFormControlFile1"
