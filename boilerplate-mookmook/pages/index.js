@@ -83,8 +83,8 @@ class Home extends React.Component {
                       <img
                         // 이거 테두리 색 씌우는건데 안한게 나은것 같아서 일단은 주석!
                         // style={{
-                        //   border: "solid 0.7rem",
-                        //   borderColor: book.imgcolor,
+                        //   border: "solid 0.4rem",
+                        //   borderColor: `${book.imgcolor}DD`,
                         // }}
                         key={index}
                         width="200px"
@@ -142,8 +142,8 @@ class Home extends React.Component {
                       <img
                         // 이거 테두리 색 씌우는건데 안한게 나은것 같아서 일단은 주석!
                         // style={{
-                        //   border: "solid 0.7rem",
-                        //   borderColor: movie.imgcolor,
+                        //   border: "solid 0.1rem",
+                        //   borderColor: `${movie.imgcolor}DD`,
                         // }}
                         key={index}
                         width="200px"
