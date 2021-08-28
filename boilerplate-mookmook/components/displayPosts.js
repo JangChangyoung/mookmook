@@ -1,10 +1,12 @@
+/* eslint-disable react/no-unescaped-entities */
+/* eslint-disable react/button-has-type */
 /* eslint-disable react/no-array-index-key */
 import React from "react";
 import Router from "next/router";
 import firebase from "firebase/app";
 import "firebase/firestore";
 import "firebase/auth";
-import { Form } from "react-bootstrap";
+// import { Form } from "react-bootstrap";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "bootstrap/dist/css/bootstrap.min.css";
 import styles from "../pages/styles.module.scss";
@@ -16,8 +18,7 @@ class DisplayPosts extends React.Component {
       books: null,
       movies: null,
       isLoading: true,
-      isHome: true,
-      type: null,
+      type: false,
     };
   }
 
@@ -26,8 +27,11 @@ class DisplayPosts extends React.Component {
   }
 
   postUploading = async () => {
+    console.log("loading");
     const books = [];
     const movies = [];
+    const { host } = this.props;
+    const { countBooks, countMovies } = this.props;
 
     await Promise.all(
       ["book", "movie"].map(async (name) => {
@@ -41,21 +45,32 @@ class DisplayPosts extends React.Component {
       })
     );
     this.changeLoading(movies, books);
+    if (host) {
+      countMovies(movies.length);
+      countBooks(books.length);
+    }
   };
 
   getPosts = (name) => {
     const { host } = this.props;
     return host
-      ? new Promise((resolve, reject) => {
+      ? new Promise((resolve) => {
           const data = firebase
             .firestore()
             .collection(name)
             .where("userID", "==", host)
+            .orderBy("colorhue")
+            .limit(32)
             .get();
           resolve(data);
         })
-      : new Promise((resolve, reject) => {
-          const data = firebase.firestore().collection(name).get();
+      : new Promise((resolve) => {
+          const data = firebase
+            .firestore()
+            .collection(name)
+            .orderBy("colorhue")
+            .limit(32)
+            .get();
           resolve(data);
         });
   };
@@ -71,14 +86,10 @@ class DisplayPosts extends React.Component {
     if (movies || books) {
       return type
         ? books.map((book, index) => (
-            // eslint-disable-next-line react/button-has-type
             <button
               key={index}
               onClick={() => Router.push(`/post/book_${book.docID}`)}
             >
-              {/* --------------------------- */}
-
-              {/* --------------------------- */}
               <div className="small-4 columns">
                 <div
                   className={styles.cardcontainer}
@@ -87,6 +98,11 @@ class DisplayPosts extends React.Component {
                   <div className={styles.card}>
                     <div className={styles.front}>
                       <img
+                        // 이거 테두리 색 씌우는건데 안한게 나은것 같아서 일단은 주석!
+                        // style={{
+                        //   border: "solid 0.7rem",
+                        //   borderColor: book.imgcolor,
+                        // }}
                         key={index}
                         width="200px"
                         height="150px"
@@ -95,16 +111,33 @@ class DisplayPosts extends React.Component {
                       />
                     </div>
                     <div className={styles.back}>
-                      <p>
-                        제목:{book.title}
-                        <br />
-                        색상: {book.color}
-                        <br />
-                        명대사: {book.line}
-                        <br />
-                        리뷰: {book.review}
-                        <br />
-                      </p>
+                      <div className={styles.detail_card}>
+                        <img
+                          key={index}
+                          width="85px"
+                          height="120px"
+                          src={book.titleimg}
+                          alt=""
+                          className={styles.detail_image}
+                        />
+                        <div className={styles.aboutinfo}>
+                          <div className={styles.detail_title}>
+                            {book.title}
+                          </div>
+                          <div className={styles.infobox}>
+                            <div
+                              className={styles.colorbox}
+                              style={{ backgroundColor: book.color }}
+                            />
+                            <div className={styles.username}>
+                              by {book.displayName}
+                            </div>
+                          </div>
+                          <div className={styles.famoustext}>
+                            " {book.line} "
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -112,7 +145,6 @@ class DisplayPosts extends React.Component {
             </button>
           ))
         : movies.map((movie, index) => (
-            // eslint-disable-next-line react/button-has-type
             <button
               key={index}
               onClick={() => Router.push(`/post/movie_${movie.docID}`)}
@@ -125,6 +157,11 @@ class DisplayPosts extends React.Component {
                   <div className={styles.card}>
                     <div className={styles.front}>
                       <img
+                        // 이거 테두리 색 씌우는건데 안한게 나은것 같아서 일단은 주석!
+                        // style={{
+                        //   border: "solid 0.7rem",
+                        //   borderColor: movie.imgcolor,
+                        // }}
                         key={index}
                         width="200px"
                         height="150px"
@@ -133,20 +170,33 @@ class DisplayPosts extends React.Component {
                       />
                     </div>
                     <div className={styles.back}>
-                      <p>
-                        제목:{movie.title}
-                        <br />
-                        색상:
-                        <div
-                          className={styles.colorbox}
-                          style={{ backgroundColor: movie.color }}
+                      <div className={styles.detail_card}>
+                        <img
+                          key={index}
+                          width="85px"
+                          height="120px"
+                          src={movie.titleimg}
+                          alt=""
+                          className={styles.detail_image}
                         />
-                        <br />
-                        명대사: {movie.line}
-                        <br />
-                        리뷰: {movie.review}
-                        <br />
-                      </p>
+                        <div className={styles.aboutinfo}>
+                          <div className={styles.detail_title}>
+                            {movie.title}
+                          </div>
+                          <div className={styles.infobox}>
+                            <div
+                              className={styles.colorbox}
+                              style={{ backgroundColor: movie.color }}
+                            />
+                            <div className={styles.username}>
+                              by {movie.displayName}
+                            </div>
+                          </div>
+                          <div className={styles.famoustext}>
+                            " {movie.line} "
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -160,13 +210,20 @@ class DisplayPosts extends React.Component {
   checkChange = (type) => this.setState({ type });
 
   loadingSkeleton = () => {
-    return (
-      <SkeletonTheme color="#202020" highlightColor="#444">
-        <p>
-          <Skeleton width={100} duration={3} count={3} />
-        </p>
-      </SkeletonTheme>
-    );
+    return [...Array(32).keys()].map((v, i) => {
+      return (
+        <div className={styles["skeleton-wrapper"]} key={String(i)}>
+          <SkeletonTheme color="#f2f2f2" highlightColor="#ddd">
+            <Skeleton
+              variant="rect"
+              height={150}
+              width={200}
+              animation="wave"
+            />
+          </SkeletonTheme>
+        </div>
+      );
+    });
   };
 
   render() {
@@ -175,19 +232,17 @@ class DisplayPosts extends React.Component {
 
     return (
       <div>
-        <Form.Check
-          type="radio"
-          name="type"
-          label="movie"
-          onChange={() => this.checkChange(false)}
-          defaultChecked
-        />
-        <Form.Check
-          type="radio"
-          name="type"
-          label="book"
-          onChange={() => this.checkChange(true)}
-        />
+        <div className={styles["main-container"]}>
+          <label htmlFor="switch-id" className={styles.switch}>
+            <input
+              type="checkbox"
+              onChange={() => this.checkChange(!type)}
+              id="switch-id"
+            />
+            <span />
+          </label>
+        </div>
+
         <div className={styles.container_row}>
           {isLoading
             ? this.loadingSkeleton()
