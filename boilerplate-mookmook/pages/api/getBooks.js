@@ -12,7 +12,7 @@ export default async (req, res) => {
     const data = await axios.get(
       `https://openapi.naver.com/v1/search/book.json?query=${encodeURIComponent(
         keyword
-      )}`,
+      )}&display=100&`,
       {
         headers: {
           "Access-Control-Allow-Origin": "*",
