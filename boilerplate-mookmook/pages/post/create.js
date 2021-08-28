@@ -1,10 +1,13 @@
 /* eslint-disable */
 import React from "react";
 import firebase from "firebase";
-import { Offcanvas, Form, FormGroup } from "react-bootstrap";
-import "bootstrap/dist/css/bootstrap.min.css";
+import { Offcanvas, Form, FormGroup, ButtonGroup, ToggleButton, InputGroup } from "react-bootstrap";
+import { CirclePicker } from 'react-color';
 import ImageCrop from "./crop";
 import Search from "./search";
+
+import "bootstrap/dist/css/bootstrap.min.css";
+import style from "./style.module.scss";
 
 class PostCreatePage extends React.Component {
   constructor(props) {
@@ -13,7 +16,7 @@ class PostCreatePage extends React.Component {
       title: null,
       imgurl: null,
       titleimg: null,
-      type: null,
+      type: 'movie',
       colorhue: null,
     };
   }
@@ -96,7 +99,7 @@ class PostCreatePage extends React.Component {
     let titleimg = this.state.titleimg;
     let imgcolor = icolor;
     let type = this.state.type;
-    let color = document.getElementById("color").value;
+    let color = document.getElementsByClassName('circle-picker').value;
     let line = document.getElementById("line").value;
     let review = document.getElementById("review").value;
     let colorhue = this.sortColors(imgcolor);
@@ -137,66 +140,96 @@ class PostCreatePage extends React.Component {
     }
     this.setState({ title: title, titleimg: titleimg });
   };
-  radioChange = (e) => this.setState({ type: e.target.value });
+  radioChange = (e) => {console.log(e); this.setState({ type: e.target.value });}
+
+  handleColor = (e) => {
+    console.log(e.hex);
+    console.log(document.getElementsByClassName('circle-picker'))
+    document.getElementsByClassName('circle-picker').value = e.hex;
+    console.log(document.getElementsByClassName('circle-picker').value)
+
+    const selectedElement = document.querySelector(`[title='${e.hex}']`);
+    console.log(selectedElement)
+  }
+
   render() {
+    const radios = [
+      { type: 'movie', value: '1' },
+      { type: 'book', value: '2' },
+    ];
+
     return (
-      <Offcanvas show={this.props.show} onHide={this.props.onHide}>
+      <Offcanvas className={style['post-container']} show={this.props.show} onHide={this.props.onHide}>
         <Offcanvas.Header closeButton>
           <Offcanvas.Title>Post your review</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
-          <div className="container">
-            <Search
-              type={this.state.type}
-              title={this.state.title}
-              selectTitle={this.selectTitle}
-            />
-            <br />
-            <br />
-            <Form.Check
-              id="type"
-              type="radio"
-              name="type"
-              value="movie"
-              label="movie"
-              onChange={(e) => this.radioChange(e)}
-            />
-            <Form.Check
-              type="radio"
-              name="type"
-              id="type"
-              value="book"
-              label="book"
-              onChange={(e) => this.radioChange(e)}
-            />
+
+          <div className={style['post-component']}>
+            <ButtonGroup className="mb-2">
+              {radios.map((radio, idx) => (
+                <ToggleButton
+                  key={idx}
+                  id={`radio-${idx}`}
+                  name="radio"
+                  type="radio"
+                  variant="outline-secondary"
+                  value={radio.type}
+                  checked={this.state.type===radio.type}
+                  onChange={(e) => this.radioChange(e)}
+                >
+                  {radio.type}
+                </ToggleButton>
+              ))}
+            </ButtonGroup>
+
             <Form>
-              <Form.Label>Movie Title</Form.Label>
-              <Form.Control
-                id="title"
-                type="text"
-                value={this.state.title}
-                readOnly
-                // placeholder="write the movie title"
-              />
-              <br></br>
-              <Form.Label htmlFor="exampleColorInput">Color picker</Form.Label>
-              <Form.Control
-                type="color"
+              <Form.Label>Title</Form.Label>
+              <InputGroup className="mb-3">
+                <Form.Control
+                  id="title"
+                  type="text"
+                  value={this.state.title}
+                  readOnly
+                />
+                
+                <Search
+                  type={this.state.type}
+                  title={this.state.title}
+                  selectTitle={this.selectTitle}
+                />
+              </InputGroup>
+              <br />
+
+
+              <Form.Label htmlFor="exampleColorInput">Color</Form.Label>
+              <CirclePicker
+                width="100%"
                 id="color"
-                defaultValue="#563d7c"
-                title="Choose your color"
+
+                value="color"
+                onChange={this.handleColor}
               />
+              <br />
+
+
               <FormGroup>
                 <Form.Label>Famous line</Form.Label>
-                <Form.Control id="line" as="textarea" rows={2} />
+                <Form.Control id="line" as="textarea" rows={2} style={{width:'100%', resize: 'none'}}/>
               </FormGroup>
+              <br />
+
+
               <Form.Group>
                 <Form.Label>Review</Form.Label>
-                <Form.Control id="review" as="textarea" rows={3} />
+                <Form.Control id="review" as="textarea" rows={3} style={{width:'100%', resize: 'none'}}/>
               </Form.Group>
+              <br />
             </Form>
-            <ImageCrop handleClick={this.handleClick} />
           </div>
+
+          <ImageCrop handleClick={this.handleClick} />
+
         </Offcanvas.Body>
       </Offcanvas>
     );

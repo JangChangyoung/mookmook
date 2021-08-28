@@ -76,7 +76,7 @@ class Home extends React.Component {
               <div className="small-4 columns">
                 <div
                   className={styles.cardcontainer}
-                  ontouchstart="this.classList.toggle('hover');"
+                  onTouchStart="this.classList.toggle('hover');"
                 >
                   <div className={styles.card}>
                     <div className={styles.front}>
@@ -135,7 +135,7 @@ class Home extends React.Component {
               <div className="small-4 columns">
                 <div
                   className={styles.cardcontainer}
-                  ontouchstart="this.classList.toggle('hover');"
+                  onTouchStart="this.classList.toggle('hover');"
                 >
                   <div className={styles.card}>
                     <div className={styles.front}>
@@ -193,6 +193,16 @@ class Home extends React.Component {
   checkChange = (type) => this.setState({ type });
 
   loadingSkeleton = () => {
+    // let wdt, hgt;
+    // const innerWdt = window.innerWidth;
+    // wdt = innerWdt < 717
+    //   ? 1
+    //   : innerWdt < 917
+    //     ? 2
+    //     : innerWdt < 1117
+    //       ? 3
+    //       : innerWdt < 1317
+
     return [...Array(32).keys()].map((v, i) => {
       return (
         <div className={styles["skeleton-wrapper"]} key={String(i)}>
