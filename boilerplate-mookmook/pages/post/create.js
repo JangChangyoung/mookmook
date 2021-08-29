@@ -143,13 +143,17 @@ class PostCreatePage extends React.Component {
   radioChange = (e) => {console.log(e); this.setState({ type: e.target.value });}
 
   handleColor = (e) => {
-    console.log(e.hex);
-    console.log(document.getElementsByClassName('circle-picker'))
+    if (document.getElementsByClassName('circle-picker').value) {
+      const oldElement = document.querySelector(`[title='${document.getElementsByClassName('circle-picker').value}']`);
+      while (oldElement.firstChild) oldElement.removeChild(oldElement.firstChild);
+    }
     document.getElementsByClassName('circle-picker').value = e.hex;
-    console.log(document.getElementsByClassName('circle-picker').value)
 
     const selectedElement = document.querySelector(`[title='${e.hex}']`);
-    console.log(selectedElement)
+    const checked = document.createElement('i');
+    checked.setAttribute('class', "bi bi-check");
+    checked.setAttribute('style','font-size: 28px; color: white;');
+    selectedElement.appendChild(checked);
   }
 
   render() {
@@ -164,24 +168,26 @@ class PostCreatePage extends React.Component {
           <Offcanvas.Title className={style['post-header']}>Post your review</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
-
           <div className={style['post-component']}>
             <p className={style['post-title']}>Choose type</p>
-              {radios.map((radio, idx) => (
-                <ToggleButton
-                  className={style.toggleButton}
-                  key={idx}
-                  id={`radio-${idx}`}
-                  name="radio"
-                  type="radio"
-                  variant="outline-secondary"
-                  value={radio.type}
-                  checked={this.state.type===radio.type}
-                  onChange={(e) => this.radioChange(e)}
-                >
-                  {radio.type}
-                </ToggleButton>
-              ))}
+            {/* <svg viewbox="0 0 24 24" style="width: 24px; height: 24px;">
+              <path d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"/>
+            </svg> */}
+            {radios.map((radio, idx) => (
+              <ToggleButton
+                className={style.toggleButton}
+                key={idx}
+                id={`radio-${idx}`}
+                name="radio"
+                type="radio"
+                variant="outline-secondary"
+                value={radio.type}
+                checked={this.state.type===radio.type}
+                onChange={(e) => this.radioChange(e)}
+              >
+                {radio.type}
+              </ToggleButton>
+            ))}
           </div>
 
           <div className={style['post-component']}>
@@ -209,7 +215,7 @@ class PostCreatePage extends React.Component {
               <CirclePicker
                 width="100%"
                 id="color"
-                value="color"
+                value="#44336"
                 onChange={this.handleColor}
               />
               <br />
