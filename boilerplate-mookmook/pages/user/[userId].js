@@ -29,7 +29,7 @@ const UserPage = () => {
   const email = account.get("email");
 
   return (
-    <div>
+    <div className={styles.container}>
       <Layout />
       <div className={styles.row}>
         <div className={styles.side}>

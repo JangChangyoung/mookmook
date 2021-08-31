@@ -25,11 +25,22 @@
   display: block;
   margin: 20px auto;
 }
+
+// mypage container
+.container {
+  overflow: auto;
+  height: max-content;
+  min-height: 100vh;
+  // min-height: auto;
+  position: relative;
+}
+
 .row {
   display: flex;
   flex-wrap: wrap;
   overflow: auto;
-  height: auto;
+  height: max-content;
+  min-height: 100vh;
   position: relative;
 }
 
@@ -38,9 +49,9 @@
 .side {
   flex: 25%; /* Set the width of the sidebar */
   background-color: #f1f1f1; /* Grey background color */
-  overflow: auto;
-  height: auto;
+  // overflow: auto;
   position: relative;
+  height: auto;
   padding: 20px; /* Some padding */
 }
 
@@ -48,8 +59,8 @@
 .main {
   flex: 75%; /* Set the width of the main content */
   background-color: white; /* White background color */
-  overflow: auto;
-  height: auto;
+  // overflow: auto;
+  // height: auto;
   // padding: 20px; /* Some padding */
   position: relative;
 }
@@ -57,4 +68,5 @@
   padding: 20px; /* Some padding */
   text-align: center; /* Center text*/
   background: #ddd; /* Grey background */
+  position: relative;
 }
