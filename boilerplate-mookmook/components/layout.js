@@ -1,5 +1,6 @@
 /* eslint-disable no-restricted-globals */
 import React, { useState } from "react";
+import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { Navbar, Nav, Container, Image, Button } from "react-bootstrap";
 
@@ -11,8 +12,11 @@ import style from "./style.module.scss";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const Layout = () => {
+  const { pathname } = useRouter();
   const account = useSelector((store) => store.account);
   const user = account.get("uid");
+  // const url = window.location.href;
+  // console.log(url);
 
   const [show, setShow] = useState(false);
   const handleShow = () => setShow(true);
@@ -54,18 +58,21 @@ const Layout = () => {
           </Navbar>
         </Container>
       </Navbar>
-      <Container fluid>
-        <Contact show={show3} onHide={handleClose3} />
-        <Image
-          className={style.contact}
-          src="/assets/contact.png"
-          width="50"
-          height="50"
-          onClick={handleShow3}
-          rounded
-        />
-      </Container>
-    </>
+        { pathname==='/'
+          ? <Container fluid>
+              <Contact show={show3} onHide={handleClose3} />
+              <Image
+                className={style.contact}
+                src="/assets/contact.png"
+                width="50"
+                height="50"
+                onClick={handleShow3}
+                rounded
+              />
+            </Container>
+          : ''
+        }
+      </>
   );
 };
 

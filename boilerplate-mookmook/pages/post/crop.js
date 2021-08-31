@@ -1,3 +1,7 @@
+/* eslint-disable no-plusplus */
+/* eslint-disable valid-typeof */
+/* eslint-disable no-param-reassign */
+/* eslint-disable consistent-return */
 /* eslint-disable no-unused-expressions */
 /* eslint-disable react/sort-comp */
 /* eslint-disable react/no-array-index-key */
@@ -29,10 +33,6 @@ class ImageCrop extends PureComponent {
     },
   };
 
-  icolorpick = (e) => {
-    this.setState({ icolor: e });
-  };
-
   onSelectFile = (e) => {
     if (e.target.files && e.target.files.length > 0) {
       const reader = new FileReader();
@@ -55,7 +55,7 @@ class ImageCrop extends PureComponent {
   onCropChange = (crop) => {
     // You could also use percentCrop:
     // this.setState({ crop: percentCrop });
-    this.setState({ crop });
+    this.setState({ crop, icolor: null });
   };
 
   getCroppedImg(image, crop, fileName) {
@@ -78,12 +78,10 @@ class ImageCrop extends PureComponent {
       crop.height
     );
 
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       canvas.toBlob((blob) => {
         if (!blob) {
-          // reject(new Error('Canvas is empty'));
-          console.error("Canvas is empty");
-          return;
+          return console.error("Canvas is empty");
         }
         blob.name = fileName;
         window.URL.revokeObjectURL(this.fileUrl); // 이전의 BLob Url 사용 메모리 해제
@@ -110,9 +108,24 @@ class ImageCrop extends PureComponent {
     }
   }
 
+  icolorpick = (e) => {
+    console.log('icolor: ',this.state.icolor)
+    if (this.state.icolor) {
+      const oldElement = document.querySelector(`[value='${this.state.icolor}']`);
+      console.log('oldElement', oldElement)
+      if (oldElement.innerHTML !== null) oldElement.innerHTML = '';
+    }
+
+    if (e) {
+      const selectedElement = document.querySelector(`[value='${e}']`);
+      console.log(selectedElement)
+      selectedElement.innerHTML = '<i class="bi bi-check" style="font-size: 30px; margin-bottom: -1px; color: white;"></i>';  
+    }
+    this.setState({ icolor: e });
+  };
+
   render() {
     const { crop, croppedImageUrl, croppedImageJPG, src, icolor } = this.state;
-    console.log(this.state);
 
     return (
       <>
@@ -120,7 +133,7 @@ class ImageCrop extends PureComponent {
           <p className={style['post-title']}>Upload your File</p>
 
           <Form>
-            <Form.Group controlId="formFile" className="mb-3">
+            <Form.Group>
             { src 
               ? <>
                   <Form.Label>Uploaded image</Form.Label>
@@ -148,10 +161,11 @@ class ImageCrop extends PureComponent {
                 </>
             }
           </Form.Group>
+          <br />
 
           {croppedImageUrl && (
             <>
-              <Form.Group>
+              {/* <Form.Group>
                 <Form.Label>Cropped image</Form.Label>
                 <br />
                 <img
@@ -161,29 +175,36 @@ class ImageCrop extends PureComponent {
                   src={croppedImageUrl}
                 />
               </Form.Group>
+              <br /> */}
 
               <Form.Group>
                 <Form.Label>Extracted color</Form.Label>
+                <br/>
                 <ButtonGroup>
                   <Color src={croppedImageUrl} crossOrigin="anonymous" format="hex">
                     {({ data, loading }) => {
                       return(
                         loading
                           ? <div>loading...</div>
-                          : <Button
-                              style={{
-                                background: data,
-                                color: data,
-                                borderColor: "transparent",
-                                width: "80px",
-                                height: "30px",
-                                marginRight: "5px"
-                              }}
-                              value={data}
-                              onClick={() => this.icolorpick(data)}
-                            >
-                              {data}
-                            </Button>
+                          : data===undefined
+                            ? ''
+                            : <Button
+                                id="primary-color"
+                                style={{
+                                  background: data,
+                                  color: data,
+                                  borderColor: "transparent",
+                                  width: "80px",
+                                  height: "30px",
+                                  marginRight: "5px"
+                                }}
+                                key={data}
+                                value={data}
+                                onClick={() => this.icolorpick(data)}
+                              >
+                                {data}
+                              </Button>
+                          // : <ExtractedColor data={data}/>
                       );
                     }}
                   </Color>
@@ -195,12 +216,38 @@ class ImageCrop extends PureComponent {
                     colorCount={4}
                   >
                     {({ data, loading }) => {
+                      let uniqueArr = [...new Set(data)];
+                      // const mostColorElement = document.getElementById('primary-color');
+                      // if(mostColorElement !== null) {
+                      //   const mostColor = mostColorElement.value;
+                      //   const duplicateIndex = uniqueArr.indexOf(mostColor);
+                      //   if (duplicateIndex !== -1) {
+                      //     uniqueArr.splice(duplicateIndex);
+                      //   }
+                      // }
+                      // console.log(uniqueArr)
+
+                      // console.log(mostColorElement)
+                      // if (mostColorElement !== null) {
+                      //   const mostColor = mostColorElement.value;
+                      //   console.log('똑같나?', mostColor, typeof(mostColor))
+
+                      //   const duplicateIndex = uniqueArr.indexOf(mostColor);
+                      //   console.log('중복인덱스', duplicateIndex)
+                      //   if (duplicateIndex !== -1) {
+                      //     console.log('중복!')
+                      //     uniqueArr.splice(duplicateIndex, 1);
+                      //   }
+                      // }
+                      // console.log()
+                      // console.log(uniqueArr)
+
                       return(                  
                         loading
                           ? <div>loading...</div>
                           : <>
-                              {data &&
-                                data.map((color, index) => (
+                              {data 
+                                ? uniqueArr.map((color, index) => (
                                   <Button
                                     style={{
                                       background: color,
@@ -216,7 +263,9 @@ class ImageCrop extends PureComponent {
                                   >
                                     {color}
                                   </Button>
-                                ))}
+                                ))
+                              : 'No color'
+                              }
                             </>
                       );
                     }}

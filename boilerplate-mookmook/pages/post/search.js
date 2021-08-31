@@ -155,7 +155,7 @@ class ModalForm extends Component {
     return (
       <Modal show={isOpen} onHide={closeModal} scrollable>
         <ModalHeader closeButton className={style.modal_header}>
-          <ModalTitle>{type} 검색하기</ModalTitle>
+          <ModalTitle>Search {type}</ModalTitle>
         </ModalHeader>
         <ModalBody className={style.modal_body}>
           <Form>
@@ -174,7 +174,7 @@ class ModalForm extends Component {
                   variant="outline-secondary"
                   onClick={() => this.handleClick(type)}
                 >
-                  검색
+                  Search
                 </Button>
               </Col>
             </Row>
