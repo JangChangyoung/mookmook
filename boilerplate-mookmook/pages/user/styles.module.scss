@@ -1,0 +1,60 @@
+.hi {
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 30px;
+}
+.image {
+  display: block;
+  margin: 20px auto;
+  border-radius: 100%;
+}
+.text {
+  line-height: 30px;
+  text-align: center;
+}
+.email {
+  color: #5f6368;
+  text-align: center;
+}
+.border {
+  margin: 30px 0;
+  background-color: #ccc;
+  height: 1px;
+}
+.logout {
+  display: block;
+  margin: 20px auto;
+}
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  overflow: auto;
+  height: auto;
+  position: relative;
+}
+
+/* Create two unequal columns that sits next to each other */
+/* Sidebar/left column */
+.side {
+  flex: 25%; /* Set the width of the sidebar */
+  background-color: #f1f1f1; /* Grey background color */
+  overflow: auto;
+  height: auto;
+  position: relative;
+  padding: 20px; /* Some padding */
+}
+
+/* Main column */
+.main {
+  flex: 75%; /* Set the width of the main content */
+  background-color: white; /* White background color */
+  overflow: auto;
+  height: auto;
+  // padding: 20px; /* Some padding */
+  position: relative;
+}
+.footer {
+  padding: 20px; /* Some padding */
+  text-align: center; /* Center text*/
+  background: #ddd; /* Grey background */
+}

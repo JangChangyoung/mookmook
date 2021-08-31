@@ -1,8 +1,14 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
-import { Form, Card, Button } from "react-bootstrap";
+import { Card, Button, Image } from "react-bootstrap";
+import { useSelector } from "react-redux";
+import styles from "./styles.module.scss";
+
 import Layout from "../../components/layout";
 import DisplayPosts from "../../components/displayPosts";
+
+import "bootstrap-icons/font/bootstrap-icons.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const UserPage = () => {
   const router = useRouter();
@@ -17,34 +23,62 @@ const UserPage = () => {
   const [countBook, setBook] = useState(0);
   const countBooks = (book) => setMovie(book);
 
+  const account = useSelector((store) => store.account);
+  const displayName = account.get("displayName");
+  const photoURL = account.get("photoURL");
+  const email = account.get("email");
+
   return (
     <div>
       <Layout />
-      <div>
-        <Card class="text-center">
-          <Card.Header>{`${host}`}님의 컬렉션입니다</Card.Header>
-          <Card.Body>
-            <blockquote className="blockquote mb-0">
-              <p>
-                {countMovie}권의 영화를 보고, {countBook}권의 책을 읽으셨어요
-              </p>
-              <br />
-              <footer className="blockquote-footer">
-                가장 마음에 드는 후기를 하나 선택해주세요
-              </footer>
-            </blockquote>
-          </Card.Body>
-        </Card>
+      <div className={styles.row}>
+        <div className={styles.side}>
+          <h2>Profile</h2>
+          <a>당신은 상위 몇퍼센트입니다</a>
+          <br />
+          <br /> <br />
+          <br />
+          <div className={styles["post-component"]}>
+            <Image
+              className={styles.image}
+              src={photoURL}
+              width="80"
+              height="80"
+            />
+            <div className={styles.text}>{displayName}</div>
+            <div className={styles.email}>{email}</div>
+          </div>
+          <br />
+          <br /> <br />
+          <br /> <br />
+          <br />
+          <h3>
+            {countMovie}권의 영화를 보고,
+            <br /> {countBook}권의 책을 읽으셨어요
+          </h3>
+          <br />
+          <p>가장 마음에 드는 후기를 하나 선택해주세요</p>
+        </div>
+        <div className={styles.main}>
+          {" "}
+          {host ? (
+            <DisplayPosts
+              style={{ zIndex: "-1" }}
+              host={host}
+              color={color}
+              countMovies={countMovies}
+              countBooks={countBooks}
+            />
+          ) : null}
+        </div>
       </div>
-
-      {host ? (
-        <DisplayPosts
-          host={host}
-          color={color}
-          countMovies={countMovies}
-          countBooks={countBooks}
-        />
-      ) : null}
+      <div className={styles.footer}>
+        <a>
+          mookmook@knu.ac.kr
+          <br />
+          contact: 010-1234-5678
+        </a>
+      </div>
     </div>
   );
 };
