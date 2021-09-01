@@ -132,6 +132,7 @@ class DisplayPost extends React.Component {
     } else {
       // 좋아요 되어있지 않은 경우 (좋아요 해야 함)
       likeArray.push(currentUser);
+      document.getElementById("like-container").style.display = "block";
       animateHeart();
     }
 
@@ -180,121 +181,130 @@ class DisplayPost extends React.Component {
     const { myLike, equal, update } = this.state;
 
     return (
-      <div
-        id="like-container"
-        className={styles.container}
-        style={{ backgroundColor: `${imgcolor}55` }}
-      >
-        <img
-          className={styles.cardImg}
-          width="400"
-          height="300"
-          key={title}
-          src={
-            imgurl ||
-            "https://bookthumb-phinf.pstatic.net/cover/208/017/20801763.jpg?type=m1&udate=20210728"
-          }
-          alt={title}
+      <>
+        <div
+          id="like-container"
+          style={{
+            height: "calc(100vh - 86px)",
+            position: "relative",
+            zIndex: 999,
+            margin: "auto",
+            display: "none",
+          }}
         />
-        <div className={styles.cardText}>
-          <div className={styles.cardGroup}>
-            <span className={styles.cardTitle}>{title}</span>
+        <div
+          className={styles.container}
+          style={{ backgroundColor: `${imgcolor}55` }}
+        >
+          <img
+            className={styles.cardImg}
+            key={title}
+            src={
+              imgurl ||
+              "https://bookthumb-phinf.pstatic.net/cover/208/017/20801763.jpg?type=m1&udate=20210728"
+            }
+            alt={title}
+          />
+          <div className={styles.cardText}>
+            <div className={styles.cardGroup}>
+              <span className={styles.cardTitle}>{title}</span>
 
-            <span className={styles.cardLike}>
-              <i
-                className={
-                  myLike ? "like bi bi-heart-fill" : "like bi bi-heart"
-                }
-                style={{ fontSize: "24px", color: "#ff008a" }}
-                onClick={() => this.changeLike(postId, type, likeArray)}
-              />
-              <p>{likeArray.length}</p>
-            </span>
-            {update ? null : (
-              <>
-                {equal ? (
-                  <>
-                    <span className={styles.icon}>
-                      <i
-                        className="bi bi-pencil-square"
-                        style={{ fontSize: "18px" }}
-                        onClick={() => this.postUpdate()}
+              <span className={styles.cardLike}>
+                <i
+                  className={
+                    myLike ? "like bi bi-heart-fill" : "like bi bi-heart"
+                  }
+                  style={{ fontSize: "24px", color: "#ff008a" }}
+                  onClick={() => this.changeLike(postId, type, likeArray)}
+                />
+                <p>{likeArray.length}</p>
+              </span>
+              {update ? null : (
+                <>
+                  {equal ? (
+                    <>
+                      <span className={styles.icon}>
+                        <i
+                          className="bi bi-pencil-square"
+                          style={{ fontSize: "18px" }}
+                          onClick={() => this.postUpdate()}
+                        />
+                      </span>
+                      <PostDelete
+                        postId={postId}
+                        type={type}
+                        line={line}
+                        review={review}
                       />
-                    </span>
-                    <PostDelete
-                      postId={postId}
-                      type={type}
-                      line={line}
-                      review={review}
-                    />
-                  </>
-                ) : null}
-              </>
-            )}
-          </div>
-
-          <div>
-            <a href={`/user/${userID}`} className={styles.cardUser}>
-              {displayName}
-            </a>
-            <span
-              className={styles.cardColor}
-              style={{ backgroundColor: `${color}` }}
-            />
-            <span className={styles.cardTime}>{uploadTime}</span>
-          </div>
-
-          <div className={styles.cardLine}>
-            <div>
-              <img
-                alt="quote"
-                width="30"
-                height="30"
-                src="/assets/quote1.png"
-              />
+                    </>
+                  ) : null}
+                </>
+              )}
             </div>
-            {update ? (
-              <Form.Control
-                as="textarea"
-                rows={2}
-                defaultValue={line}
-                onChange={(e) => this.handleChange("line", e)}
-                style={{ width: "100%", resize: "none" }}
-              />
-            ) : (
-              <p className={styles.cardQuote}>{line}</p>
-            )}
+
             <div>
-              <img
-                alt="quote"
-                width="30"
-                height="30"
-                src="/assets/quote2.png"
+              <a href={`/user/${userID}`} className={styles.cardUser}>
+                {displayName}
+              </a>
+              <span
+                className={styles.cardColor}
+                style={{ backgroundColor: `${color}` }}
               />
+              <span className={styles.cardTime}>{uploadTime}</span>
             </div>
-          </div>
-          <div className={styles.cardLine}>
-            {update ? (
-              <Form.Control
-                as="textarea"
-                rows={5}
-                defaultValue={review}
-                onChange={(e) => this.handleChange("review", e)}
-                style={{ width: "100%", resize: "none" }}
-              />
-            ) : (
-              <p className={styles.cardReview}>{review}</p>
-            )}
-          </div>
-          <div className={styles.update}>
-            {update ? (
-              <Button variant="secondary" onClick={this.handleClick}>
-                Update
-              </Button>
-            ) : null}
+
+            <div className={styles.cardLine}>
+              <div>
+                <img
+                  alt="quote"
+                  width="30"
+                  height="30"
+                  src="/assets/quote1.png"
+                />
+              </div>
+              {update ? (
+                <Form.Control
+                  as="textarea"
+                  rows={2}
+                  defaultValue={line}
+                  onChange={(e) => this.handleChange("line", e)}
+                  style={{ width: "100%", resize: "none" }}
+                />
+              ) : (
+                <p className={styles.cardQuote}>{line}</p>
+              )}
+              <div>
+                <img
+                  alt="quote"
+                  width="30"
+                  height="30"
+                  src="/assets/quote2.png"
+                />
+              </div>
+            </div>
+            <div className={styles.cardLine}>
+              {update ? (
+                <Form.Control
+                  as="textarea"
+                  rows={5}
+                  defaultValue={review}
+                  onChange={(e) => this.handleChange("review", e)}
+                  style={{ width: "100%", resize: "none" }}
+                />
+              ) : (
+                <p className={styles.cardReview}>{review}</p>
+              )}
+            </div>
+            <div className={styles.update}>
+              {update ? (
+                <Button variant="secondary" onClick={this.handleClick}>
+                  Update
+                </Button>
+              ) : null}
+            </div>
           </div>
         </div>
-      </div>
+      </>
     );
   };
 

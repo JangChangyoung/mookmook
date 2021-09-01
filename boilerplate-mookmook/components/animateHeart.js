@@ -1,6 +1,6 @@
 import Lottie from "lottie-web";
 
-const animateHeart = (targetNodeId) => {
+const animateHeart = () => {
   const animation = Lottie.loadAnimation({
     container: document.getElementById("like-container"),
     renderer: "svg",
@@ -10,7 +10,9 @@ const animateHeart = (targetNodeId) => {
   });
   setTimeout(() => {
     animation.stop();
-    // document.getElementById("like-container").innerHTML = null;
+    const heart = document.getElementById("like-container");
+    heart.innerHTML = null;
+    heart.style.display = "none";
   }, 3000);
 };
 
