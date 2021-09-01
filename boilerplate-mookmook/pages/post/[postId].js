@@ -21,6 +21,7 @@ import { Button, FloatingLabel, Form } from "react-bootstrap";
 import Layout from "../../components/layout";
 import "firebase/firestore";
 import PostDelete from "./delete";
+import animateHeart from "../../components/animateHeart";
 
 import styles from "./style.module.scss";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -131,6 +132,7 @@ class DisplayPost extends React.Component {
     } else {
       // 좋아요 되어있지 않은 경우 (좋아요 해야 함)
       likeArray.push(currentUser);
+      animateHeart();
     }
 
     this.setState({ myLike: !myLike });
@@ -179,6 +181,7 @@ class DisplayPost extends React.Component {
 
     return (
       <div
+        id="like-container"
         className={styles.container}
         style={{ backgroundColor: `${imgcolor}55` }}
       >

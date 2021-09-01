@@ -109,17 +109,20 @@ class ImageCrop extends PureComponent {
   }
 
   icolorpick = (e) => {
-    console.log('icolor: ',this.state.icolor)
+    console.log("icolor: ", this.state.icolor);
     if (this.state.icolor) {
-      const oldElement = document.querySelector(`[value='${this.state.icolor}']`);
-      console.log('oldElement', oldElement)
-      if (oldElement.innerHTML !== null) oldElement.innerHTML = '';
+      const oldElement = document.querySelector(
+        `[value='${this.state.icolor}']`
+      );
+      console.log("oldElement", oldElement);
+      if (oldElement.innerHTML !== null) oldElement.innerHTML = "";
     }
 
     if (e) {
       const selectedElement = document.querySelector(`[value='${e}']`);
-      console.log(selectedElement)
-      selectedElement.innerHTML = '<i class="bi bi-check" style="font-size: 30px; margin-bottom: -1px; color: white;"></i>';  
+      console.log(selectedElement);
+      selectedElement.innerHTML =
+        '<i class="bi bi-check" style="font-size: 30px; margin-bottom: -1px; color: white;"></i>';
     }
     this.setState({ icolor: e });
   };
@@ -129,14 +132,15 @@ class ImageCrop extends PureComponent {
 
     return (
       <>
-        <div className={style['post-component']}>
-          <p className={style['post-title']}>Upload your File</p>
+        <div className={style["post-component"]}>
+          <p className={style["post-title"]}>Upload your File</p>
 
           <Form>
             <Form.Group>
-            { src 
-              ? <>
+              {src ? (
+                <>
                   <Form.Label>Uploaded image</Form.Label>
+                  <br />
                   <ReactCrop
                     src={src}
                     crop={crop}
@@ -147,10 +151,14 @@ class ImageCrop extends PureComponent {
                   />
                   <br />
                 </>
-              : <>
-                  <Form.Label htmlFor="exampleFormControlFile1" className={style['upload-container']}>
-                    <i className="bi bi-file-earmark-plus"/>
-                      Upload
+              ) : (
+                <>
+                  <Form.Label
+                    htmlFor="exampleFormControlFile1"
+                    className={style["upload-container"]}
+                  >
+                    <i className="bi bi-file-earmark-plus" />
+                    Upload
                   </Form.Label>
                   <Form.Control
                     type="file"
@@ -159,13 +167,13 @@ class ImageCrop extends PureComponent {
                     onChange={this.onSelectFile}
                   />
                 </>
-            }
-          </Form.Group>
-          <br />
+              )}
+            </Form.Group>
+            <br />
 
-          {croppedImageUrl && (
-            <>
-              {/* <Form.Group>
+            {croppedImageUrl && (
+              <>
+                {/* <Form.Group>
                 <Form.Label>Cropped image</Form.Label>
                 <br />
                 <img
@@ -177,77 +185,81 @@ class ImageCrop extends PureComponent {
               </Form.Group>
               <br /> */}
 
-              <Form.Group>
-                <Form.Label>Extracted color</Form.Label>
-                <br/>
-                <ButtonGroup>
-                  <Color src={croppedImageUrl} crossOrigin="anonymous" format="hex">
-                    {({ data, loading }) => {
-                      return(
-                        loading
-                          ? <div>loading...</div>
-                          : data===undefined
-                            ? ''
-                            : <Button
-                                id="primary-color"
-                                style={{
-                                  background: data,
-                                  color: data,
-                                  borderColor: "transparent",
-                                  width: "80px",
-                                  height: "30px",
-                                  marginRight: "5px"
-                                }}
-                                key={data}
-                                value={data}
-                                onClick={() => this.icolorpick(data)}
-                              >
-                                {data}
-                              </Button>
-                          // : <ExtractedColor data={data}/>
-                      );
-                    }}
-                  </Color>
+                <Form.Group>
+                  <Form.Label>Extracted color</Form.Label>
+                  <br />
+                  <ButtonGroup>
+                    <Color
+                      src={croppedImageUrl}
+                      crossOrigin="anonymous"
+                      format="hex"
+                    >
+                      {({ data, loading }) => {
+                        return loading ? (
+                          <div>loading...</div>
+                        ) : data === undefined ? (
+                          ""
+                        ) : (
+                          <Button
+                            id="primary-color"
+                            style={{
+                              background: data,
+                              color: data,
+                              borderColor: "transparent",
+                              width: "80px",
+                              height: "30px",
+                              marginRight: "5px",
+                            }}
+                            key={data}
+                            value={data}
+                            onClick={() => this.icolorpick(data)}
+                          >
+                            {data}
+                          </Button>
+                        );
+                        // : <ExtractedColor data={data}/>
+                      }}
+                    </Color>
 
-                  <Palette
-                    src={croppedImageUrl}
-                    crossOrigin="anonymous"
-                    format="hex"
-                    colorCount={4}
-                  >
-                    {({ data, loading }) => {
-                      let uniqueArr = [...new Set(data)];
-                      // const mostColorElement = document.getElementById('primary-color');
-                      // if(mostColorElement !== null) {
-                      //   const mostColor = mostColorElement.value;
-                      //   const duplicateIndex = uniqueArr.indexOf(mostColor);
-                      //   if (duplicateIndex !== -1) {
-                      //     uniqueArr.splice(duplicateIndex);
-                      //   }
-                      // }
-                      // console.log(uniqueArr)
+                    <Palette
+                      src={croppedImageUrl}
+                      crossOrigin="anonymous"
+                      format="hex"
+                      colorCount={4}
+                    >
+                      {({ data, loading }) => {
+                        let uniqueArr = [...new Set(data)];
+                        // const mostColorElement = document.getElementById('primary-color');
+                        // if(mostColorElement !== null) {
+                        //   const mostColor = mostColorElement.value;
+                        //   const duplicateIndex = uniqueArr.indexOf(mostColor);
+                        //   if (duplicateIndex !== -1) {
+                        //     uniqueArr.splice(duplicateIndex);
+                        //   }
+                        // }
+                        // console.log(uniqueArr)
 
-                      // console.log(mostColorElement)
-                      // if (mostColorElement !== null) {
-                      //   const mostColor = mostColorElement.value;
-                      //   console.log('똑같나?', mostColor, typeof(mostColor))
+                        // console.log(mostColorElement)
+                        // if (mostColorElement !== null) {
+                        //   const mostColor = mostColorElement.value;
+                        //   console.log('똑같나?', mostColor, typeof(mostColor))
 
-                      //   const duplicateIndex = uniqueArr.indexOf(mostColor);
-                      //   console.log('중복인덱스', duplicateIndex)
-                      //   if (duplicateIndex !== -1) {
-                      //     console.log('중복!')
-                      //     uniqueArr.splice(duplicateIndex, 1);
-                      //   }
-                      // }
-                      // console.log()
-                      // console.log(uniqueArr)
+                        //   const duplicateIndex = uniqueArr.indexOf(mostColor);
+                        //   console.log('중복인덱스', duplicateIndex)
+                        //   if (duplicateIndex !== -1) {
+                        //     console.log('중복!')
+                        //     uniqueArr.splice(duplicateIndex, 1);
+                        //   }
+                        // }
+                        // console.log()
+                        // console.log(uniqueArr)
 
-                      return(                  
-                        loading
-                          ? <div>loading...</div>
-                          : <>
-                              {data 
-                                ? uniqueArr.map((color, index) => (
+                        return loading ? (
+                          <div>loading...</div>
+                        ) : (
+                          <>
+                            {data
+                              ? uniqueArr.map((color, index) => (
                                   <Button
                                     style={{
                                       background: color,
@@ -255,7 +267,7 @@ class ImageCrop extends PureComponent {
                                       borderColor: "transparent",
                                       width: "80px",
                                       height: "30px",
-                                      marginRight: "5px"
+                                      marginRight: "5px",
                                     }}
                                     key={index}
                                     value={color}
@@ -264,19 +276,18 @@ class ImageCrop extends PureComponent {
                                     {color}
                                   </Button>
                                 ))
-                              : 'No color'
-                              }
-                            </>
-                      );
-                    }}
-                  </Palette>
-                </ButtonGroup>
-              </Form.Group>
-            </>
-          )}
+                              : "No color"}
+                          </>
+                        );
+                      }}
+                    </Palette>
+                  </ButtonGroup>
+                </Form.Group>
+              </>
+            )}
           </Form>
         </div>
-        
+
         <Button
           className={style.submit}
           onClick={() => this.props.handleClick(croppedImageJPG, icolor)}

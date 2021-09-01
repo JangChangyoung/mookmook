@@ -192,6 +192,7 @@ class PostCreatePage extends React.Component {
           autoHideDuration={200}
           autoHeight
           autoHeightMin={0}
+          autoHeightMax={900}
           // autoHeightMax={window.innerHeight - 80}
           // thumbMinSize={30}
           universal={true}
