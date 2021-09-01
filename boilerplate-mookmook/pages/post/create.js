@@ -5,13 +5,13 @@ import {
   Offcanvas,
   Form,
   FormGroup,
-  ButtonGroup,
   ToggleButton,
   InputGroup,
 } from "react-bootstrap";
 import { CirclePicker } from "react-color";
 import ImageCrop from "./crop";
 import Search from "./search";
+import { Scrollbars } from "react-custom-scrollbars";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import style from "./style.module.scss";
@@ -161,6 +161,8 @@ class PostCreatePage extends React.Component {
         oldElement.removeChild(oldElement.firstChild);
     }
     document.getElementsByClassName("circle-picker").value = e.hex;
+
+    const selectedElement = document.querySelector(`[title='${e.hex}']`);
     const checked = document.createElement("i");
     checked.setAttribute("class", "bi bi-check");
     checked.setAttribute("style", "font-size: 28px; color: white;");
@@ -184,85 +186,95 @@ class PostCreatePage extends React.Component {
             Post your review
           </Offcanvas.Title>
         </Offcanvas.Header>
-        <Offcanvas.Body>
-          <div className={style["post-component"]}>
-            <p className={style["post-title"]}>Choose type</p>
-            {/* <svg viewbox="0 0 24 24" style="width: 24px; height: 24px;">
-              <path d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"/>
-            </svg> */}
-            {radios.map((radio, idx) => (
-              <ToggleButton
-                className={style.toggleButton}
-                key={idx}
-                id={`radio-${idx}`}
-                name="radio"
-                type="radio"
-                variant="outline-secondary"
-                value={radio.type}
-                checked={this.state.type === radio.type}
-                onChange={(e) => this.radioChange(e)}
-              >
-                {radio.type}
-              </ToggleButton>
-            ))}
-            ))}
-          </div>
+        <Scrollbars
+          autoHide
+          autoHideTimeout={1000}
+          autoHideDuration={200}
+          autoHeight
+          autoHeightMin={0}
+          // autoHeightMax={window.innerHeight - 80}
+          // thumbMinSize={30}
+          universal={true}
+        >
+          <Offcanvas.Body>
+            <div className={style["post-component"]}>
+              <p className={style["post-title"]}>Choose type</p>
+              {/* <svg viewbox="0 0 24 24" style="width: 24px; height: 24px;">
+                <path d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"/>
+              </svg> */}
+              {radios.map((radio, idx) => (
+                <ToggleButton
+                  className={style.toggleButton}
+                  key={idx}
+                  id={`radio-${idx}`}
+                  name="radio"
+                  type="radio"
+                  variant="outline-secondary"
+                  value={radio.type}
+                  checked={this.state.type === radio.type}
+                  onChange={(e) => this.radioChange(e)}
+                >
+                  {radio.type}
+                </ToggleButton>
+              ))}
+            </div>
 
-          <div className={style["post-component"]}>
-            <p className={style["post-title"]}>Write your review</p>
-            <Form>
-              <Form.Label>Title</Form.Label>
-              <InputGroup className="mb-3">
-                <Form.Control
-                  id="title"
-                  type="text"
-                  value={this.state.title}
-                  readOnly
+            <div className={style["post-component"]}>
+              <p className={style["post-title"]}>Write your review</p>
+              <Form>
+                <Form.Label>Title</Form.Label>
+                <InputGroup className="mb-3">
+                  <Form.Control
+                    id="title"
+                    type="text"
+                    value={this.state.title}
+                    readOnly
+                  />
+
+                  <Search
+                    type={this.state.type}
+                    title={this.state.title}
+                    selectTitle={this.selectTitle}
+                  />
+                </InputGroup>
+                <br />
+
+                <Form.Label htmlFor="exampleColorInput">Color</Form.Label>
+                <CirclePicker
+                  width="100%"
+                  id="color"
+                  value="#44336"
+                  onChange={this.handleColor}
                 />
+                <br />
 
-                <Search
-                  type={this.state.type}
-                  title={this.state.title}
-                  selectTitle={this.selectTitle}
-                />
-              </InputGroup>
-              <br />
+                <FormGroup>
+                  <Form.Label>Famous line</Form.Label>
+                  <Form.Control
+                    id="line"
+                    as="textarea"
+                    rows={2}
+                    style={{ width: "100%", resize: "none" }}
+                  />
+                </FormGroup>
+                <br />
 
-              <Form.Label htmlFor="exampleColorInput">Color</Form.Label>
-              <CirclePicker
-                width="100%"
-                id="color"
-                value="#44336"
-                onChange={this.handleColor}
-              />
-              <br />
+                <Form.Group>
+                  <Form.Label>Review</Form.Label>
+                  <Form.Control
+                    id="review"
+                    as="textarea"
+                    rows={3}
+                    style={{ width: "100%", resize: "none" }}
+                  />
+                </Form.Group>
+                <br />
+              </Form>
+            </div>
 
-              <FormGroup>
-                <Form.Label>Famous line</Form.Label>
-                <Form.Control
-                  id="line"
-                  as="textarea"
-                  rows={2}
-                  style={{ width: "100%", resize: "none" }}
-                />
-              </FormGroup>
-              <br />
-
-              <Form.Group>
-                <Form.Label>Review</Form.Label>
-                <Form.Control
-                  id="review"
-                  as="textarea"
-                  rows={3}
-                  style={{ width: "100%", resize: "none" }}
-                />
-              </Form.Group>
-              <br />
-            </Form>
-          </div>
-
-          <ImageCrop handleClick={this.handleClick} />
-        </Offcanvas.Body>
+            <ImageCrop handleClick={this.handleClick} />
+          </Offcanvas.Body>
+        </Scrollbars>
       </Offcanvas>
     );
   }
