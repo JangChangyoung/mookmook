@@ -1,3 +1,4 @@
+/* eslint-disable no-plusplus */
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable react/button-has-type */
 /* eslint-disable react/no-array-index-key */
@@ -49,6 +50,23 @@ class DisplayPosts extends React.Component {
       countMovies(movies.length);
       countBooks(books.length);
     }
+
+    // let step;
+    // if (movies.length > 32) {
+    //   for (step = 0; step < 32; step++) {
+    //     randommovies.push(this.randomItem(movies));
+    //   }
+    // } else randommovies.concat(movies);
+    // if (books.length > 32) {
+    //   for (step = 0; step < 32; step++) {
+    //     randombooks.push(this.randomItem(books));
+    //   }
+    // } else randombooks.concat(books);
+    // this.changeLoading(movies, books, randombooks, randommovies);
+    // if (host) {
+    //   countMovies(movies.length);
+    //   countBooks(books.length);
+    // }
   };
 
   getPosts = (name) => {
@@ -60,7 +78,6 @@ class DisplayPosts extends React.Component {
             .collection(name)
             .where("userID", "==", host)
             .orderBy("colorhue")
-            .limit(32)
             .get();
           resolve(data);
         })
@@ -69,7 +86,6 @@ class DisplayPosts extends React.Component {
             .firestore()
             .collection(name)
             .orderBy("colorhue")
-            .limit(32)
             .get();
           resolve(data);
         });
@@ -77,7 +93,12 @@ class DisplayPosts extends React.Component {
 
   changeLoading = (movies, books) => {
     if (books !== [] && movies !== []) {
-      this.setState({ movies, books, isLoading: false });
+      this.setState({
+        movies,
+        books,
+
+        isLoading: false,
+      });
     }
   };
 
@@ -224,6 +245,10 @@ class DisplayPosts extends React.Component {
         </div>
       );
     });
+  };
+
+  randomItem = (a) => {
+    return a[Math.floor(Math.random() * a.length)];
   };
 
   render() {
