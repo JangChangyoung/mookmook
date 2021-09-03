@@ -191,18 +191,12 @@ class PostCreatePage extends React.Component {
           autoHideTimeout={1000}
           autoHideDuration={200}
           autoHeight
-          autoHeightMin={0}
-          autoHeightMax={900}
-          // autoHeightMax={window.innerHeight - 80}
-          // thumbMinSize={30}
+          autoHeightMin="calc(100vh - 74px)"
           universal={true}
         >
           <Offcanvas.Body>
             <div className={style["post-component"]}>
               <p className={style["post-title"]}>Choose type</p>
-              {/* <svg viewbox="0 0 24 24" style="width: 24px; height: 24px;">
-                <path d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"/>
-              </svg> */}
               {radios.map((radio, idx) => (
                 <ToggleButton
                   className={style.toggleButton}
