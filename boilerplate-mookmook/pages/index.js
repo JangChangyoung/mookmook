@@ -14,7 +14,7 @@ class Home extends React.Component {
     return (
       <div>
         <Layout />
-        <DisplayPosts host={null} />
+        <DisplayPosts host={null} types="random" />
       </div>
     );
   }

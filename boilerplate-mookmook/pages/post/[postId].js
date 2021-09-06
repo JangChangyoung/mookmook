@@ -330,7 +330,7 @@ const PostPage = () => {
     <>
       <Layout />
       {postId ? (
-        <DisplayPost postId={postId} />
+        <DisplayPost postId={postId} type="all" />
       ) : (
         <div>{`Post: ${postId}`}</div>
       )}

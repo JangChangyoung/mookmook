@@ -63,7 +63,8 @@ const UserPage = () => {
           {" "}
           {host ? (
             <DisplayPosts
-              style={{ zIndex: "-1" }}
+              types="all"
+              style={{ zIndex: "-1", paddingLeft: "-300px" }}
               host={host}
               color={color}
               countMovies={countMovies}

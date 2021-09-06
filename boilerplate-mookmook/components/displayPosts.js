@@ -31,7 +31,10 @@ class DisplayPosts extends React.Component {
     console.log("loading");
     const books = [];
     const movies = [];
-    const { host } = this.props;
+    const randommovies = [];
+    const randombooks = [];
+    const { host, types } = this.props;
+
     const { countBooks, countMovies } = this.props;
 
     await Promise.all(
@@ -45,28 +48,33 @@ class DisplayPosts extends React.Component {
         });
       })
     );
-    this.changeLoading(movies, books);
+    console.log("random전");
+    let step;
+    if (types === "random") {
+      console.log("왜 random?");
+      if (movies.length > 32) {
+        for (step = 0; step < 32; step++) {
+          randommovies.push(this.randomItem(movies));
+        }
+      } else randommovies.concat(movies);
+      if (books.length > 32) {
+        for (step = 0; step < 32; step++) {
+          randombooks.push(this.randomItem(books));
+        }
+      } else randombooks.concat(books);
+      this.setState({
+        movies: randommovies,
+        books: randombooks,
+        isLoading: false,
+      });
+    } else {
+      this.changeLoading(movies, books);
+    }
+
     if (host) {
       countMovies(movies.length);
       countBooks(books.length);
     }
-
-    // let step;
-    // if (movies.length > 32) {
-    //   for (step = 0; step < 32; step++) {
-    //     randommovies.push(this.randomItem(movies));
-    //   }
-    // } else randommovies.concat(movies);
-    // if (books.length > 32) {
-    //   for (step = 0; step < 32; step++) {
-    //     randombooks.push(this.randomItem(books));
-    //   }
-    // } else randombooks.concat(books);
-    // this.changeLoading(movies, books, randombooks, randommovies);
-    // if (host) {
-    //   countMovies(movies.length);
-    //   countBooks(books.length);
-    // }
   };
 
   getPosts = (name) => {
