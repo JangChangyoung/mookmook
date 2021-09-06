@@ -30,33 +30,26 @@
 .container {
   overflow: auto;
   height: max-content;
-  min-height: 100vh;
-  // min-height: auto;
-  position: relative;
-}
-
-.row {
+  min-height: calc(100vh - 158px);
   display: flex;
   flex-wrap: wrap;
-  overflow: auto;
-  height: max-content;
-  min-height: 100vh;
-  position: relative;
 }
 
 /* Create two unequal columns that sits next to each other */
 /* Sidebar/left column */
 .side {
-  flex: 25%; /* Set the width of the sidebar */
+  flex: 25%;
+  min-height: 100vh;
+  // flex: 200px; /* Set the width of the sidebar */
   background-color: #f1f1f1; /* Grey background color */
   // overflow: auto;
   position: relative;
-  height: auto;
   padding: 20px; /* Some padding */
 }
 
 /* Main column */
 .main {
+  min-width: 600px;
   flex: 75%; /* Set the width of the main content */
   background-color: white; /* White background color */
   // overflow: auto;
