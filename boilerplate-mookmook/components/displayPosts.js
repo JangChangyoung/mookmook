@@ -49,18 +49,17 @@ class DisplayPosts extends React.Component {
       })
     );
     console.log("random전");
-    let step;
+
     if (types === "random") {
       console.log("왜 random?");
       if (movies.length > 32) {
-        for (step = 0; step < 32; step++) {
-          randommovies.push(this.randomItem(movies));
-        }
+        const step = this.randomItem(movies.length);
+        console.log(step);
+        for (let i = 0; i < 32; i++) randommovies.push(movies[step[i]]);
       } else randommovies.concat(movies);
       if (books.length > 32) {
-        for (step = 0; step < 32; step++) {
-          randombooks.push(this.randomItem(books));
-        }
+        const step = this.randomItem(books.length);
+        for (let m = 0; m < 32; m++) randombooks.push(books[step[m]]);
       } else randombooks.concat(books);
       this.setState({
         movies: randommovies,
@@ -255,9 +254,24 @@ class DisplayPosts extends React.Component {
     });
   };
 
-  randomItem = (a) => {
-    return a[Math.floor(Math.random() * a.length)];
+  randomItem = (anum) => {
+    const randomIndexArray = [];
+    for (let i = 0; i < 32; i++) {
+      // check if there is any duplicate index
+      const randomNum = Math.floor(Math.random() * anum);
+      if (randomIndexArray.indexOf(randomNum) === -1) {
+        randomIndexArray.push(randomNum);
+      } else {
+        // if the randomNum is already in the array retry
+        i--;
+      }
+    }
+
+    return randomIndexArray.sort((a, b) => {
+      return a - b;
+    });
   };
+  // return a[Math.floor(Math.random() * a.length)];
 
   render() {
     console.log("rendering");
