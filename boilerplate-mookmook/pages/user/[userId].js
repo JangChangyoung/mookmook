@@ -30,67 +30,64 @@ const UserPage = () => {
   const email = account.get("email");
 
   return (
-    <Scrollbars
-      autoHide
-      autoHideTimeout={1000}
-      autoHideDuration={200}
-      autoHeight
-      autoHeightMin="100vh"
-      universal={true}
-    >
-      <Layout />
-      <div className={styles.container}>
-        {/* <div className={styles.row}> */}
-        <div className={styles.side}>
-          <h2>Profile</h2>
-          <a>당신은 상위 몇퍼센트입니다</a>
-          <br />
-          <br /> <br />
-          <br />
-          <div className={styles["post-component"]}>
-            <Image
-              className={styles.image}
-              src={photoURL}
-              width="80"
-              height="80"
-            />
-            <div className={styles.text}>{displayName}</div>
-            <div className={styles.email}>{email}</div>
+    <>
+      <Scrollbars
+        autoHide
+        autoHideTimeout={1000}
+        autoHideDuration={200}
+        autoHeight
+        autoHeightMin="100vh"
+        universal={true}
+      >
+        <Layout />
+        <div className={styles.container}>
+          <div className={styles.side}>
+            <h2>Profile</h2>
+            <a>당신은 상위 몇퍼센트입니다</a>
+            <br />
+            <br /> <br />
+            <br />
+            <div className={styles["post-component"]}>
+              <Image
+                className={styles.image}
+                src={photoURL}
+                width="80"
+                height="80"
+              />
+              <div className={styles.text}>{displayName}</div>
+              <div className={styles.email}>{email}</div>
+            </div>
+            <br />
+            <br /> <br />
+            <br /> <br />
+            <br />
+            <h3>
+              {countMovie}권의 영화를 보고,
+              <br /> {countBook}권의 책을 읽으셨어요
+            </h3>
+            <br />
+            <p>가장 마음에 드는 후기를 하나 선택해주세요</p>
           </div>
-          <br />
-          <br /> <br />
-          <br /> <br />
-          <br />
-          <h3>
-            {countMovie}권의 영화를 보고,
-            <br /> {countBook}권의 책을 읽으셨어요
-          </h3>
-          <br />
-          <p>가장 마음에 드는 후기를 하나 선택해주세요</p>
+          <div className={styles.main}>
+            {" "}
+            {host ? (
+              <DisplayPosts
+                types="all"
+                // style={{ zIndex: "-1", paddingLeft: "-300px" }}
+                host={host}
+                color={color}
+                countMovies={countMovies}
+                countBooks={countBooks}
+              />
+            ) : null}
+          </div>
         </div>
-        <div className={styles.main}>
-          {" "}
-          {host ? (
-            <DisplayPosts
-              types="all"
-              style={{ zIndex: "-1", paddingLeft: "-300px" }}
-              host={host}
-              color={color}
-              countMovies={countMovies}
-              countBooks={countBooks}
-            />
-          ) : null}
+        <div className={styles.footer}>
+          <p>mookmook@knu.ac.kr</p>
+          <p>contact: 010-1234-5678</p>
         </div>
-      </div>
-      {/* </div> */}
-      <div className={styles.footer}>
-        <a>
-          mookmook@knu.ac.kr
-          <br />
-          contact: 010-1234-5678
-        </a>
-      </div>
-    </Scrollbars>
+      </Scrollbars>
+    </>
   );
 };
 
