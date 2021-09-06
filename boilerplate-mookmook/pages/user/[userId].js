@@ -43,10 +43,6 @@ const UserPage = () => {
         <div className={styles.container}>
           <div className={styles.side}>
             <h2>Profile</h2>
-            <a>당신은 상위 몇퍼센트입니다</a>
-            <br />
-            <br /> <br />
-            <br />
             <div className={styles["post-component"]}>
               <Image
                 className={styles.image}
@@ -54,16 +50,18 @@ const UserPage = () => {
                 width="80"
                 height="80"
               />
-              <div className={styles.text}>{displayName}</div>
-              <div className={styles.email}>{email}</div>
+              <p>
+                {displayName}님은 상위{" "}
+                <span style={{ color: "red" }}>0.00 %</span> 입니다
+              </p>
             </div>
             <br />
             <br /> <br />
             <br /> <br />
             <br />
             <h3>
-              {countMovie}권의 영화를 보고,
-              <br /> {countBook}권의 책을 읽으셨어요
+              {countMovie}개의 영화를 보고,
+              <br /> {countBook}권의 책을 읽으셨어요!
             </h3>
             <br />
             <p>가장 마음에 드는 후기를 하나 선택해주세요</p>
@@ -73,7 +71,6 @@ const UserPage = () => {
             {host ? (
               <DisplayPosts
                 types="all"
-                // style={{ zIndex: "-1", paddingLeft: "-300px" }}
                 host={host}
                 color={color}
                 countMovies={countMovies}
