@@ -25,6 +25,9 @@ module.exports = {
     "react/prop-types": 0,
     "no-shadow": 0,
     "react/jsx-no-bind": 0,
+    "prefer-const": 0,
+    "import/order": 0,
+    "react/jsx-boolean-value": 0,
   },
   settings: {
     "import/resolver": {
