@@ -6,6 +6,7 @@ import styles from "./styles.module.scss";
 
 import Layout from "../../components/layout";
 import DisplayPosts from "../../components/displayPosts";
+import ColorSelect from "../../components/colorSelect";
 import { Scrollbars } from "react-custom-scrollbars";
 
 import "bootstrap-icons/font/bootstrap-icons.css";
@@ -15,14 +16,14 @@ const UserPage = () => {
   const router = useRouter();
   const host = router.query.userId;
 
-  const [color, setColor] = useState(false);
-  const handleColor = (color) => setColor(color);
+  const [color, setColor] = useState(null);
+  const changeColor = (color) => setColor(color);
 
   const [countMovie, setMovie] = useState(0);
   const countMovies = (movie) => setMovie(movie);
 
   const [countBook, setBook] = useState(0);
-  const countBooks = (book) => setMovie(book);
+  const countBooks = (book) => setBook(book);
 
   const account = useSelector((store) => store.account);
   const displayName = account.get("displayName");
@@ -30,6 +31,7 @@ const UserPage = () => {
   const email = account.get("email");
 
   return (
+<<<<<<< Updated upstream
     <>
       <Scrollbars
         autoHide
@@ -78,6 +80,47 @@ const UserPage = () => {
               />
             ) : null}
           </div>
+=======
+    <Scrollbars
+      autoHide
+      autoHideTimeout={1000}
+      autoHideDuration={200}
+      autoHeight
+      autoHeightMin="100vh"
+      universal={true}
+    >
+      <Layout />
+      <ColorSelect changeColor={changeColor} />
+      <div className={styles.container}>
+        {/* <div className={styles.row}> */}
+        <div className={styles.side}>
+          <h2>Profile</h2>
+          <a>당신은 상위 몇 퍼센트입니다</a>
+          <br />
+          <br /> <br />
+          <br />
+          <div className={styles["post-component"]}>
+            <Image
+              className={styles.image}
+              src={photoURL}
+              width="80"
+              height="80"
+            />
+            <div className={styles.text}>{displayName}</div>
+            <div className={styles.email}>{email}</div>
+          </div>
+          <br />
+          <br /> <br />
+          <br /> <br />
+          <br />
+          <h5>{displayName}님은</h5>
+          <h3>
+            {countMovie}권의 영화를 보고,
+            <br /> {countBook}권의 책을 읽으셨어요
+          </h3>
+          <br />
+          <p>가장 마음에 드는 후기를 하나 선택해주세요</p>
+>>>>>>> Stashed changes
         </div>
         <div className={styles.footer}>
           <p>mookmook@knu.ac.kr</p>

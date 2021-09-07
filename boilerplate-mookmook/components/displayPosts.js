@@ -78,7 +78,7 @@ class DisplayPosts extends React.Component {
   };
 
   getPosts = (name) => {
-    const { host } = this.props;
+    const { host, color } = this.props;
     return host
       ? new Promise((resolve) => {
           const data = firebase
@@ -104,7 +104,6 @@ class DisplayPosts extends React.Component {
       this.setState({
         movies,
         books,
-
         isLoading: false,
       });
     }
@@ -112,9 +111,19 @@ class DisplayPosts extends React.Component {
 
   displayPosts = (props) => {
     const { type, movies, books } = props;
+    const { color } = this.props;
+    let dpMovies = movies;
+    let dpBooks = books;
+
+    if (color) {
+      const dpColor = color;
+      dpMovies = movies.filter((movie) => movie.color === dpColor);
+      dpBooks = books.filter((book) => book.color === dpColor);
+      console.log(color);
+    }
     if (movies || books) {
       return type
-        ? books.map((book, index) => (
+        ? dpBooks.map((book, index) => (
             <button
               key={index}
               onClick={() => Router.push(`/post/book_${book.docID}`)}
@@ -122,7 +131,7 @@ class DisplayPosts extends React.Component {
               <div className="small-4 columns">
                 <div
                   className={styles.cardcontainer}
-                  ontouchstart="this.classList.toggle('hover');"
+                  onTouchStart="this.classList.toggle('hover');"
                 >
                   <div className={styles.card}>
                     <div className={styles.front}>
@@ -173,7 +182,7 @@ class DisplayPosts extends React.Component {
               </div>
             </button>
           ))
-        : movies.map((movie, index) => (
+        : dpMovies.map((movie, index) => (
             <button
               key={index}
               onClick={() => Router.push(`/post/movie_${movie.docID}`)}
