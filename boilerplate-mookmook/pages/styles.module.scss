@@ -23,7 +23,7 @@ $scale: 2;
 .container_row {
   width: 100%;
   padding: 30px 120px 30px 240px;
-  position: absolute;
+  position: relative;
   left: 50%;
   transform: translateX(-50%);
   flex-wrap: wrap;
