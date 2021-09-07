@@ -21,6 +21,10 @@ module.exports = {
     "jsx-a11y/label-has-associated-control": 0,
     "no-nested-ternary": 0,
     "arrow-body-style": 0,
+    "no-unused-vars": 0,
+    "react/prop-types": 0,
+    "no-shadow": 0,
+    "react/jsx-no-bind": 0,
   },
   settings: {
     "import/resolver": {
