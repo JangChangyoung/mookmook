@@ -134,19 +134,17 @@ class ModalForm extends Component {
           data: { items },
         },
       } = await axios.get(
-        `http://localhost:3000/api/get${api}?keyword=${encodeURIComponent(
-          title
-        )}`
+        `/api/get${api}?keyword=${encodeURIComponent(title)}`
       );
       this.setState({ items });
     }
   };
 
   handleKeyPress = (e) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       e.preventDefault();
     }
-  }
+  };
 
   render() {
     const { items } = this.state;
@@ -162,7 +160,7 @@ class ModalForm extends Component {
             <Row className={style.search_bar}>
               <Col sm={9}>
                 <Form.Control
-                  onKeyPress={e => this.handleKeyPress(e,type)}
+                  onKeyPress={(e) => this.handleKeyPress(e, type)}
                   type="text"
                   onChange={this.handleChange}
                   value={this.state.search}
