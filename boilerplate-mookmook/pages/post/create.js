@@ -34,20 +34,20 @@ class PostCreatePage extends React.Component {
   }
   sortColors(color) {
     /* Get the hex value without hash symbol. */
-    var hex = color.substring(1);
+    const hex = color.substring(1);
 
-    var r = parseInt(hex.substring(0, 2), 16) / 255;
-    var g = parseInt(hex.substring(2, 4), 16) / 255;
-    var b = parseInt(hex.substring(4, 6), 16) / 255;
+    const r = parseInt(hex.substring(0, 2), 16) / 255;
+    const g = parseInt(hex.substring(2, 4), 16) / 255;
+    const b = parseInt(hex.substring(4, 6), 16) / 255;
     /* Getting the Max and Min values for Chroma. */
-    var max = Math.max.apply(Math, [r, g, b]);
-    var min = Math.min.apply(Math, [r, g, b]);
+    const max = Math.max.apply(Math, [r, g, b]);
+    const min = Math.min.apply(Math, [r, g, b]);
 
     /* Variables for HSV value of hex color. */
-    var chr = max - min;
-    var hue = 0;
-    var val = max;
-    var sat = 0;
+    const chr = max - min;
+    const hue = 0;
+    const val = max;
+    const sat = 0;
 
     if (val > 0) {
       sat = chr / val;
@@ -68,12 +68,12 @@ class PostCreatePage extends React.Component {
     return hue;
   }
   getTime = () => {
-    let today = new Date();
+    const today = new Date();
 
-    let year = today.getFullYear(); // 년도
-    let month = today.getMonth() + 1; // 월
-    let date = today.getDate(); // 날짜
-    let day = today.getDay(); // 요일
+    const year = today.getFullYear(); // 년도
+    const month = today.getMonth() + 1; // 월
+    const date = today.getDate(); // 날짜
+    const day = today.getDay(); // 요일
     switch (day) {
       case 0:
         day = "Mon";
@@ -101,16 +101,16 @@ class PostCreatePage extends React.Component {
   };
 
   handleClick = async (data, icolor) => {
-    let title = this.state.title;
-    let imgurl = data;
-    let titleimg = this.state.titleimg;
-    let imgcolor = icolor;
-    let type = this.state.type;
-    let color = document.getElementsByClassName("circle-picker").value;
-    let line = document.getElementById("line").value;
-    let review = document.getElementById("review").value;
-    let colorhue = this.sortColors(imgcolor);
-    let datetime = this.getTime();
+    const title = this.state.title;
+    const imgurl = data;
+    const titleimg = this.state.titleimg;
+    const imgcolor = icolor;
+    const type = this.state.type;
+    const color = document.getElementsByClassName("circle-picker").value;
+    const line = document.getElementById("line").value;
+    const review = document.getElementById("review").value;
+    const colorhue = this.sortColors(imgcolor);
+    const datetime = this.getTime();
 
     if (!title || !imgurl || !imgcolor || !type || !color || !line || !review) {
       alert("모든 값을 입력해주세요.");
@@ -143,7 +143,7 @@ class PostCreatePage extends React.Component {
   };
   selectTitle = (title, titleimg) => {
     if (title.includes("<b>")) {
-      var title = title.replace(/<b>/gi, "").replace(/<\/b>/gi, "");
+      const title = title.replace(/<b>/gi, "").replace(/<\/b>/gi, "");
     }
     this.setState({ title: title, titleimg: titleimg });
   };
