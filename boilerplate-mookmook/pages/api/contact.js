@@ -1,4 +1,3 @@
-/* eslint-disable consistent-return */
 import admin from "firebase-admin";
 import axios from "axios";
 

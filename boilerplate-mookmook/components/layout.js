@@ -1,4 +1,3 @@
-/* eslint-disable no-restricted-globals */
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
@@ -34,7 +33,7 @@ const Layout = () => {
     <>
       <PostCreatePage show={show} onHide={handleClose} />
       <SignUpPage show={show2} onHide={handleClose2} />
-      <Navbar style={{backgroundColor:"#003366"}} expand="lg">
+      <Navbar style={{ backgroundColor: "#003366" }} expand="lg">
         <Container>
           <Navbar id="basic-navbar-nav">
             <Nav className="justify-content-start">
@@ -45,34 +44,43 @@ const Layout = () => {
               </Nav.Link>
             </Nav>
           </Navbar>
-          <Navbar.Brand className={style.brandName} style={{color:'white'}} href="/">
+          <Navbar.Brand
+            className={style.brandName}
+            style={{ color: "white" }}
+            href="/"
+          >
             Mook-Mook
           </Navbar.Brand>
           <Navbar id="basic-navbar-nav" className="justify-content-end">
             <Nav>
-              <Nav.Link onClick={handleShow2} style={{color:'white'}}>
+              <Nav.Link onClick={handleShow2} style={{ color: "white" }}>
                 {user ? "Logout" : "Login"}
               </Nav.Link>
-              {user ? <Nav.Link href={`/user/${user}`} style={{color:'white'}}>MyPage</Nav.Link> : null}
+              {user ? (
+                <Nav.Link href={`/user/${user}`} style={{ color: "white" }}>
+                  MyPage
+                </Nav.Link>
+              ) : null}
             </Nav>
           </Navbar>
         </Container>
       </Navbar>
-        { pathname==='/'
-          ? <Container fluid>
-              <Contact show={show3} onHide={handleClose3} />
-              <Image
-                className={style.contact}
-                src="/assets/contact.png"
-                width="50"
-                height="50"
-                onClick={handleShow3}
-                rounded
-              />
-            </Container>
-          : ''
-        }
-      </>
+      {pathname === "/" ? (
+        <Container fluid>
+          <Contact show={show3} onHide={handleClose3} />
+          <Image
+            className={style.contact}
+            src="/assets/contact.png"
+            width="50"
+            height="50"
+            onClick={handleShow3}
+            rounded
+          />
+        </Container>
+      ) : (
+        ""
+      )}
+    </>
   );
 };
 

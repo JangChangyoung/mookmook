@@ -55,6 +55,12 @@ module.exports = {
     "eslint-disable no-useless-catch ": 0,
     "eslint-disable react/button-has-type": 0,
     "eslint-disable react/no-unescaped-entities": 0,
+    "eslint-disable no-restricted-globals": 0,
+    "eslint-disable-next-line react/prop-types": 0,
+    "eslint-disable react/jsx-props-no-spreading": 0,
+    "eslint-disable camelcase": 0,
+    "eslint-disable no-console": 0,
+    "eslint-disable no-undef": 0,
   },
   settings: {
     "import/resolver": {

@@ -1,8 +1,3 @@
-/* eslint-disable camelcase */
-/* eslint-disable prefer-destructuring */
-/* eslint-disable react/prop-types */
-/* eslint-disable react/jsx-props-no-spreading */
-/* eslint-disable-next-line react/prop-types */
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 

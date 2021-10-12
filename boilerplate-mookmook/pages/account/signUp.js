@@ -1,8 +1,3 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable no-undef */
-/* eslint-disable camelcase */
-/* eslint-disable no-console */
-/* eslint-disable react/button-has-type */
 import React from "react";
 import { useSelector } from "react-redux";
 import { Offcanvas, Button, Image } from "react-bootstrap";
@@ -59,17 +54,13 @@ const SignUpPage = ({ show, onHide }) => {
       );
     }
     return (
-      <div className={styles['post-component']}>
+      <div className={styles["post-component"]}>
         <p className={styles.hi}>{`${displayName}님, 안녕하세요 !`}</p>
         <Image className={styles.image} src={photoURL} width="80" height="80" />
         <div className={styles.text}>{displayName}</div>
         <div className={styles.email}>{email}</div>
         <div className={styles.border} />
-        <Button
-          className={styles.logout}
-          variant="secondary"
-          onClick={logout}
-        >
+        <Button className={styles.logout} variant="secondary" onClick={logout}>
           Logout
         </Button>
       </div>
@@ -77,9 +68,16 @@ const SignUpPage = ({ show, onHide }) => {
   }
 
   return (
-    <Offcanvas className={styles['post-container']} show={show} onHide={onHide} placement="end">
+    <Offcanvas
+      className={styles["post-container"]}
+      show={show}
+      onHide={onHide}
+      placement="end"
+    >
       <Offcanvas.Header closeButton>
-        <Offcanvas.Title className={styles['post-header']}>Sign</Offcanvas.Title>
+        <Offcanvas.Title className={styles["post-header"]}>
+          Sign
+        </Offcanvas.Title>
       </Offcanvas.Header>
       <Offcanvas.Body>
         <Loging />
