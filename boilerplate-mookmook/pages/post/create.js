@@ -51,14 +51,14 @@ class PostCreatePage extends React.Component {
     if (val > 0) {
       sat = chr / val;
       if (sat > 0) {
-        if (r == max) {
+        if (r === max) {
           hue = 60 * ((g - min - (b - min)) / chr);
           if (hue < 0) {
             hue += 360;
           }
-        } else if (g == max) {
+        } else if (g === max) {
           hue = 120 + 60 * ((b - min - (r - min)) / chr);
-        } else if (b == max) {
+        } else if (b === max) {
           hue = 240 + 60 * ((r - min - (g - min)) / chr);
         }
       }

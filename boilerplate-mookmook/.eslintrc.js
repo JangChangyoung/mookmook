@@ -18,6 +18,7 @@ module.exports = {
     "react/jsx-filename-extension": 0,
     "react/react-in-jsx-scope": 0,
     "jsx-a11y/anchor-is-valid": 0,
+    "react/prefer-stateless-function": 0,
     "jsx-a11y/label-has-associated-control": 0,
     "no-nested-ternary": 0,
     "arrow-body-style": 0,
