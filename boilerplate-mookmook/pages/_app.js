@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 
 import firebase from "firebase/app";
 import "firebase/auth";
+import "firebase/analytics";
 
 import { createStore } from "redux";
 import { createWrapper } from "next-redux-wrapper";
@@ -29,6 +30,8 @@ const App = ({ Component, pageProps }) => {
       appId: process.env.appId,
       measurementId: process.env.measurementId,
     });
+
+    firebase.analytics();
   }
 
   const dispatch = useDispatch();
