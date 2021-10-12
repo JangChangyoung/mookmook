@@ -61,6 +61,15 @@ module.exports = {
     camelcase: 0,
     "no-console": 0,
     "no-undef": 0,
+    "class-methods-use-this": 0,
+    "no-const-assign": 0,
+    "lines-between-class-members": 0,
+    "default-case": 0,
+    "prefer-template": 0,
+    "object-shorthand": 0,
+    "no-array-constructor": 0,
+    "lines-between-class-members": 0,
+    "no-use-before-define": 0,
   },
   settings: {
     "import/resolver": {
