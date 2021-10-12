@@ -6,6 +6,7 @@ import { Navbar, Nav, Container, Image, Button } from "react-bootstrap";
 import PostCreatePage from "../pages/post/create";
 import SignUpPage from "../pages/account/signUp";
 import Contact from "../pages/contact/index";
+import firebase from "firebase/app";
 
 import style from "./style.module.scss";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -18,7 +19,15 @@ const Layout = () => {
   // console.log(url);
 
   const [show, setShow] = useState(false);
-  const handleShow = () => setShow(true);
+  const handleShow = () => {
+    // const user = firebase.auth().currentUser;
+    if (user) {
+      setShow(true);
+    } else {
+      alert("로그인을 해주세요!");
+    }
+  };
+
   const handleClose = () => setShow(false);
 
   const [show2, setShow2] = useState(false);

@@ -44,9 +44,9 @@ class PostCreatePage extends React.Component {
 
     /* Variables for HSV value of hex color. */
     const chr = max - min;
-    const hue = 0;
+    let hue = 0;
     const val = max;
-    const sat = 0;
+    let sat = 0;
 
     if (val > 0) {
       sat = chr / val;
@@ -72,7 +72,7 @@ class PostCreatePage extends React.Component {
     const year = today.getFullYear(); // 년도
     const month = today.getMonth() + 1; // 월
     const date = today.getDate(); // 날짜
-    const day = today.getDay(); // 요일
+    let day = today.getDay(); // 요일
     switch (day) {
       case 0:
         day = "Mon";
@@ -108,12 +108,13 @@ class PostCreatePage extends React.Component {
     const color = document.getElementsByClassName("circle-picker").value;
     const line = document.getElementById("line").value;
     const review = document.getElementById("review").value;
-    const colorhue = this.sortColors(imgcolor);
     const datetime = this.getTime();
 
     if (!title || !imgurl || !imgcolor || !type || !color || !line || !review) {
-      alert("모든 값을 입력해주세요.");
+      return alert("모든 값을 입력해주세요.");
     } else {
+      const colorhue = this.sortColors(imgcolor);
+
       const db = firebase.firestore();
       const user = firebase.auth().currentUser;
       console.log(user);
@@ -122,15 +123,15 @@ class PostCreatePage extends React.Component {
         .add({
           displayName: user.displayName,
           userID: user.uid,
-          imgcolor: imgcolor,
-          type: type,
-          title: title,
-          imgurl: imgurl,
-          titleimg: titleimg,
-          color: color,
-          colorhue: colorhue,
-          line: line,
-          review: review,
+          imgcolor,
+          type,
+          title,
+          imgurl,
+          titleimg,
+          color,
+          colorhue,
+          line,
+          review,
           uploadTime: datetime,
           likeArray: new Array(),
         })
