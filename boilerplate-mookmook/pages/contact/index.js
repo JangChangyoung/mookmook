@@ -1,5 +1,3 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable no-useless-catch */
 import React, { useState } from "react";
 import { Modal, Button } from "react-bootstrap";
 import styles from "pages/contact/styles.module.scss";

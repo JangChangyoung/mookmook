@@ -1,19 +1,3 @@
-/* eslint-disable prefer-const */
-/* eslint-disable react/no-access-state-in-setstate */
-/* eslint-disable react/no-unused-state */
-/* eslint-disable no-unused-expressions */
-/* eslint-disable no-return-assign */
-/* eslint-disable prefer-destructuring */
-/* eslint-disable no-plusplus */
-/* eslint-disable no-param-reassign */
-/* eslint-disable array-callback-return */
-/* eslint-disable consistent-return */
-/* eslint-disable no-unused-vars */
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable spaced-comment */
-/* eslint-disable react/prop-types */
-/* eslint-disable react/destructuring-assignment */
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import firebase from "firebase/app";

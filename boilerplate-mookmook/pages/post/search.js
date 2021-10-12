@@ -1,9 +1,3 @@
-/* eslint-disable react/no-array-index-key */
-/* eslint-disable react/prop-types */
-/* eslint-disable react/destructuring-assignment */
-/* eslint-disable react/prefer-stateless-function */
-/* eslint-disable no-useless-constructor */
-/* eslint-disable max-classes-per-file */
 import React, { Component } from "react";
 import axios from "axios";
 import { Modal, Button, Row, Col, Form } from "react-bootstrap";

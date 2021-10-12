@@ -1,7 +1,3 @@
-/* eslint-disable no-plusplus */
-/* eslint-disable react/no-unescaped-entities */
-/* eslint-disable react/button-has-type */
-/* eslint-disable react/no-array-index-key */
 import React from "react";
 import Router from "next/router";
 import firebase from "firebase/app";

@@ -1,14 +1,3 @@
-/* eslint-disable no-plusplus */
-/* eslint-disable valid-typeof */
-/* eslint-disable no-param-reassign */
-/* eslint-disable consistent-return */
-/* eslint-disable no-unused-expressions */
-/* eslint-disable react/sort-comp */
-/* eslint-disable react/no-array-index-key */
-/* eslint-disable react/state-in-constructor */
-/* eslint-disable no-useless-constructor */
-/* eslint-disable react/prop-types */
-/* eslint-disable react/destructuring-assignment */
 import React, { PureComponent } from "react";
 import ReactCrop from "react-image-crop";
 import Color, { Palette } from "color-thief-react";
