@@ -5,7 +5,7 @@ import { Button, Form, ButtonGroup } from "react-bootstrap";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "react-image-crop/dist/ReactCrop.css";
-import style from "./style.module.scss";
+import style from "pages/post/style.module.scss";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
 class ImageCrop extends PureComponent {
@@ -175,7 +175,10 @@ class ImageCrop extends PureComponent {
               <br /> */}
 
                 <Form.Group>
-                  <Form.Label>Extracted color</Form.Label>
+                  <Form.Label>
+                    Extracted color{" "}
+                    <span className={style.detail}>(Click)</span>
+                  </Form.Label>
                   <br />
                   <ButtonGroup>
                     <Color

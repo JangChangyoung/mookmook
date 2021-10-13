@@ -22,13 +22,14 @@ class MovieInfo extends Component {
         <div className={style.card}>
           <body>
             <div className="wrapper">
+              {/* <div className={style.wrapper}> */}
               <a href={id} className={style.product_img}>
                 <img src={imgurl} alt="" height="200" width="170" />
               </a>
               <div className={style.product_info}>
                 <div className={style.product_text}>
                   <h1>{title.replace(/<b>/gi, "").replace(/<\/b>/gi, "")}</h1>
-                  <h2>by {director.replaceAll("|", " ")}</h2>
+                  <h2>{director.replaceAll("|", " ")}</h2>
                   <p>
                     배우: {actor} <br />
                     개봉년도: {year} <br />
@@ -145,7 +146,12 @@ class ModalForm extends Component {
     const { type, isOpen, closeModal, selectTitle, handleSubmit } = this.props;
 
     return (
-      <Modal show={isOpen} onHide={closeModal} scrollable>
+      <Modal
+        className={style["modal-wrapper"]}
+        show={isOpen}
+        onHide={closeModal}
+        scrollable
+      >
         <ModalHeader closeButton className={style.modal_header}>
           <ModalTitle>Search {type}</ModalTitle>
         </ModalHeader>

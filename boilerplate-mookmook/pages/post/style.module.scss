@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Gowun+Dodum&display=swap");
+// @import url("https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Gowun+Dodum&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
 // font-family: 'Gowun Batang', serif;
@@ -42,6 +42,9 @@
   margin-right: 15px;
 }
 
+.modal-wrapper {
+  font-family: "Roboto", "Noto Sans KR", sans-serif;
+}
 .modal_body {
   height: 500px;
 }
@@ -107,13 +110,15 @@
 
 .product_text h1,
 .product-price-btn p {
-  font-family: "Gowun Batang", serif;
+  // font-family: "Gowun Batang", serif;
+  font-family: "Roboto", "Noto Sans KR", sans-serif;
 }
 
 .product_text h2 {
   margin: 0 7px 15px 32px;
   font-size: 13px;
-  font-family: "Gowun Batang", serif;
+  // font-family: "Gowun Batang", serif;
+  font-family: "Roboto", "Noto Sans KR", sans-serif;
   font-weight: 400;
   text-transform: uppercase;
   color: #9b9b9b;
@@ -123,7 +128,8 @@
 .product_text p {
   // height: 125px;
   margin: 0 7px 0 30px;
-  font-family: "Gowun Dodum", sans-serif;
+  // font-family: "Gowun Dodum", sans-serif;
+  font-family: "Roboto", "Noto Sans KR", sans-serif;
   color: #777676;
   line-height: 1.7em;
 
@@ -139,13 +145,18 @@
 
 .product_price_btn p {
   display: inline-block;
-  font-family: "Trocchi", serif;
+  // font-family: "Trocchi", serif;
+  font-family: "Roboto", "Noto Sans KR", sans-serif;
   margin: 0 0 0 38px;
   font-size: 20px;
   font-weight: lighter;
   color: #474747;
 }
 
+.detail {
+  // font-size: 14px;
+  color: #9b9b9b;
+}
 .product_price_btn button {
   float: right;
   display: inline-block;
@@ -154,7 +165,8 @@
   box-sizing: border-box;
   border: transparent;
   border-radius: 60px;
-  font-family: "Gowun Dodum", sans-serif;
+  // font-family: "Gowun Dodum", sans-serif;
+  font-family: "Roboto", "Noto Sans KR", sans-serif;
   font-size: 10px;
   font-weight: 500;
   text-transform: uppercase;
@@ -163,10 +175,10 @@
   background-color: #86bbf7;
   cursor: pointer;
   outline: none;
-}
 
-.product_price_btn button:hover {
-  background-color: #719fd4;
+  &:hover {
+    background-color: #719fd4;
+  }
 }
 
 /* postId */
@@ -178,7 +190,6 @@
   min-width: 530px;
   border-radius: 30px;
   font-family: "Roboto", "Noto Sans KR", sans-serif;
-
   position: absolute;
   left: 50%;
   top: 50%;
