@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { Card, Button, Image } from "react-bootstrap";
 import { useSelector } from "react-redux";
@@ -25,10 +25,19 @@ const UserPage = () => {
   const [countBook, setBook] = useState(0);
   const countBooks = (book) => setBook(book);
 
+  const [userData, setData] = useState(0);
+  // const changeData = (data) => setData(data);
+
   const account = useSelector((store) => store.account);
   const displayName = account.get("displayName");
   const photoURL = account.get("photoURL");
   const email = account.get("email");
+
+  useEffect(async () => {
+    const data = await (await fetch(`/api/getUser?uid=${host}`)).json();
+    setData(data);
+    console.log("data:", data);
+  }, [host]);
 
   return (
     <>
@@ -47,12 +56,12 @@ const UserPage = () => {
             <div className={styles["post-component"]}>
               <Image
                 className={styles.image}
-                src={photoURL}
+                src={userData.data ? userData.data.photoURL : null}
                 width="80"
                 height="80"
               />
               <p>
-                {displayName}님은 상위{" "}
+                {userData.data ? userData.data.displayName : null}님은 상위{" "}
                 <span style={{ color: "red" }}>0.00 %</span> 입니다
               </p>
             </div>
