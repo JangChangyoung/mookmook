@@ -1,12 +1,17 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { Modal, Button } from "react-bootstrap";
 import styles from "pages/contact/styles.module.scss";
 
 const Contact = ({ show, onHide }) => {
   const [question, setQuestion] = useState("");
+  const account = useSelector((store) => store.account);
+  const user = account.get("uid");
 
   const handleQuestion = ({ target: { value } }) => setQuestion(value);
+
   const handleClose = () => onHide(false);
+
   const handleSubmit = async () => {
     try {
       if (question.length > 0) {
@@ -15,7 +20,7 @@ const Contact = ({ show, onHide }) => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ question }),
+          body: JSON.stringify({ user, question }),
         });
         handleClose();
       }

@@ -20,18 +20,18 @@ if (admin.apps.length === 0) {
 
 export default async (req, res) => {
   const SLACK_URL =
-    "https://hooks.slack.com/services/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";
+    "https://hooks.slack.com/services/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";
   try {
     // const token = req.headers['x-access-token'];
     // const decoded = await admin.auth().verifyIdToken(token);
 
-    const { question } = req.body;
+    const { user, question } = req.body;
 
     if (!question)
       return res.status(400).json({ success: false, error: "Bad Request" });
 
     await axios.post(SLACK_URL, {
-      text: `문의자: 김문의\n문의내용: ${question}\n`,
+      text: `문의자: ${user}\n문의내용: ${question}\n`,
     });
 
     res.status(200).json({
