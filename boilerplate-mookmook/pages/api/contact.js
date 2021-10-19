@@ -20,7 +20,7 @@ if (admin.apps.length === 0) {
 
 export default async (req, res) => {
   const SLACK_URL =
-    "https://hooks.slack.com/services/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";
+    "https://hooks.slack.com/services/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";
   try {
     // const token = req.headers['x-access-token'];
     // const decoded = await admin.auth().verifyIdToken(token);

@@ -9,7 +9,7 @@ const Contact = ({ show, onHide }) => {
   const handleClose = () => onHide(false);
   const handleSubmit = async () => {
     try {
-      if (question.length > 8) {
+      if (question.length > 0) {
         await fetch("/api/contact", {
           method: "POST",
           headers: {
@@ -20,6 +20,7 @@ const Contact = ({ show, onHide }) => {
         handleClose();
       }
     } catch (err) {
+      console.log(err);
       throw err;
     }
   };

@@ -185,7 +185,7 @@ class DisplayPosts extends React.Component {
               <div className="small-4 columns">
                 <div
                   className={styles.cardcontainer}
-                  ontouchstart="this.classList.toggle('hover');"
+                  onTouchStart="this.classList.toggle('hover');"
                 >
                   <div className={styles.card}>
                     <div className={styles.front}>
