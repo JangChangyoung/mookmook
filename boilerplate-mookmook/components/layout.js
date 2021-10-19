@@ -20,7 +20,6 @@ const Layout = () => {
 
   const [show, setShow] = useState(false);
   const handleShow = () => {
-    // const user = firebase.auth().currentUser;
     if (user) {
       setShow(true);
     } else {

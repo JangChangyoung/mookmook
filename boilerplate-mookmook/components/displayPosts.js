@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Router from "next/router";
 import firebase from "firebase/app";
 import "firebase/firestore";
@@ -27,8 +27,8 @@ class DisplayPosts extends React.Component {
     console.log("loading");
     const books = [];
     const movies = [];
-    const randommovies = [];
-    const randombooks = [];
+    // const randommovies = [];
+    // const randombooks = [];
     const { host, types } = this.props;
 
     const { countBooks, countMovies } = this.props;
@@ -45,7 +45,7 @@ class DisplayPosts extends React.Component {
         });
       })
     );
-    console.log("random전");
+    // console.log("random전");
 
     // if (types === "random") {
     //   console.log("왜 random?");
